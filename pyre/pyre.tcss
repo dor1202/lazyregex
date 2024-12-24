@@ -1,0 +1,53 @@
+Input {
+    width: 70%;
+}
+
+#output-container {
+    height: 70%;
+}
+
+#select {
+    width: 15%;
+}
+
+#help {
+    width: 15%;
+}
+
+#inputs {
+    height: 4;
+}
+
+Help {
+    align: center middle;
+}
+
+Help > Container {
+    width: 50%;
+    height: 70%;
+    border: thick $background 80%;
+    background: $surface;
+
+}
+
+Help > Container > Label{
+    margin: 1 1;
+}
+
+Help > Container > Horizontal {
+    overflow-y: auto;
+}
+
+Help > Container > Horizontal > .helpKeys {
+    width: 10%;
+    margin: 0 1
+}
+
+Help > Container > Horizontal > .helpValues {
+    width: 90%;
+}
+
+Help > Container > Button {
+    align: center middle;
+    margin: 2 2;
+}
