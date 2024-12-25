@@ -1,0 +1,4 @@
+CustomFooter {
+        dock: bottom;
+        height: 1;
+}

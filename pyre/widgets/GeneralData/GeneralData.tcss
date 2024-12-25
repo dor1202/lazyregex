@@ -1,0 +1,16 @@
+GeneralData {
+    width: 80%;
+    height: 5;
+}
+
+GeneralData Grid {
+    grid-size: 2 4;
+}
+
+GeneralData Label {
+    content-align: center middle;
+}
+
+GeneralData .GridDesc {
+    color: orange;
+}

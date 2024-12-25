@@ -1,0 +1,5 @@
+PatternInput {
+    width: 100%;
+    border-title-color: white;
+    border: blue;
+}
