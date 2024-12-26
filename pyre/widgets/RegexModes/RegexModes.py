@@ -4,8 +4,6 @@ from textual.widgets import RadioButton, RadioSet
 
 
 class RegexModes(Widget):
-    CSS_PATH = "RegexModes.tcss"
-
     def compose(self) -> ComposeResult:
         with RadioSet():
             yield RadioButton("match")

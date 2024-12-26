@@ -11,6 +11,8 @@ from ...widgets.PatternInput.PatternInput import PatternInput
 
 
 class HomeScreen(Screen):
+    CSS_PATH = "Home.tcss"
+
     BINDINGS = [
         (":", "open_cmd"),
     ]
@@ -21,9 +23,8 @@ class HomeScreen(Screen):
         self.query_one(CmdInput).focus()
 
     def compose(self) -> ComposeResult:
-        with Horizontal(id="Top"):
-            yield GeneralData()
-            yield Logo()
+        yield GeneralData()
+        yield Logo()
         yield CmdInput()
         yield PatternInput()
         yield InputArea()

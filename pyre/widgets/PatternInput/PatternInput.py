@@ -2,8 +2,6 @@ from textual.widgets import Input
 
 
 class PatternInput(Input):
-    CSS_PATH = "PatternInput.tcss"
-
     BORDER_TITLE = "Pattern"
 
     BINDINGS = [

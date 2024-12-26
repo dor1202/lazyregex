@@ -5,8 +5,6 @@ from textual.widgets.selection_list import Selection
 
 
 class RegexOptions(Widget):
-    CSS_PATH = "RegexOptions.tcss"
-
     BORDER_TITLE = "Regex Options"
 
     def compose(self) -> ComposeResult:

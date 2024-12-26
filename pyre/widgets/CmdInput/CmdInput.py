@@ -2,8 +2,6 @@ from textual.widgets import Input
 
 
 class CmdInput(Input):
-    CSS_PATH = "CmdInput.tcss"
-
     BINDINGS = [
         ("escape", "close_input"),
     ]
