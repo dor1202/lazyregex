@@ -18,7 +18,7 @@ class HomeScreen(Screen):
     ]
 
     def action_open_cmd(self):
-        self.query_one(CmdInput).visible = True
+        self.query_one(CmdInput).display = "block"
         self.query_one(CmdInput).disabled = False
         self.query_one(CmdInput).focus()
 
@@ -28,4 +28,4 @@ class HomeScreen(Screen):
         yield CmdInput()
         yield PatternInput()
         yield InputArea()
-        yield CustomFooter()
+        # yield CustomFooter()

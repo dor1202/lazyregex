@@ -1,5 +1,5 @@
 from textual.widgets import Input
-
+from textual.suggester import SuggestFromList
 
 class CmdInput(Input):
     BINDINGS = [
@@ -7,10 +7,16 @@ class CmdInput(Input):
     ]
 
     def __init__(self):
-        super().__init__(id="CmdInput", disabled=True)
+        super().__init__(
+            id="CmdInput",
+            disabled=True,
+            suggester=SuggestFromList(
+                ["q", "q!", "quit", "p", "pattern", "i", "input", "m", "mode", "o", "options"]
+            )
+        )
 
     def action_close_input(self):
-        self.visible = False
+        self.display = "none"
         self.disabled = True
         self.value = ""
 

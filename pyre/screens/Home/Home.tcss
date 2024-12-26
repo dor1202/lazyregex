@@ -21,7 +21,8 @@ Logo {
 
 CmdInput {
   width: 100%;
-  visibility: hidden;
+  display: none;
+  border: rgb(117, 251, 253);
 }
 
 InputArea {
