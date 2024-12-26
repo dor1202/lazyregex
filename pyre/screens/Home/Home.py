@@ -6,7 +6,6 @@ from ...widgets.CustomHeader.CustomHeader import CustomHeader
 from ...widgets.Footer.Footer import CustomFooter
 from ...widgets.InputArea.InputArea import InputArea
 from ...widgets.PatternInput.PatternInput import PatternInput
-from ...widgets.Title.Title import Title
 
 
 class HomeScreen(Screen):
@@ -24,7 +23,6 @@ class HomeScreen(Screen):
     def compose(self) -> ComposeResult:
         yield CustomHeader()
         yield CmdInput()
-        yield Title()
         yield PatternInput()
         yield InputArea()
         yield CustomFooter()
