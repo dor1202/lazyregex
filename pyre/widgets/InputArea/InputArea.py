@@ -2,8 +2,6 @@ from textual.widgets import TextArea
 
 
 class InputArea(TextArea):
-    CSS_PATH = "InputArea.tcss"
-
     BORDER_TITLE = "Test String"
 
     BINDINGS = [

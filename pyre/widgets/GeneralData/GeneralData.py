@@ -6,8 +6,6 @@ import platform
 
 
 class GeneralData(Widget):
-    CSS_PATH = "GeneralData.tcss"
-
     def __init__(self):
         super().__init__(id="Header")
 

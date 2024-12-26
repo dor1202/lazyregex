@@ -1,0 +1,37 @@
+GeneralData {
+  width: 83%;
+}
+
+GeneralData Grid {
+  grid-size: 2 4;
+}
+
+GeneralData Label {
+  content-align: center middle;
+}
+
+GeneralData .GridDesc {
+  color: orange;
+}
+
+Logo {
+  color: orange;
+}
+
+CmdInput {
+  width: 100%;
+  display: none;
+  border: rgb(190, 237, 238);
+}
+
+InputArea {
+  width: 100%;
+  border-title-color: white;
+  border: rgb(151, 204, 246);
+}
+
+PatternInput {
+  width: 100%;
+  border-title-color: white;
+  border: rgb(151, 204, 246);
+}

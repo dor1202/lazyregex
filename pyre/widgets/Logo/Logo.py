@@ -1,8 +1,7 @@
-from textual.widgets import Static
+from textual.widgets import Label
 
-class Logo(Static):
-    CSS_PATH = "Logo.tcss"
 
+class Logo(Label):
     def __init__(self):
         super().__init__(id="Logo")
         logo_path = "pyre/widgets/Logo/Logo.txt"

@@ -6,6 +6,8 @@ from ...widgets.RegexOptions.RegexOptions import RegexOptions
 
 
 class RegexOptionsScreen(Screen):
+    CSS_PATH = "Regexoptions.tcss"
+
     BINDINGS = [
         ("escape", "back_to_main"),
     ]
