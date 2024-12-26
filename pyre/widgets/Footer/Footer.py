@@ -1,10 +1,23 @@
 from textual.app import ComposeResult
 from textual.widget import Widget
-from textual.widgets import Footer
+from textual.widgets import Label
 
 
 class CustomFooter(Widget):
-    CSS_PATH = "Footer.tcss"
+    DEFAULT_CSS = """
+    CustomFooter {
+        height: 1;
+        layout: horizontal;
+    }
+    CustomFooter Label {
+        background: orange;
+        margin: 0 1;
+    }
+    """
+
+    def __init__(self):
+        super().__init__(id="CustomFooter")
 
     def compose(self) -> ComposeResult:
-        yield Footer()
+        yield Label("aaa")
+        yield Label("bbb")

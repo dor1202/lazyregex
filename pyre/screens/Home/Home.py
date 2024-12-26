@@ -1,13 +1,12 @@
 from textual.screen import Screen
 from textual.app import ComposeResult
-from textual.containers import Horizontal
 
 from ...widgets.CmdInput.CmdInput import CmdInput
+from ...widgets.CustomHeader.CustomHeader import CustomHeader
 from ...widgets.Footer.Footer import CustomFooter
-from ...widgets.GeneralData.GeneralData import GeneralData
 from ...widgets.InputArea.InputArea import InputArea
-from ...widgets.Logo.Logo import Logo
 from ...widgets.PatternInput.PatternInput import PatternInput
+from ...widgets.Title.Title import Title
 
 
 class HomeScreen(Screen):
@@ -23,9 +22,9 @@ class HomeScreen(Screen):
         self.query_one(CmdInput).focus()
 
     def compose(self) -> ComposeResult:
-        yield GeneralData()
-        yield Logo()
+        yield CustomHeader()
         yield CmdInput()
+        yield Title()
         yield PatternInput()
         yield InputArea()
-        # yield CustomFooter()
+        yield CustomFooter()
