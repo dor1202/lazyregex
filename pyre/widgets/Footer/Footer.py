@@ -17,5 +17,5 @@ class CustomFooter(Widget):
         super().__init__(id="CustomFooter")
 
     def compose(self) -> ComposeResult:
-        yield FooterOptions()
-        yield FooterMode()
+        yield FooterOptions(id="FooterOptions")
+        yield FooterMode(id="FooterMode")

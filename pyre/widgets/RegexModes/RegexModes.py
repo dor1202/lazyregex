@@ -17,8 +17,6 @@ class RegexModes(Widget):
                 yield RadioButton(option, value=(option == GlobalState().regex_method))
 
     def on_radio_set_changed(self, event: RadioSet.Changed) -> None:
-        GlobalState().regex_method = self.OPTIONS[event.index]
-
-        # from ..FooterMode.FooterMode import FooterMode
-        # main_screen = self.app.screen_stack[-2]
-        # main_screen.query_one(FooterMode).method = self.OPTIONS[event.index]
+        from ..FooterMode.FooterMode import FooterMode
+        main_screen = self.app.screen_stack[-2]
+        main_screen.query_one(FooterMode).mode = self.OPTIONS[event.index]

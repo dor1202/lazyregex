@@ -17,8 +17,7 @@ class FooterMode(Widget):
     }
     """
 
-    def __init__(self):
-        super().__init__(id="FooterMode")
+    mode = reactive("match", recompose=True)
 
     def compose(self) -> ComposeResult:
-        yield Label(GlobalState().regex_method)
+        yield Label(self.mode)

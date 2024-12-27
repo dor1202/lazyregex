@@ -1,3 +1,4 @@
+from textual import on
 from textual.widget import Widget
 from textual.app import ComposeResult
 from textual.widgets import SelectionList
@@ -20,3 +21,9 @@ class RegexOptions(Widget):
 
         selections = [Selection(*element) for element in options]
         yield SelectionList(*selections)
+
+    @on(SelectionList.SelectedChanged)
+    def update_selected_view(self) -> None:
+        from ..FooterOptions.FooterOptions import FooterOptions
+        main_screen = self.app.screen_stack[-2]
+        main_screen.query_one(FooterOptions).options = self.query_one(SelectionList).selected
