@@ -1,6 +1,8 @@
+from rich.console import RenderableType
 from textual.app import ComposeResult
 from textual.widget import Widget
 from textual.widgets import Label
+from textual.reactive import reactive
 from pyre.GlobalState import GlobalState
 
 

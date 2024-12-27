@@ -2,6 +2,12 @@ from textual.widgets import TextArea
 
 
 class InputArea(TextArea):
+    DEFAULT_CSS = """
+    InputArea {
+        width: 50%;
+    }
+    """
+
     BORDER_TITLE = "Test String"
 
     BINDINGS = [

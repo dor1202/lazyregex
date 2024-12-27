@@ -1,9 +1,11 @@
 from textual.screen import Screen
 from textual.app import ComposeResult
+from textual.containers import Grid
 
 from ...widgets.CmdInput.CmdInput import CmdInput
 from ...widgets.CustomHeader.CustomHeader import CustomHeader
 from ...widgets.Footer.Footer import CustomFooter
+from ...widgets.GroupsArea.GroupsArea import GroupsArea
 from ...widgets.InputArea.InputArea import InputArea
 from ...widgets.PatternInput.PatternInput import PatternInput
 
@@ -24,5 +26,9 @@ class HomeScreen(Screen):
         yield CustomHeader()
         yield CmdInput()
         yield PatternInput()
-        yield InputArea()
+        yield Grid(
+            InputArea(),
+            GroupsArea()
+            , classes="hitsArea"
+        )
         yield CustomFooter()

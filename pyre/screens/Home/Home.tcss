@@ -15,6 +15,7 @@ GeneralData .GridDesc {
 }
 
 Logo {
+  padding: 0 0 0 10;
   color: orange;
 }
 
@@ -34,4 +35,23 @@ PatternInput {
   width: 100%;
   border-title-color: white;
   border: rgb(151, 204, 246);
+}
+
+GroupsArea {
+  width: 100%;
+  border-title-color: rgb(177, 177, 177);
+  border: rgb(94, 95, 133);
+}
+
+.hitsArea {
+  grid-size: 5 1;
+  grid-gutter: 1 2;
+}
+
+.hitsArea InputArea {
+  column-span: 3;
+}
+
+.hitsArea GroupsArea {
+  column-span: 2;
 }

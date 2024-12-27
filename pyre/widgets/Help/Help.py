@@ -6,7 +6,7 @@ from ... import __version__
 import platform
 
 
-class GeneralData(Widget):
+class Help(Widget):
     DEFAULT_CSS = """
     .vertical-layout {
         layout: vertical;
@@ -25,24 +25,24 @@ class GeneralData(Widget):
         padding: 0 1;
     }
     
-    .orangeColor {
-        color: orange;
+    .HelpColor {
+        color: cyan;
     }
     """
 
     def __init__(self):
-        super().__init__(id="Header")
+        super().__init__(id="Help")
 
     def compose(self) -> ComposeResult:
         yield Container(
             Container(
-                Label("Application version:", classes="orangeColor"),
-                Label(__version__),
+                Label("<Shift + :>", classes="HelpColor"),
+                Label("Commands Input"),
                 classes="horizontal-layout",
             ),
             Container(
-                Label("Python version:", classes="orangeColor"),
-                Label(platform.python_version()),
+                Label("<Esc>", classes="HelpColor"),
+                Label("Drop Focus"),
                 classes="horizontal-layout",
             ),
             classes="vertical-layout",
