@@ -11,18 +11,21 @@ class FooterOptions(Widget):
     DEFAULT_CSS = """
     FooterOptions {
         layout: horizontal;
-        width: 90%;
     }
-    FooterOptions Label {
-        background: orange;
-        width: 10;
+    FooterOptions Container {
+        layout: horizontal;
+    }
+    .optionLabel {
+        background: rgb(255, 140, 0);
+        width: auto;
+        margin: 0 1;
     }
     """
 
-    options = reactive(["aaa", "bbb"], recompose=True)
+    options = reactive([], recompose=True)
 
     def compose(self) -> ComposeResult:
+        yield Label("Options:")
         yield Container(
-            *[Label(option) for option in self.options],
-            *[Label(option) for option in self.options],
+            *[Label(option, classes="optionLabel") for option in self.options],
         )

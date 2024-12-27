@@ -8,7 +8,8 @@ from ...widgets.Footer.Footer import CustomFooter
 from ...widgets.GroupsArea.GroupsArea import GroupsArea
 from ...widgets.InputArea.InputArea import InputArea
 from ...widgets.PatternInput.PatternInput import PatternInput
-
+from ...widgets.FooterOptions.FooterOptions import FooterOptions
+from ...widgets.FooterMode.FooterMode import FooterMode
 
 class HomeScreen(Screen):
     CSS_PATH = "Home.tcss"
@@ -31,4 +32,8 @@ class HomeScreen(Screen):
             GroupsArea()
             , classes="hitsArea"
         )
-        yield CustomFooter()
+        yield Grid(
+            FooterOptions(id="FooterOptions"),
+            FooterMode(id="FooterMode")
+            , classes="FooterArea"
+        )

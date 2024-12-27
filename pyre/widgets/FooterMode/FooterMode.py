@@ -11,13 +11,19 @@ class FooterMode(Widget):
     FooterMode {
         layout: horizontal;
     }
-    FooterMode Label {
+
+    .modeLabel {
+        margin: 0 2;
+    }
+    
+    .modeValue {
         background: green;
-        margin: 0 1;
+        margin: 0;
     }
     """
 
     mode = reactive("match", recompose=True)
 
     def compose(self) -> ComposeResult:
-        yield Label(self.mode)
+        yield Label(f"Mode: ", classes="modeLabel")
+        yield Label(self.mode, classes="modeValue")

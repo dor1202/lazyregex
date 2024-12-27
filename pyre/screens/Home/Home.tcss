@@ -17,6 +17,7 @@ GeneralData .GridDesc {
 Logo {
   padding: 0 0 0 10;
   color: orange;
+  border: white;
 }
 
 CmdInput {
@@ -53,5 +54,18 @@ GroupsArea {
 }
 
 .hitsArea GroupsArea {
+  column-span: 2;
+}
+
+.FooterArea {
+  grid-size: 6 1;
+  height: 2;
+}
+
+.FooterArea FooterOptions {
+  column-span: 4;
+}
+
+.FooterArea FooterMode {
   column-span: 2;
 }
