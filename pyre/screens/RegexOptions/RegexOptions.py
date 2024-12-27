@@ -6,7 +6,7 @@ from ...widgets.RegexOptions.RegexOptions import RegexOptions
 
 
 class RegexOptionsScreen(Screen):
-    CSS_PATH = "Regexoptions.tcss"
+    CSS_PATH = "RegexOptions.tcss"
 
     BINDINGS = [
         ("escape", "back_to_main"),
@@ -16,5 +16,4 @@ class RegexOptionsScreen(Screen):
         self.app.pop_screen()
 
     def compose(self) -> ComposeResult:
-        yield Label("Regex Options")
         yield RegexOptions()

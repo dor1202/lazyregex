@@ -7,6 +7,8 @@ from ...GlobalState import GlobalState
 
 
 class RegexModes(Widget):
+    BORDER_TITLE = "Regex Modes"
+
     OPTIONS = ["match", "substitution", "search"]
 
     def compose(self) -> ComposeResult:
@@ -15,7 +17,7 @@ class RegexModes(Widget):
                 yield RadioButton(option, value=(option == GlobalState().regex_method))
 
     def on_radio_set_changed(self, event: RadioSet.Changed) -> None:
-        GlobalState().regex_method= self.OPTIONS[event.index]
+        GlobalState().regex_method = self.OPTIONS[event.index]
 
         # from ..FooterMode.FooterMode import FooterMode
         # main_screen = self.app.screen_stack[-2]

@@ -11,7 +11,7 @@ class CmdInput(Input):
             id="CmdInput",
             disabled=True,
             suggester=SuggestFromList(
-                ["q", "q!", "quit", "p", "pattern", "i", "input", "m", "mode", "o", "options"]
+                ["q", "q!", "quit", "p", "pattern", "i", "input", "m", "mode", "o", "options", "h", "help"]
             )
         )
 
@@ -42,6 +42,10 @@ class CmdInput(Input):
         self.action_close_input()
         self.app.push_screen("options")
 
+    def open_help(self):
+        self.action_close_input()
+        self.app.push_screen("help")
+
     def action_submit(self) -> None:
         commands = {
             "q": lambda: self.app.exit(),
@@ -55,6 +59,8 @@ class CmdInput(Input):
             "mode": self.open_modes,
             "o": self.open_options,
             "options": self.open_options,
+            "h": self.open_help,
+            "help": self.open_help,
         }
         com = commands.get(self.value, self.action_close_input)
         com()

@@ -44,12 +44,12 @@ GroupsArea {
 }
 
 .hitsArea {
-  grid-size: 5 1;
+  grid-size: 6 1;
   grid-gutter: 1 2;
 }
 
 .hitsArea InputArea {
-  column-span: 3;
+  column-span: 4;
 }
 
 .hitsArea GroupsArea {
