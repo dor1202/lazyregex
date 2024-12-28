@@ -1,6 +1,5 @@
 from textual.widgets import TextArea
 
-
 class InputArea(TextArea):
     DEFAULT_CSS = """
     InputArea {

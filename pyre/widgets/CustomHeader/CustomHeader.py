@@ -10,7 +10,7 @@ from ...widgets.Help.Help import Help
 class CustomHeader(Widget):
     DEFAULT_CSS = """
     CustomHeader {
-        height: 4;
+        height: 5;
         layout: horizontal;
     }
     """

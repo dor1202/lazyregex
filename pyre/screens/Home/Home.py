@@ -4,7 +4,6 @@ from textual.containers import Grid
 
 from ...widgets.CmdInput.CmdInput import CmdInput
 from ...widgets.CustomHeader.CustomHeader import CustomHeader
-from ...widgets.Footer.Footer import CustomFooter
 from ...widgets.GroupsArea.GroupsArea import GroupsArea
 from ...widgets.InputArea.InputArea import InputArea
 from ...widgets.PatternInput.PatternInput import PatternInput

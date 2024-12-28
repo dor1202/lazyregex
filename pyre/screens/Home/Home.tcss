@@ -15,9 +15,8 @@ GeneralData .GridDesc {
 }
 
 Logo {
-  padding: 0 0 0 10;
   color: orange;
-  border: white;
+  padding: 0 0 0 10;
 }
 
 CmdInput {

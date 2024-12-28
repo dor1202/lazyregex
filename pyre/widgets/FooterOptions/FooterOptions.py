@@ -25,7 +25,6 @@ class FooterOptions(Widget):
     options = reactive([], recompose=True)
 
     def compose(self) -> ComposeResult:
-        yield Label("Options:")
         yield Container(
             *[Label(option, classes="optionLabel") for option in self.options],
         )
