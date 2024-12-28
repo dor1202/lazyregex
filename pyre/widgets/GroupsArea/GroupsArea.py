@@ -17,6 +17,12 @@ class GroupsArea(Widget):
         table = self.query_one(DataTable)
         table.disabled = True
         table.show_cursor = False
-        table.cell_padding = 6
-        table.add_columns("Group Name", "Match")
-        table.add_rows(self.groups)
+        table.cell_padding = 4
+        table.add_columns("Group Name", "Position", "Match")
+        # table.add_rows(self.groups)
+
+    def watch_groups(self, value):
+        table = self.query_one(DataTable)
+        # table.clear()
+        table.add_columns("Group Name", "Position", "Match")
+        table.add_rows([value)

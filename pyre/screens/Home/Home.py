@@ -1,6 +1,7 @@
 from textual.screen import Screen
 from textual.app import ComposeResult
 from textual.containers import Grid
+from textual import on
 
 from ...widgets.CmdInput.CmdInput import CmdInput
 from ...widgets.CustomHeader.CustomHeader import CustomHeader

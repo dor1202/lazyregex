@@ -4,8 +4,6 @@ from textual.widgets import Label
 from textual.reactive import reactive
 from textual.containers import Container
 
-from pyre.GlobalState import GlobalState
-
 
 class FooterOptions(Widget):
     DEFAULT_CSS = """
