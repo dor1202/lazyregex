@@ -9,6 +9,8 @@ import re
 
 class RegexLogic(metaclass=Singleton):
 
+    # TODO: Add a debounce to the update_pattern and update_text methods
+
     def __init__(self):
         self.pattern = ""
         self.text = ""
