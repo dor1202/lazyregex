@@ -16,6 +16,7 @@ class RegexLogic(metaclass=Singleton):
         self.text = ""
         # (group name, position, value)
         self.groups = []
+        self.raw_groups = []
         self.regex_options = []
         self.regex_method = "match"
 
@@ -39,6 +40,7 @@ class RegexLogic(metaclass=Singleton):
             method = getattr(pattern, self.regex_method)
             matches = method(self.text)
             if matches:
+                self.raw_groups = matches.groups() or [matches]
                 self.groups = self._combine_matches_groups(matches)
         except re.error as e:
             print(e)

@@ -11,6 +11,7 @@ from ...widgets.PatternInput.PatternInput import PatternInput
 from ...widgets.FooterOptions.FooterOptions import FooterOptions
 from ...widgets.FooterMode.FooterMode import FooterMode
 
+
 class HomeScreen(Screen):
     CSS_PATH = "Home.tcss"
 

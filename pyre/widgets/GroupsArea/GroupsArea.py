@@ -8,7 +8,7 @@ class GroupsArea(Widget):
     BORDER_TITLE = "Groups"
 
     # [Group Name, Match]
-    groups = reactive([], recompose=True)
+    groups = reactive([])
 
     def compose(self) -> ComposeResult:
         yield DataTable(id="GroupsArea")
@@ -19,10 +19,8 @@ class GroupsArea(Widget):
         table.show_cursor = False
         table.cell_padding = 4
         table.add_columns("Group Name", "Position", "Match")
-        # table.add_rows(self.groups)
 
     def watch_groups(self, value):
         table = self.query_one(DataTable)
-        # table.clear()
-        table.add_columns("Group Name", "Position", "Match")
-        table.add_rows([value)
+        table.clear()
+        table.add_rows(value)
