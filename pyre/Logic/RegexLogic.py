@@ -37,6 +37,8 @@ class RegexLogic(metaclass=Singleton):
                 pattern = re.compile(self.pattern, combined_flags)
             else:
                 pattern = re.compile(self.pattern)
+            # https://stackoverflow.com/questions/11686516/python-regexp-global-flag
+            # TODO: add a check of the options, and use the function for it, use finditer for the findall to get indexes
             method = getattr(pattern, self.regex_method)
             matches = method(self.text)
             if matches:

@@ -7,7 +7,7 @@ from textual.reactive import reactive
 class GroupsArea(Widget):
     BORDER_TITLE = "Groups"
 
-    # [Group Name, Match]
+    # [Group Name, Position, Match]
     groups = reactive([])
 
     def compose(self) -> ComposeResult:
