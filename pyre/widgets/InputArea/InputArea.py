@@ -26,6 +26,9 @@ class InputArea(TextArea):
     def on_text_area_changed(self):
         RegexLogic().update_text(self.text)
         self.app.query_one(GroupsArea).groups = RegexLogic().groups
+
+        from .InputAreaWrapper import InputAreaWrapper
+        self.app.query_one(InputAreaWrapper).content = self.text
         # Will cause in infinite loop
         # self.text = self.create_highlighted_output(RegexLogic().raw_groups)
 

@@ -6,7 +6,7 @@ from textual import on
 from ...widgets.CmdInput.CmdInput import CmdInput
 from ...widgets.CustomHeader.CustomHeader import CustomHeader
 from ...widgets.GroupsArea.GroupsArea import GroupsArea
-from ...widgets.InputArea.InputArea import InputArea
+from ...widgets.InputArea.InputAreaWrapper import InputAreaWrapper
 from ...widgets.PatternInput.PatternInput import PatternInput
 from ...widgets.FooterOptions.FooterOptions import FooterOptions
 from ...widgets.FooterMode.FooterMode import FooterMode
@@ -29,7 +29,7 @@ class HomeScreen(Screen):
         yield CmdInput()
         yield PatternInput()
         yield Grid(
-            InputArea(),
+            InputAreaWrapper(),
             GroupsArea()
             , classes="hitsArea"
         )

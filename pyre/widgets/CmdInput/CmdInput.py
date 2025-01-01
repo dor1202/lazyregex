@@ -30,7 +30,7 @@ class CmdInput(Input):
     def focus_input(self):
         self.action_close_input()
 
-        from ...screens.Home.Home import InputArea
+        from ...widgets.InputArea.InputArea import InputArea
         self.app.query_one(InputArea).disabled = False
         self.app.query_one(InputArea).focus()
 
