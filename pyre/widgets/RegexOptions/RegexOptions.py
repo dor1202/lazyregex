@@ -23,7 +23,8 @@ class RegexOptions(Widget):
     ]
 
     def compose(self) -> ComposeResult:
-        selections = [Selection(element[0], element[1]) for element in self.OPTIONS]
+        option_names = [option[1] for option in RegexLogic().regex_options]
+        selections = [Selection(element[0], element[1], element[2] in option_names) for element in self.OPTIONS]
         yield SelectionList(*selections)
 
     @on(SelectionList.SelectedChanged)

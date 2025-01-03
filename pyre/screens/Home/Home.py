@@ -1,12 +1,12 @@
 from textual.screen import Screen
 from textual.app import ComposeResult
 from textual.containers import Grid
-from textual import on
+from textual import on, events
 
 from ...widgets.CmdInput.CmdInput import CmdInput
 from ...widgets.CustomHeader.CustomHeader import CustomHeader
 from ...widgets.GroupsArea.GroupsArea import GroupsArea
-from ...widgets.InputArea.InputAreaWrapper import InputAreaWrapper
+from ...widgets.ColoredInputArea.ColoredInputArea import ColoredInputArea
 from ...widgets.PatternInput.PatternInput import PatternInput
 from ...widgets.FooterOptions.FooterOptions import FooterOptions
 from ...widgets.FooterMode.FooterMode import FooterMode
@@ -29,7 +29,7 @@ class HomeScreen(Screen):
         yield CmdInput()
         yield PatternInput()
         yield Grid(
-            InputAreaWrapper(),
+            ColoredInputArea(),
             GroupsArea()
             , classes="hitsArea"
         )

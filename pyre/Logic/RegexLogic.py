@@ -9,31 +9,32 @@ import re
 
 class RegexLogic(metaclass=Singleton):
 
-    # TODO: Add a debounce to the update_pattern and update_text methods
-
     def __init__(self):
         self.pattern = ""
         self.text = ""
         # (group name, position, value)
         self.groups = []
         self.raw_groups = []
-        self.regex_options = []
+        self.regex_options = [
+            # name, flag
+            ("single_line", re.S),
+            ("insensitive", re.I),
+        ]
         self.regex_method = "match"
 
     def update_pattern(self, pattern: str):
         self.pattern = pattern
         self._run_regex()
-        # self.run_worker(self.update_regex(), exclusive=True)
 
     def update_text(self, text: str):
         self.text = text
         self._run_regex()
-        # self.run_worker(self.update_regex(), exclusive=True)
 
     def _run_regex(self):
         try:
             if self.regex_options:
-                combined_flags = reduce(lambda x, y: x | y, self.regex_options)
+                options = [option[1] for option in self.regex_options]
+                combined_flags = reduce(lambda x, y: x | y, options)
                 pattern = re.compile(self.pattern, combined_flags)
             else:
                 pattern = re.compile(self.pattern)
@@ -44,6 +45,9 @@ class RegexLogic(metaclass=Singleton):
             if matches:
                 self.raw_groups = matches.groups() or [matches]
                 self.groups = self._combine_matches_groups(matches)
+            else:
+                self.raw_groups = []
+                self.groups = []
         except re.error as e:
             print(e)
 
@@ -56,5 +60,5 @@ class RegexLogic(metaclass=Singleton):
                     group.append(match.group(i + 1))
                 groups.append(group)
         else:
-            groups = [("Match 1", f"{matches.pos}-{matches.endpos}", matches.string)]
+            groups = [("Match 1", f"{matches.regs[0][0]}-{matches.regs[0][1]}", matches.string)]
         return groups

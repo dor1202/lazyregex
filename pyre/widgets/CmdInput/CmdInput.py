@@ -30,9 +30,9 @@ class CmdInput(Input):
     def focus_input(self):
         self.action_close_input()
 
-        from ...widgets.InputArea.InputArea import InputArea
-        self.app.query_one(InputArea).disabled = False
-        self.app.query_one(InputArea).focus()
+        from ...widgets.ColoredInputArea.ColoredInputArea import ColoredInputArea
+        self.app.query_one(ColoredInputArea).disabled = False
+        self.app.query_one(ColoredInputArea).focus()
 
     def open_modes(self):
         self.action_close_input()

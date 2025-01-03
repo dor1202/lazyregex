@@ -1,1 +1,6 @@
 # pyre
+
+
+Debug code:
+Terminal 1: textual console
+Terminal 1: textual run --dev pyre.cli:app

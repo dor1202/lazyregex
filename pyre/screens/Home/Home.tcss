@@ -25,7 +25,7 @@ CmdInput {
   border: rgb(190, 237, 238);
 }
 
-InputArea {
+ColoredInputArea {
   width: 100%;
   border-title-color: white;
   border: rgb(151, 204, 246);
@@ -48,7 +48,7 @@ GroupsArea {
   grid-gutter: 1 2;
 }
 
-.hitsArea InputArea {
+.hitsArea ColoredInputArea {
   column-span: 4;
 }
 
