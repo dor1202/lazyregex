@@ -42,8 +42,6 @@ class ColoredInputArea(TextArea):
     def highlight(
         self, row: int, start_column: int, end_column: int, color: str
     ) -> None:
-        # TODO: not sure why it paints the full row
-        print(start_column, end_column)
         self._highlights[row].append((start_column, end_column, color))
 
     @staticmethod
@@ -58,11 +56,11 @@ class ColoredInputArea(TextArea):
     def process_input(self):
         RegexLogic().update_text(self.text)
         self.app.query_one(GroupsArea).groups = GlobalState().groups
+        self._highlights.clear()
 
         if not GlobalState().groups:
-            for row, line in enumerate(self.document.lines):
-                self.highlight(row, 0, len(line), "blue")
+            return
 
         for group_name, position, value in GlobalState().groups:
             start, end = position.split("-")
-            self.highlight(0, start, end, "green")
+            self.highlight(0, int(start), int(end), "green")

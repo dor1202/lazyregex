@@ -31,11 +31,11 @@ class RegexLogic(metaclass=Singleton):
             method = getattr(pattern, self.global_state.regex_method)
             matches = method(self.global_state.text)
             if matches:
-                self.raw_groups = matches.groups() or [matches]
-                self.groups = self._combine_matches_groups(matches)
+                self.global_state.raw_groups = matches.groups() or [matches]
+                self.global_state.groups = self._combine_matches_groups(matches)
             else:
-                self.raw_groups = []
-                self.groups = []
+                self.global_state.raw_groups = []
+                self.global_state.groups = []
         except re.error as e:
             print(e)
 
