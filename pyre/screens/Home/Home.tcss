@@ -15,8 +15,10 @@ GeneralData .GridDesc {
 }
 
 Logo {
+  width: 100%;
   color: orange;
-  padding: 0 0 0 10;
+  text-align: end;
+  margin: 0 2 0 0;
 }
 
 CmdInput {
@@ -39,8 +41,8 @@ PatternInput {
 
 GroupsArea {
   width: 100%;
-  border-title-color: rgb(177, 177, 177);
-  border: rgb(94, 95, 133);
+  border-title-color: white;
+  border: rgb(123, 205, 246);
 }
 
 .hitsArea {

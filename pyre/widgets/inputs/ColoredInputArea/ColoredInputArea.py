@@ -18,6 +18,10 @@ class ColoredInputArea(TextArea):
     ColoredInputArea {
         width: 50%;
     }
+    
+    ColoredInputArea:disabled {
+        opacity: 100% !important;
+    }
     """
 
     BORDER_TITLE = "Test String"
@@ -28,6 +32,12 @@ class ColoredInputArea(TextArea):
 
     def action_drop_focus_input(self):
         self.disabled = True
+
+        from ....widgets.widgets.Help.Help import Help
+        GlobalState().help_ui = [
+            ("<Shift + :>", "Commands Input"),
+        ]
+        self.app.query_one(Help).help_labels = GlobalState().help_ui
 
     def __init__(self, *args, **kwargs):
         super().__init__(disabled=True, *args, **kwargs)

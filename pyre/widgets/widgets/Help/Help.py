@@ -2,6 +2,9 @@ from textual.app import ComposeResult
 from textual.containers import Container
 from textual.widget import Widget
 from textual.widgets import Label
+from textual.reactive import reactive
+
+from ....logic.GlobalState import GlobalState
 
 
 class Help(Widget):
@@ -28,20 +31,21 @@ class Help(Widget):
     }
     """
 
+    help_labels = reactive(GlobalState().help_ui, recompose=True)
+
     def __init__(self):
         super().__init__(id="Help")
 
     def compose(self) -> ComposeResult:
+        containers = [
+            Container(
+                Label(command, classes="HelpColor"),
+                Label(explanation),
+                classes="horizontal-layout",
+            )
+            for command, explanation in self.help_labels
+        ]
         yield Container(
-            Container(
-                Label("<Shift + :>", classes="HelpColor"),
-                Label("Commands Input"),
-                classes="horizontal-layout",
-            ),
-            Container(
-                Label("<Esc>", classes="HelpColor"),
-                Label("Drop Focus"),
-                classes="horizontal-layout",
-            ),
+            *containers,
             classes="vertical-layout",
         )

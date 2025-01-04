@@ -1,6 +1,8 @@
 from textual.suggester import SuggestFromList
 from textual.widgets import Input
 
+from ....logic.GlobalState import GlobalState
+
 
 class CmdInput(Input):
     BINDINGS = [
@@ -43,6 +45,12 @@ class CmdInput(Input):
         self.app.query_one(PatternInput).disabled = False
         self.app.query_one(PatternInput).focus()
 
+        from ....widgets.widgets.Help.Help import Help
+        GlobalState().help_ui = [
+            ("<Esc>", "Drop Focus"),
+        ]
+        self.app.query_one(Help).help_labels = GlobalState().help_ui
+
     def focus_input(self):
         self.action_close_input()
 
@@ -52,6 +60,12 @@ class CmdInput(Input):
 
         self.app.query_one(ColoredInputArea).disabled = False
         self.app.query_one(ColoredInputArea).focus()
+
+        from ....widgets.widgets.Help.Help import Help
+        GlobalState().help_ui = [
+            ("<Esc>", "Drop Focus"),
+        ]
+        self.app.query_one(Help).help_labels = GlobalState().help_ui
 
     def open_modes(self):
         self.action_close_input()

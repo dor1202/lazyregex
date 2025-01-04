@@ -10,8 +10,8 @@ from ..ColoredInputArea.ColoredInputArea import ColoredInputArea
 
 class PatternInput(Input):
     DEFAULT_CSS = """
-    .regex .group {
-        color: red;
+    PatternInput:disabled {
+        opacity: 100% !important;
     }
     """
 
@@ -29,6 +29,12 @@ class PatternInput(Input):
 
     def action_drop_focus_input(self):
         self.disabled = True
+
+        from ....widgets.widgets.Help.Help import Help
+        GlobalState().help_ui = [
+            ("<Shift + :>", "Commands Input"),
+        ]
+        self.app.query_one(Help).help_labels = GlobalState().help_ui
 
     async def on_input_changed(self):
         await self.debouncer.debounce(self.process_input)

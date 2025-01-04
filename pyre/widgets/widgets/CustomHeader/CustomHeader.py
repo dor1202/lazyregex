@@ -1,4 +1,5 @@
 from textual.app import ComposeResult
+from textual.containers import Grid
 from textual.containers import Container
 from textual.widget import Widget
 
@@ -13,12 +14,27 @@ class CustomHeader(Widget):
         height: 5;
         layout: horizontal;
     }
+    
+    Grid{
+        grid-size: 3 1;
+        grid-gutter: 1 2;
+    }
+    
+    Grid GeneralData {
+      column-span: 1;
+    }
+    
+    Grid Help {
+      column-span: 1;
+    }
+    
+    Grid Logo {
+      column-span: 1;
+    }
     """
 
     def __init__(self):
         super().__init__(id="CustomHeader")
 
     def compose(self) -> ComposeResult:
-        yield Container(GeneralData())
-        yield Container(Help())
-        yield Container(Logo())
+        yield Grid(GeneralData(), Help(), Logo())

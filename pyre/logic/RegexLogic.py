@@ -26,34 +26,36 @@ class RegexLogic(metaclass=Singleton):
                 pattern = re.compile(self.global_state.pattern, combined_flags)
             else:
                 pattern = re.compile(self.global_state.pattern)
-            # https://stackoverflow.com/questions/11686516/python-regexp-global-flag
-            # TODO: add a check of the options, and use the function for it, use finditer for the findall to get indexes
-            method = getattr(pattern, self.global_state.regex_method)
-            matches = method(self.global_state.text)
-            if matches:
-                self.global_state.raw_groups = matches.groups() or [matches]
-                self.global_state.groups = self._combine_matches_groups(matches)
+            matches_iterator = pattern.finditer(self.global_state.text)
+            # method = getattr(pattern, self.global_state.regex_method)
+            # matches = method(self.global_state.text)
+            if matches_iterator:
+                self.global_state.groups = self._combine_matches_groups(matches_iterator)
             else:
-                self.global_state.raw_groups = []
                 self.global_state.groups = []
         except re.error as e:
+            self.global_state.groups = []
             print(e)
 
     @staticmethod
-    def _combine_matches_groups(matches):
+    def _combine_matches_groups(matches_iterator):
         groups = []
-        if matches.groupdict():
-            for match in matches.groupdict():
-                group = []
-                for i in range(len(match.groups())):
-                    group.append(match.group(i + 1))
-                groups.append(group)
-        else:
-            groups = [
+        for index, match in enumerate(matches_iterator):
+            groups.append(
                 (
-                    "Match 1",
-                    f"{matches.regs[0][0]}-{matches.regs[0][1]}",
-                    matches.string,
+                    f"Match {index}",
+                    f"{match.start()}-{match.end()}",
+                    match.group(0),
                 )
-            ]
+            )
+            for group_name, group_match in match.groupdict().items():
+                if group_match is not None:  # Check if the group has a match
+                    start, end = match.span(group_name)
+                    groups.append(
+                        (
+                            f"Group {group_name}",
+                            f"{start}-{end}",
+                            group_match,
+                        )
+                    )
         return groups
