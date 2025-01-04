@@ -1,9 +1,9 @@
 from textual.app import ComposeResult
-from textual.widget import Widget
 from textual.containers import Container
+from textual.widget import Widget
 
-from ...widgets.GeneralData.GeneralData import GeneralData
 from ....widgets.labels.Logo.Logo import Logo
+from ...widgets.GeneralData.GeneralData import GeneralData
 from ...widgets.Help.Help import Help
 
 

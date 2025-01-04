@@ -1,7 +1,7 @@
-from textual.widget import Widget
 from textual.app import ComposeResult
-from textual.widgets import RadioButton, RadioSet, Label
 from textual.reactive import reactive
+from textual.widget import Widget
+from textual.widgets import Label, RadioButton, RadioSet
 
 from ....logic.GlobalState import GlobalState
 

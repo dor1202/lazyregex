@@ -1,8 +1,8 @@
 from textual.app import ComposeResult
+from textual.containers import Container
+from textual.reactive import reactive
 from textual.widget import Widget
 from textual.widgets import Label
-from textual.reactive import reactive
-from textual.containers import Container
 
 from ....logic.GlobalState import GlobalState
 

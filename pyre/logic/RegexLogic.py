@@ -1,9 +1,8 @@
-from ..logic.GlobalState import GlobalState
-from ..metaclasses.singelton import Singleton
-
+import re
 from functools import reduce
 
-import re
+from ..logic.GlobalState import GlobalState
+from ..metaclasses.singelton import Singleton
 
 
 class RegexLogic(metaclass=Singleton):

@@ -9,7 +9,6 @@ from textual.containers import Container, Horizontal, ScrollableContainer
 from textual.screen import ModalScreen
 from textual.widgets import Button, Header, Input, Label, Select, Static
 
-
 UNDERLINE = "\033[4m"
 RESET_UNDERLINE = "\033[24m"
 

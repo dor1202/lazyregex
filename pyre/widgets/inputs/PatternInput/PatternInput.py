@@ -1,11 +1,11 @@
 from textual.widgets import Input
 
-from ..ColoredInputArea.ColoredInputArea import ColoredInputArea
-from ....widgets.widgets.GroupsArea.GroupsArea import GroupsArea
+from ....highlighters.pattern_highlight import PatternHighlighter
 from ....logic.Debouncer import Debouncer
 from ....logic.GlobalState import GlobalState
 from ....logic.RegexLogic import RegexLogic
-from ....highlighters.pattern_highlight import PatternHighlighter
+from ....widgets.widgets.GroupsArea.GroupsArea import GroupsArea
+from ..ColoredInputArea.ColoredInputArea import ColoredInputArea
 
 
 class PatternInput(Input):

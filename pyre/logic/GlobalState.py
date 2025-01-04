@@ -1,6 +1,6 @@
-from ..metaclasses.singelton import Singleton
-
 import re
+
+from ..metaclasses.singelton import Singleton
 
 
 class GlobalState(metaclass=Singleton):

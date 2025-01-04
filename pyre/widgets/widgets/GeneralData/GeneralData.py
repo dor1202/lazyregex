@@ -1,9 +1,11 @@
-from textual.widget import Widget
-from textual.app import ComposeResult
-from textual.widgets import Label
-from textual.containers import Container
-from pyre import __version__
 import platform
+
+from textual.app import ComposeResult
+from textual.containers import Container
+from textual.widget import Widget
+from textual.widgets import Label
+
+from pyre import __version__
 
 
 class GeneralData(Widget):

@@ -1,14 +1,15 @@
-from textual.screen import Screen
 from textual.app import ComposeResult
 from textual.containers import Grid
+from textual.screen import Screen
 
 from ...widgets.inputs.CmdInput.CmdInput import CmdInput
-from ...widgets.widgets.CustomHeader.CustomHeader import CustomHeader
-from ...widgets.widgets.GroupsArea.GroupsArea import GroupsArea
-from ...widgets.inputs.ColoredInputArea.ColoredInputArea import ColoredInputArea
+from ...widgets.inputs.ColoredInputArea.ColoredInputArea import \
+    ColoredInputArea
 from ...widgets.inputs.PatternInput.PatternInput import PatternInput
-from ...widgets.widgets.FooterOptions.FooterOptions import FooterOptions
+from ...widgets.widgets.CustomHeader.CustomHeader import CustomHeader
 from ...widgets.widgets.FooterMode.FooterMode import FooterMode
+from ...widgets.widgets.FooterOptions.FooterOptions import FooterOptions
+from ...widgets.widgets.GroupsArea.GroupsArea import GroupsArea
 
 
 class HomeScreen(Screen):

@@ -1,5 +1,5 @@
-from textual.screen import Screen
 from textual.app import ComposeResult
+from textual.screen import Screen
 
 from ...widgets.widgets.RegexModes.RegexModes import RegexModes
 

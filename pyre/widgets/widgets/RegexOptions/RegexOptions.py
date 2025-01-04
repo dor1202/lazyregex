@@ -1,10 +1,10 @@
+import re
+
 from textual import on
-from textual.widget import Widget
 from textual.app import ComposeResult
+from textual.widget import Widget
 from textual.widgets import SelectionList
 from textual.widgets.selection_list import Selection
-
-import re
 
 from ....logic.GlobalState import GlobalState
 

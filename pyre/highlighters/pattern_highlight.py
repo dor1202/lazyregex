@@ -1,8 +1,8 @@
 import re
 
 from rich.highlighter import RegexHighlighter, _combine_regex
-from rich.text import Span, Text
 from rich.style import Style
+from rich.text import Span, Text
 
 
 class PatternHighlighter(RegexHighlighter):

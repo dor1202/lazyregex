@@ -1,5 +1,6 @@
-from textual.widgets import Input
 from textual.suggester import SuggestFromList
+from textual.widgets import Input
+
 
 class CmdInput(Input):
     BINDINGS = [
@@ -30,7 +31,8 @@ class CmdInput(Input):
     def focus_input(self):
         self.action_close_input()
 
-        from ....widgets.inputs.ColoredInputArea.ColoredInputArea import ColoredInputArea
+        from ....widgets.inputs.ColoredInputArea.ColoredInputArea import \
+            ColoredInputArea
         self.app.query_one(ColoredInputArea).disabled = False
         self.app.query_one(ColoredInputArea).focus()
 
