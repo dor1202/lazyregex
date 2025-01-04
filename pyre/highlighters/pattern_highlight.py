@@ -15,7 +15,6 @@ class PatternHighlighter(RegexHighlighter):
     REGEX_QUANTIFIER = r"(?P<quantifier>\{\d+(,\d*)?\}|\*|\+|\?)"
     REGEX_META = r"(?P<meta>[.^$|])"
 
-    base_style = "regex."
     highlights = [
         _combine_regex(
             REGEX_GROUP,

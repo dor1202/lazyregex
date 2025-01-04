@@ -1,7 +1,7 @@
 from textual.screen import Screen
 from textual.app import ComposeResult
 
-from ...widgets.HelpData.HelpData import HelpData
+from ...widgets.widgets.HelpData.HelpData import HelpData
 
 
 class HelpScreen(Screen):

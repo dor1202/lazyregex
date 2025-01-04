@@ -1,8 +1,7 @@
 from textual.screen import Screen
 from textual.app import ComposeResult
-from textual.widgets import Label
 
-from ...widgets.RegexModes.RegexModes import RegexModes
+from ...widgets.widgets.RegexModes.RegexModes import RegexModes
 
 
 class RegexModesScreen(Screen):

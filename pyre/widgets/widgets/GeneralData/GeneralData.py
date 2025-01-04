@@ -2,7 +2,7 @@ from textual.widget import Widget
 from textual.app import ComposeResult
 from textual.widgets import Label
 from textual.containers import Container
-from ... import __version__
+from pyre import __version__
 import platform
 
 

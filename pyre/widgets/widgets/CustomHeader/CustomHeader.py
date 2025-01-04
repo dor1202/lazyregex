@@ -3,7 +3,7 @@ from textual.widget import Widget
 from textual.containers import Container
 
 from ...widgets.GeneralData.GeneralData import GeneralData
-from ...widgets.Logo.Logo import Logo
+from ....widgets.labels.Logo.Logo import Logo
 from ...widgets.Help.Help import Help
 
 

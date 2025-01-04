@@ -3,7 +3,7 @@ from textual.app import ComposeResult
 from textual.widgets import RadioButton, RadioSet, Label
 from textual.reactive import reactive
 
-from ...Logic.RegexLogic import RegexLogic
+from ....logic.GlobalState import GlobalState
 
 
 class RegexModes(Widget):
@@ -14,10 +14,10 @@ class RegexModes(Widget):
     def compose(self) -> ComposeResult:
         with RadioSet():
             for option in self.OPTIONS:
-                yield RadioButton(option, value=(option == RegexLogic().regex_method))
+                yield RadioButton(option, value=(option == GlobalState().regex_method))
 
     def on_radio_set_changed(self, event: RadioSet.Changed) -> None:
-        RegexLogic().regex_method = self.OPTIONS[event.index]
+        GlobalState().regex_method = self.OPTIONS[event.index]
 
         from ..FooterMode.FooterMode import FooterMode
         main_screen = self.app.screen_stack[-2]

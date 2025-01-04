@@ -5,9 +5,10 @@ from rich.color import ANSI_COLOR_NAMES, Color
 from rich.style import Style
 from textual.widgets import TextArea
 
-from ...Logic.Debouncer import Debouncer
-from ...Logic.RegexLogic import RegexLogic
-from ..GroupsArea.GroupsArea import GroupsArea
+from ....logic.Debouncer import Debouncer
+from ....logic.GlobalState import GlobalState
+from ....logic.RegexLogic import RegexLogic
+from ....widgets.widgets.GroupsArea.GroupsArea import GroupsArea
 
 IS_WINDOWS = sys.platform == "win32"
 
@@ -54,12 +55,12 @@ class ColoredInputArea(TextArea):
 
     def process_input(self):
         RegexLogic().update_text(self.text)
-        self.app.query_one(GroupsArea).groups = RegexLogic().groups
+        self.app.query_one(GroupsArea).groups = GlobalState().groups
 
-        if not RegexLogic().groups:
+        if not GlobalState().groups:
             for row, line in enumerate(self.document.lines):
                 self.highlight(row, 0, len(line), "blue")
 
-        for group_name, position, value in RegexLogic().groups:
+        for group_name, position, value in GlobalState().groups:
             start, end = position.split("-")
             self.highlight(0, start, end, "green")

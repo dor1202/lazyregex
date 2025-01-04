@@ -23,14 +23,14 @@ class CmdInput(Input):
     def focus_pattern(self):
         self.action_close_input()
 
-        from ...screens.Home.Home import PatternInput
+        from ....screens.Home.Home import PatternInput
         self.app.query_one(PatternInput).disabled = False
         self.app.query_one(PatternInput).focus()
 
     def focus_input(self):
         self.action_close_input()
 
-        from ...widgets.ColoredInputArea.ColoredInputArea import ColoredInputArea
+        from ....widgets.inputs.ColoredInputArea.ColoredInputArea import ColoredInputArea
         self.app.query_one(ColoredInputArea).disabled = False
         self.app.query_one(ColoredInputArea).focus()
 

@@ -1,10 +1,11 @@
 from textual.widgets import Input
 
 from ..ColoredInputArea.ColoredInputArea import ColoredInputArea
-from ..GroupsArea.GroupsArea import GroupsArea
-from ...Logic.Debouncer import Debouncer
-from ...Logic.RegexLogic import RegexLogic
-from ...highlighters.pattern_highlight import PatternHighlighter
+from ....widgets.widgets.GroupsArea.GroupsArea import GroupsArea
+from ....logic.Debouncer import Debouncer
+from ....logic.GlobalState import GlobalState
+from ....logic.RegexLogic import RegexLogic
+from ....highlighters.pattern_highlight import PatternHighlighter
 
 
 class PatternInput(Input):
@@ -32,5 +33,5 @@ class PatternInput(Input):
 
     def process_input(self):
         RegexLogic().update_pattern(self.value)
-        self.app.query_one(GroupsArea).groups = RegexLogic().groups
+        self.app.query_one(GroupsArea).groups = GlobalState().groups
         self.app.query_one(ColoredInputArea).process_input()

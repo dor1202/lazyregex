@@ -4,7 +4,7 @@ from textual.widgets import Label
 from textual.reactive import reactive
 from textual.containers import Container
 
-from pyre.Logic.RegexLogic import RegexLogic
+from ....logic.GlobalState import GlobalState
 
 
 class FooterOptions(Widget):
@@ -23,7 +23,7 @@ class FooterOptions(Widget):
     }
     """
 
-    options = reactive([option[0] for option in RegexLogic().regex_options], recompose=True)
+    options = reactive([option[0] for option in GlobalState().regex_options], recompose=True)
 
     def compose(self) -> ComposeResult:
         yield Container(

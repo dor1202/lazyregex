@@ -6,7 +6,7 @@ from textual.widgets.selection_list import Selection
 
 import re
 
-from ...Logic.RegexLogic import RegexLogic
+from ....logic.GlobalState import GlobalState
 
 
 class RegexOptions(Widget):
@@ -23,7 +23,7 @@ class RegexOptions(Widget):
     ]
 
     def compose(self) -> ComposeResult:
-        option_names = [option[1] for option in RegexLogic().regex_options]
+        option_names = [option[1] for option in GlobalState().regex_options]
         selections = [Selection(element[0], element[1], element[2] in option_names) for element in self.OPTIONS]
         yield SelectionList(*selections)
 
@@ -32,7 +32,7 @@ class RegexOptions(Widget):
         selected = self.query_one(SelectionList).selected
 
         select_data_full_row = [option for select in selected for option in self.OPTIONS if select == option[1]]
-        RegexLogic().regex_options = [option[2] for option in select_data_full_row]
+        GlobalState().regex_options = [option[2] for option in select_data_full_row]
 
         from ..FooterOptions.FooterOptions import FooterOptions
         main_screen = self.app.screen_stack[-2]
