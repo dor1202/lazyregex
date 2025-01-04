@@ -12,8 +12,22 @@ class CmdInput(Input):
             id="CmdInput",
             disabled=True,
             suggester=SuggestFromList(
-                ["q", "q!", "quit", "p", "pattern", "i", "input", "m", "mode", "o", "options", "h", "help"]
-            )
+                [
+                    "q",
+                    "q!",
+                    "quit",
+                    "p",
+                    "pattern",
+                    "i",
+                    "input",
+                    "m",
+                    "mode",
+                    "o",
+                    "options",
+                    "h",
+                    "help",
+                ]
+            ),
         )
 
     def action_close_input(self):
@@ -25,14 +39,17 @@ class CmdInput(Input):
         self.action_close_input()
 
         from ....screens.Home.Home import PatternInput
+
         self.app.query_one(PatternInput).disabled = False
         self.app.query_one(PatternInput).focus()
 
     def focus_input(self):
         self.action_close_input()
 
-        from ....widgets.inputs.ColoredInputArea.ColoredInputArea import \
-            ColoredInputArea
+        from ....widgets.inputs.ColoredInputArea.ColoredInputArea import (
+            ColoredInputArea,
+        )
+
         self.app.query_one(ColoredInputArea).disabled = False
         self.app.query_one(ColoredInputArea).focus()
 

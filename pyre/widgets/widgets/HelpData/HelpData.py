@@ -13,23 +13,28 @@ class HelpData(Widget):
     def compose(self) -> ComposeResult:
         yield Container(
             Container(
-                Label("q / q! / quit", classes="HelpColor"), Label("Exit the application"),
+                Label("q / q! / quit", classes="HelpColor"),
+                Label("Exit the application"),
                 classes="horizontal-layout",
             ),
             Container(
-                Label("p / pattern", classes="HelpColor"), Label("Focus the pattern input"),
+                Label("p / pattern", classes="HelpColor"),
+                Label("Focus the pattern input"),
                 classes="horizontal-layout",
             ),
             Container(
-                Label("i / input", classes="HelpColor"), Label("Focus the input area"),
+                Label("i / input", classes="HelpColor"),
+                Label("Focus the input area"),
                 classes="horizontal-layout",
             ),
             Container(
-                Label("m / mode", classes="HelpColor"), Label("Open the modes screen"),
+                Label("m / mode", classes="HelpColor"),
+                Label("Open the modes screen"),
                 classes="horizontal-layout",
             ),
             Container(
-                Label("o / options", classes="HelpColor"), Label("Open the options screen"),
+                Label("o / options", classes="HelpColor"),
+                Label("Open the options screen"),
                 classes="horizontal-layout",
             ),
             classes="vertical-layout",

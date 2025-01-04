@@ -49,5 +49,11 @@ class RegexLogic(metaclass=Singleton):
                     group.append(match.group(i + 1))
                 groups.append(group)
         else:
-            groups = [("Match 1", f"{matches.regs[0][0]}-{matches.regs[0][1]}", matches.string)]
+            groups = [
+                (
+                    "Match 1",
+                    f"{matches.regs[0][0]}-{matches.regs[0][1]}",
+                    matches.string,
+                )
+            ]
         return groups

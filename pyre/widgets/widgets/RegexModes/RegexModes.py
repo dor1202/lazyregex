@@ -20,5 +20,6 @@ class RegexModes(Widget):
         GlobalState().regex_method = self.OPTIONS[event.index]
 
         from ..FooterMode.FooterMode import FooterMode
+
         main_screen = self.app.screen_stack[-2]
         main_screen.query_one(FooterMode).mode = self.OPTIONS[event.index]

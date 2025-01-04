@@ -22,7 +22,9 @@ class PatternInput(Input):
     ]
 
     def __init__(self):
-        super().__init__(id="PatternInput", disabled=True, highlighter=PatternHighlighter())
+        super().__init__(
+            id="PatternInput", disabled=True, highlighter=PatternHighlighter()
+        )
         self.debouncer = Debouncer(0.5)
 
     def action_drop_focus_input(self):

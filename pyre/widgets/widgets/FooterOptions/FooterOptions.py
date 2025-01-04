@@ -23,7 +23,9 @@ class FooterOptions(Widget):
     }
     """
 
-    options = reactive([option[0] for option in GlobalState().regex_options], recompose=True)
+    options = reactive(
+        [option[0] for option in GlobalState().regex_options], recompose=True
+    )
 
     def compose(self) -> ComposeResult:
         yield Container(

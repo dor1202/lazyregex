@@ -3,8 +3,7 @@ from textual.containers import Grid
 from textual.screen import Screen
 
 from ...widgets.inputs.CmdInput.CmdInput import CmdInput
-from ...widgets.inputs.ColoredInputArea.ColoredInputArea import \
-    ColoredInputArea
+from ...widgets.inputs.ColoredInputArea.ColoredInputArea import ColoredInputArea
 from ...widgets.inputs.PatternInput.PatternInput import PatternInput
 from ...widgets.widgets.CustomHeader.CustomHeader import CustomHeader
 from ...widgets.widgets.FooterMode.FooterMode import FooterMode
@@ -28,13 +27,9 @@ class HomeScreen(Screen):
         yield CustomHeader()
         yield CmdInput()
         yield PatternInput()
-        yield Grid(
-            ColoredInputArea(),
-            GroupsArea()
-            , classes="hitsArea"
-        )
+        yield Grid(ColoredInputArea(), GroupsArea(), classes="hitsArea")
         yield Grid(
             FooterOptions(id="FooterOptions"),
-            FooterMode(id="FooterMode")
-            , classes="FooterArea"
+            FooterMode(id="FooterMode"),
+            classes="FooterArea",
         )

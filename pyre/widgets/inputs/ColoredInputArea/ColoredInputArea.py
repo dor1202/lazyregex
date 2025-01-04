@@ -39,7 +39,9 @@ class ColoredInputArea(TextArea):
             color = palette[color_number]
             self._theme.syntax_styles[name] = Style(color=Color.from_rgb(*color))
 
-    def highlight(self, row: int, start_column: int, end_column: int, color: str) -> None:
+    def highlight(
+        self, row: int, start_column: int, end_column: int, color: str
+    ) -> None:
         # TODO: not sure why it paints the full row
         print(start_column, end_column)
         self._highlights[row].append((start_column, end_column, color))
