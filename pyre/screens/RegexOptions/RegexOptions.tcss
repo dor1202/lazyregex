@@ -1,0 +1,11 @@
+Screen {
+  align: center middle;
+}
+
+RegexOptions {
+  padding: 1;
+  border-title-color: white;
+  border: rgb(123, 205, 246);
+  width: 80%;
+  height: 80%;
+}

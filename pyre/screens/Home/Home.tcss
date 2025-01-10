@@ -15,7 +15,10 @@ GeneralData .GridDesc {
 }
 
 Logo {
+  width: 100%;
   color: orange;
+  text-align: end;
+  margin: 0 2 0 0;
 }
 
 CmdInput {
@@ -24,7 +27,7 @@ CmdInput {
   border: rgb(190, 237, 238);
 }
 
-InputArea {
+ColoredInputArea {
   width: 100%;
   border-title-color: white;
   border: rgb(151, 204, 246);
@@ -34,4 +37,48 @@ PatternInput {
   width: 100%;
   border-title-color: white;
   border: rgb(151, 204, 246);
+}
+
+GroupsArea {
+  width: 100%;
+  border-title-color: white;
+  border: rgb(123, 205, 246);
+}
+
+SubstitutionInput {
+  width: 100%;
+  border-title-color: white;
+  border: rgb(151, 204, 246);
+}
+
+SubstitutionInputArea {
+  width: 100%;
+  border-title-color: white;
+  border: rgb(151, 204, 246);
+}
+
+.hitsArea {
+  grid-size: 6 1;
+  grid-gutter: 1 2;
+}
+
+.hitsArea ColoredInputArea {
+  column-span: 4;
+}
+
+.hitsArea GroupsArea {
+  column-span: 2;
+}
+
+.FooterArea {
+  grid-size: 6 1;
+  height: 2;
+}
+
+.FooterArea FooterOptions {
+  column-span: 4;
+}
+
+.FooterArea FooterMode {
+  column-span: 2;
 }

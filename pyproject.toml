@@ -23,8 +23,8 @@ pyre = "pyre.cli:app"
 python = "^3.11"
 rich = "^13.9.4"
 typer = "^0.9.0"
-textual = "^0.52.1"
-
+textual = "^1.0.0"
+colorama = "^0.4.4"
 
 [tool.poetry.group.dev.dependencies]
 textual-dev = "^1.4.0"
@@ -43,7 +43,7 @@ select = ["E", "F", "B", "I"]
 strict = true
 
 [tool.bumpversion]
-current_version = "0.0.0"
+current_version = "0.1.0"
 commit = true
 tag = true
 tag_name = "v{new_version}"

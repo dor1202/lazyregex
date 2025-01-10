@@ -1,0 +1,32 @@
+Screen {
+  align: center middle;
+}
+
+HelpData {
+  padding: 1;
+  border-title-color: white;
+  border: rgb(123, 205, 246);
+  width: 80%;
+  height: 80%;
+}
+
+.vertical-layout {
+  layout: vertical;
+  height: auto;
+  width: auto;
+}
+
+.horizontal-layout {
+  layout: horizontal;
+  height: auto;
+  width: auto;
+}
+
+Label {
+  width: auto;
+  padding: 0 1;
+}
+
+.HelpColor {
+  color: cyan;
+}

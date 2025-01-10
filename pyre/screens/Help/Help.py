@@ -1,11 +1,11 @@
 from textual.app import ComposeResult
 from textual.screen import Screen
 
-from ...widgets.widgets.RegexModes.RegexModes import RegexModes
+from ...widgets.widgets.HelpData.HelpData import HelpData
 
 
-class RegexModesScreen(Screen):
-    CSS_PATH = "RegexModes.tcss"
+class HelpScreen(Screen):
+    CSS_PATH = "HelpScreen.tcss"
 
     BINDINGS = [
         ("escape", "back_to_main"),
@@ -15,4 +15,4 @@ class RegexModesScreen(Screen):
         self.app.pop_screen()
 
     def compose(self) -> ComposeResult:
-        yield RegexModes()
+        yield HelpData()

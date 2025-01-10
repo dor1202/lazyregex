@@ -1,12 +1,11 @@
-from textual.screen import Screen
 from textual.app import ComposeResult
-from textual.widgets import Label
+from textual.screen import Screen
 
-from ...widgets.RegexOptions.RegexOptions import RegexOptions
+from ...widgets.widgets.RegexOptions.RegexOptions import RegexOptions
 
 
 class RegexOptionsScreen(Screen):
-    CSS_PATH = "Regexoptions.tcss"
+    CSS_PATH = "RegexOptions.tcss"
 
     BINDINGS = [
         ("escape", "back_to_main"),
@@ -16,5 +15,4 @@ class RegexOptionsScreen(Screen):
         self.app.pop_screen()
 
     def compose(self) -> ComposeResult:
-        yield Label("Regex Options")
         yield RegexOptions()
