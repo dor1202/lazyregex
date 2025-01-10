@@ -9,6 +9,7 @@ from ....logic.Debouncer import Debouncer
 from ....logic.GlobalState import GlobalState
 from ....logic.RegexLogic import RegexLogic
 from ....widgets.widgets.GroupsArea.GroupsArea import GroupsArea
+from ....widgets.inputs.SubstitutionInputArea.SubstitutionInputArea import SubstitutionInputArea
 
 IS_WINDOWS = sys.platform == "win32"
 
@@ -71,6 +72,9 @@ class ColoredInputArea(TextArea):
         if not GlobalState().groups:
             return
 
-        for group_name, position, value in GlobalState().groups:
+        for _, position, _ in GlobalState().groups:
             start, end = position.split("-")
             self.highlight(0, int(start), int(end), "green")
+        
+        if GlobalState().regex_method == "substitution":
+            self.app.query_one(SubstitutionInputArea).output_text = GlobalState().substitution_output

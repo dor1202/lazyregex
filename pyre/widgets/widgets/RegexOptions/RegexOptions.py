@@ -14,6 +14,7 @@ class RegexOptions(Widget):
 
     OPTIONS = [
         # (name, value, flag)
+        ("Global", "global", "global"),
         ("Multi Line (m)", "multi_line", re.M),
         ("Insensitive (i)", "insensitive", re.I),
         ("Extended (x)", "extended", re.X),
@@ -40,7 +41,7 @@ class RegexOptions(Widget):
             for option in self.OPTIONS
             if select == option[1]
         ]
-        GlobalState().regex_options = [option[2] for option in select_data_full_row]
+        GlobalState().regex_options = [(option[1], option[2]) for option in select_data_full_row]
 
         from ..FooterOptions.FooterOptions import FooterOptions
 

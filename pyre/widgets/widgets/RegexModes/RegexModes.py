@@ -9,7 +9,7 @@ from ....logic.GlobalState import GlobalState
 class RegexModes(Widget):
     BORDER_TITLE = "Regex Modes"
 
-    OPTIONS = ["match", "substitution", "search"]
+    OPTIONS = ["match", "substitution"]
 
     def compose(self) -> ComposeResult:
         with RadioSet():
@@ -21,5 +21,7 @@ class RegexModes(Widget):
 
         from ..FooterMode.FooterMode import FooterMode
 
+
         main_screen = self.app.screen_stack[-2]
+        main_screen.regex_method = self.OPTIONS[event.index]
         main_screen.query_one(FooterMode).mode = self.OPTIONS[event.index]

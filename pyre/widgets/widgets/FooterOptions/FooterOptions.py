@@ -20,6 +20,7 @@ class FooterOptions(Widget):
         color: black;
         width: auto;
         margin: 0 1;
+        padding: 0 1;
     }
     """
 

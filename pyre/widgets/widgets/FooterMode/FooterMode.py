@@ -11,8 +11,10 @@ class FooterMode(Widget):
     }
     
     .modeValue {
-        background: green;
+        color: black;
+        background: cyan;
         margin: 0 1;
+        padding: 0 1;
     }
     """
 

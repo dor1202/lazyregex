@@ -45,6 +45,18 @@ GroupsArea {
   border: rgb(123, 205, 246);
 }
 
+SubstitutionInput {
+  width: 100%;
+  border-title-color: white;
+  border: rgb(151, 204, 246);
+}
+
+SubstitutionInputArea {
+  width: 100%;
+  border-title-color: white;
+  border: rgb(151, 204, 246);
+}
+
 .hitsArea {
   grid-size: 6 1;
   grid-gutter: 1 2;

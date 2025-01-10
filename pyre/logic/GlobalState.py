@@ -11,6 +11,7 @@ class GlobalState(metaclass=Singleton):
         self.groups = []
         self.regex_options = [
             # name, flag
+            ("global", "global"),
             ("single_line", re.S),
             ("insensitive", re.I),
         ]
@@ -19,3 +20,5 @@ class GlobalState(metaclass=Singleton):
             # (command, explanation)
             ("<Shift + :>", "Commands Input"),
         ]
+        self.substitution_input = ""
+        self.substitution_output = ""
