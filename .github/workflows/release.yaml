@@ -27,7 +27,7 @@ jobs:
   pypi-publish:
     name: upload release to PyPI
     needs: check-if-publish-needed
-    if: needs.check-if-publish-needed.outputs.publish_needed == 'true'
+    if: needs.check-if-publish-needed.outputs.publish_needed == 'false'
     runs-on: ubuntu-latest
     environment: pypi
     permissions:
