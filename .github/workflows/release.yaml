@@ -1,8 +1,8 @@
 name: release
 on:
   push:
-    tags:
-      - "v*"
+    branch:
+      - "main"
 permissions:
   contents: write
 
