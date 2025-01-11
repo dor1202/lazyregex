@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pyre"
+name = "pyre-tui"
 version = "0.1.11"
 description = ""
 authors = ["Dor Schrieber <schreiberdor@gmail.com>"]
