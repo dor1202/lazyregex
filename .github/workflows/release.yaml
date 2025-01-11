@@ -1,8 +1,8 @@
 name: release
 on:
   push:
-    branch:
-      - "main"
+    tags:
+      - "v*"
 permissions:
   contents: write
 
@@ -30,8 +30,7 @@ jobs:
     if: needs.check-if-publish-needed.outputs.publish_needed == 'true'
     runs-on: ubuntu-latest
     environment: pypi
-    permissions:
-      id-token: write
+    permissions: write-all
     steps:
       - uses: actions/checkout@v4
 
