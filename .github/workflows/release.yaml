@@ -1,8 +1,8 @@
 name: release
 on:
   push:
-    branch:
-      - "main"
+    tags:
+      - "v*"
 permissions:
   contents: write
 
@@ -54,11 +54,14 @@ jobs:
         run: | 
           pip install dist/*.whl --force-reinstall
 
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v5
+        
       - name: create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            dist/*
+          body: ${{steps.github_release.outputs.changelog}}
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
