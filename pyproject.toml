@@ -17,7 +17,7 @@ homepage = "https://github.com/dor1202/pyre"
 repository = "https://github.com/dor1202/pyre"
 
 [tool.poetry.scripts]
-pyre = "pyre.cli:app"
+pyre = "pyre-tui.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -55,7 +55,7 @@ serialize = [
 ]
 
 [[tool.bumpversion.files]]
-filename = "pyre/__init__.py"
+filename = "pyre-tui/__init__.py"
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"
