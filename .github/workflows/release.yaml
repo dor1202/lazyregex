@@ -22,7 +22,7 @@ jobs:
         uses: tj-actions/changed-files@v45
         with:
           files: |
-            pyre/__init__.py
+            pyre_tui/__init__.py
 
   pypi-publish:
     name: upload release to PyPI
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/pyre-tui 
+      url: https://pypi.org/p/pyre_tui 
     permissions: write-all
     steps:
       - uses: actions/checkout@v4

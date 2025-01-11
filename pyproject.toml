@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pyre-tui"
+name = "pyre_tui"
 version = "0.1.12"
 description = ""
 authors = ["Dor Schrieber <schreiberdor@gmail.com>"]
@@ -17,7 +17,7 @@ homepage = "https://github.com/dor1202/pyre"
 repository = "https://github.com/dor1202/pyre"
 
 [tool.poetry.scripts]
-pyre = "pyre-tui.cli:app"
+pyre = "pyre_tui.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -55,7 +55,7 @@ serialize = [
 ]
 
 [[tool.bumpversion.files]]
-filename = "pyre-tui/__init__.py"
+filename = "pyre_tui/__init__.py"
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"
