@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyre"
-version = "0.1.3"
+version = "0.1.4"
 description = ""
 authors = ["Dor Schrieber <schreiberdor@gmail.com>"]
 readme = "README.md"
@@ -43,7 +43,7 @@ select = ["E", "F", "B", "I"]
 strict = true
 
 [tool.bumpversion]
-current_version = "0.1.3"
+current_version = "0.1.4"
 commit = true
 tag = true
 tag_name = "v{new_version}"
@@ -66,8 +66,10 @@ replace = "version = \"{new_version}\""
 
 
 
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+
 
 
 
