@@ -4,11 +4,11 @@ on:
     branches:
       - master
     paths:
-      - pyre_tui/**
+      - pyreg/**
       - tests/**
   pull_request:
     paths:
-      - pyre_tui/**
+      - pyreg/**
       - tests/**
 
 jobs:

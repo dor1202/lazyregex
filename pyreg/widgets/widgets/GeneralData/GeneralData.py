@@ -5,7 +5,7 @@ from textual.containers import Container
 from textual.widget import Widget
 from textual.widgets import Label
 
-from pyre_tui import __version__
+from pyreg import __version__
 
 
 class GeneralData(Widget):

@@ -13,6 +13,17 @@ from ....widgets.inputs.SubstitutionInputArea.SubstitutionInputArea import Subst
 
 IS_WINDOWS = sys.platform == "win32"
 
+MATCH_COLOR = "cyan"
+PREV_MATCH_COLOR = "orange1"
+GROUP_COLORs = [
+    "green",
+    "yellow",
+    "purple",
+    "pink",
+    "red",
+    "turquoise",
+]
+
 
 class ColoredInputArea(TextArea):
     DEFAULT_CSS = """
@@ -64,6 +75,21 @@ class ColoredInputArea(TextArea):
     async def on_text_area_changed(self):
         await self.debouncer.debounce(self.process_input)
 
+    def _calc_color(self, name: str, group_index: int, row: int, start_column: int):
+        print(name, group_index, row, start_column)
+        print(self._highlights[row])
+        prev_color = next((color for start, end, color in self._highlights[row] if end == start_column), None)
+        print(prev_color)
+        if "match" in name.lower():
+            color = MATCH_COLOR
+        else:
+            color = GROUP_COLORs[group_index % len(GROUP_COLORs)]
+        print(color)
+        if prev_color and prev_color == color:
+            color = PREV_MATCH_COLOR
+        print(color)
+        return color
+
     def process_input(self):
         RegexLogic().update_text(self.text)
         self.app.query_one(GroupsArea).groups = GlobalState().groups
@@ -72,9 +98,15 @@ class ColoredInputArea(TextArea):
         if not GlobalState().groups:
             return
 
-        for _, position, _ in GlobalState().groups:
+        group_index = 0
+        for index, (name, position, _) in enumerate(GlobalState().groups):
             start, end = position.split("-")
-            self.highlight(0, int(start), int(end), "green")
+            start = int(start)
+            end = int(end)
+            if "match" in name.lower():
+                group_index -= 1
+            group_index += 1
+            self.highlight(0, start, end, self._calc_color(name, group_index, 0, start))
         
         if GlobalState().regex_method == "substitution":
             self.app.query_one(SubstitutionInputArea).output_text = GlobalState().substitution_output
