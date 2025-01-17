@@ -43,3 +43,7 @@ class PatternInput(Input):
         RegexLogic().update_pattern(self.value)
         self.app.query_one(GroupsArea).groups = GlobalState().groups
         self.app.query_one(ColoredInputArea).process_input()
+        # Renders the highlights
+        self.app.query_one(ColoredInputArea).disabled = False
+        self.app.query_one(ColoredInputArea).disabled = True
+
