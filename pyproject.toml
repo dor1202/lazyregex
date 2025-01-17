@@ -17,7 +17,7 @@ homepage = "https://github.com/dor1202/pyre"
 repository = "https://github.com/dor1202/pyre"
 
 [tool.poetry.scripts]
-pyre = "pyreg.cli:app"
+pyreg = "pyreg.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.11"

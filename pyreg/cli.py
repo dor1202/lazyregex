@@ -1,13 +1,13 @@
 import typer
 
-from .tmp_pyre import PyreApp
+from .pyreg import PyregApp
 
 app = typer.Typer()
 
 
-@app.command("pyre")
+@app.command("pyreg")
 def pyre_cli() -> None:
-    PyreApp().run()
+    PyregApp().run()
 
 # Debug code:
 # Terminal 1: textual console
