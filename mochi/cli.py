@@ -1,17 +1,17 @@
 import typer
 
-from .pyreg import PyregApp
+from .mochi import MochiApp
 
 app = typer.Typer()
 
 
-@app.command("pyreg")
-def pyre_cli() -> None:
-    PyregApp().run()
+@app.command("mochi")
+def mochi_cli() -> None:
+    MochiApp().run()
 
 # Debug code:
 # Terminal 1: textual console
-# Terminal 1: textual run --dev pyreg.cli:app
+# Terminal 1: textual run --dev mochi.cli:app
 
 # Publish release:
 # poetry run bump-my-version patch
