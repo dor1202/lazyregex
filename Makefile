@@ -16,12 +16,12 @@ publish: build
 	poetry publish
 
 format:
-	poetry run ruff format mochi-re/ tests/
-	poetry run ruff --fix mochi-re/ tests/
+	poetry run ruff format mochi/ tests/
+	poetry run ruff --fix mochi/ tests/
 
 lint:
-	poetry run ruff mochi-re/ tests/
-	poetry run mypy mochi-re/ tests/
+	poetry run ruff mochi/ tests/
+	poetry run mypy mochi/ tests/
 
 bump:
 	poetry run bump-my-version bump $(BUMP_PART)

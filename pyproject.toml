@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mochi-re"
+name = "mochi"
 version = "0.1.18"
 description = ""
 authors = ["Dor Schrieber <schreiberdor@gmail.com>"]
@@ -17,7 +17,7 @@ homepage = "https://github.com/dor1202/mochi-re"
 repository = "https://github.com/dor1202/mochi-re"
 
 [tool.poetry.scripts]
-mochi = "mochi-re.cli:app"
+mochi = "mochi.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -55,7 +55,7 @@ serialize = [
 ]
 
 [[tool.bumpversion.files]]
-filename = "mochi-re/__init__.py"
+filename = "mochi/__init__.py"
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"

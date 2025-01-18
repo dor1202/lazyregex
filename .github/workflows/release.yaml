@@ -22,7 +22,7 @@ jobs:
         uses: tj-actions/changed-files@v45
         with:
           files: |
-            mochi-re/__init__.py
+            mochi/__init__.py
 
   pypi-publish:
     name: upload release to PyPI
