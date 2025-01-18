@@ -144,7 +144,7 @@ venv.bak/
 dmypy.json
 
 # Mochi type checker
-.mochi/
+.mochi-re/
 
 # pytype static type analyzer
 .pytype/

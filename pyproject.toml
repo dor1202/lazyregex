@@ -13,11 +13,11 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12"
 ]
-homepage = "https://github.com/dor1202/mochi"
-repository = "https://github.com/dor1202/mochi"
+homepage = "https://github.com/dor1202/mochi-re"
+repository = "https://github.com/dor1202/mochi-re"
 
 [tool.poetry.scripts]
-mochi = "mochi.cli:app"
+mochi = "mochi-re.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.11"

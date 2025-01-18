@@ -27,9 +27,9 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 ---
 
-[![Release](https://img.shields.io/github/release-pre/dor1202/mochi.svg)](https://github.com/dor1202/mochi/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/mochi/blob/main/LICENSE)
-<!-- [![Downloads](https://img.shields.io/github/downloads/dor1202/mochi/total.svg)](https://github.com/dor1202/mochi/releases) -->
+[![Release](https://img.shields.io/github/release-pre/dor1202/mochi-re.svg)](https://github.com/dor1202/mochi-re/releases)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/mochi-re/blob/main/LICENSE)
+<!-- [![Downloads](https://img.shields.io/github/downloads/dor1202/mochi-re/total.svg)](https://github.com/dor1202/mochi-re/releases) -->
 
 ---
 
