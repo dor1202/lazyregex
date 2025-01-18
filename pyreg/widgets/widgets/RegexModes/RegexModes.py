@@ -23,5 +23,6 @@ class RegexModes(Widget):
 
 
         main_screen = self.app.screen_stack[-2]
+        print(main_screen)
         main_screen.regex_method = self.OPTIONS[event.index]
         main_screen.query_one(FooterMode).mode = self.OPTIONS[event.index]

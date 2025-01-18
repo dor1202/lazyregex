@@ -33,6 +33,15 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 ---
 
+## Screenshots
+
+1. Match
+   <img src="assets/match_example.png"/>
+2. Substitution
+   <img src="assets/sub_example.png"/>
+3. Regex Options
+   <img src="assets/options_example.png"/>
+
 ## Installation
 
 * Via [Pypi](https://pypi.org/)
