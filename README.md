@@ -86,8 +86,8 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 Without the contributions from these fine folks, this project would be a total dud!
 
-<a href="https://github.com/dor1202/mochi/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=dor1202/mochi" />
+<a href="https://github.com/dor1202/mochi-re/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=dor1202/mochi-re" />
 </a>
 
 ---
