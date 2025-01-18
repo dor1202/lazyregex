@@ -1,3 +1,5 @@
+import re
+
 from textual.widgets import Input
 
 from ....highlighters.pattern_highlight import PatternHighlighter
@@ -40,6 +42,14 @@ class PatternInput(Input):
         await self.debouncer.debounce(self.process_input)
 
     def process_input(self):
+        will_regex_crush = re.search(r"\\(?!(w|s|d))", self.value, re.IGNORECASE)
+        if will_regex_crush:
+            return
+
         RegexLogic().update_pattern(self.value)
         self.app.query_one(GroupsArea).groups = GlobalState().groups
         self.app.query_one(ColoredInputArea).process_input()
+        # Renders the highlights
+        self.app.query_one(ColoredInputArea).disabled = False
+        self.app.query_one(ColoredInputArea).disabled = True
+

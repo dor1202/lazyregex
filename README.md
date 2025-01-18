@@ -1,8 +1,9 @@
-```text
-.----..-.  .-..----. .----.
-| {}  }\ \/ / | {}  }| {__|
-| .--'  }  {  | .-. \| {__.
-`-'     `--'  `-' `-'`----'                          
+```text                       
+ ._ __  _   _ _ __ ___  __ _.
+ | '_ \| | | | '__/ _ \/ _` |
+ | |_) | |_| | | |  __/ (_| |
+ | .__/ \__, |_|  \___|\__, |
+ |_|    |___/          |___/.
 ```
 
 ## Pyre - Python Regex CLI Tool!
@@ -26,18 +27,27 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 ---
 
-[![Release](https://img.shields.io/github/release-pre/dor1202/pyre_tui.svg)](https://github.com/dor1202/pyre_tui/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/pyre_tui/blob/main/LICENSE)
-<!-- [![Downloads](https://img.shields.io/github/downloads/dor1202/pyre_tui/total.svg)](https://github.com/dor1202/pyre_tui/releases) -->
+[![Release](https://img.shields.io/github/release-pre/dor1202/pyreg.svg)](https://github.com/dor1202/pyreg/releases)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/pyreg/blob/main/LICENSE)
+<!-- [![Downloads](https://img.shields.io/github/downloads/dor1202/pyreg/total.svg)](https://github.com/dor1202/pyreg/releases) -->
 
 ---
+
+## Screenshots
+
+1. Match
+   <img src="assets/match_example.png"/>
+2. Substitution
+   <img src="assets/sub_example.png"/>
+3. Regex Options
+   <img src="assets/options_example.png"/>
 
 ## Installation
 
 * Via [Pypi](https://pypi.org/)
 
    ```shell
-   pip install pyre_tui
+   pip install pyreg
    ```
 
 ---
@@ -76,8 +86,8 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 Without the contributions from these fine folks, this project would be a total dud!
 
-<a href="https://github.com/dor1202/pyre_tui/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=dor1202/pyre_tui" />
+<a href="https://github.com/dor1202/pyreg/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=dor1202/pyreg" />
 </a>
 
 ---

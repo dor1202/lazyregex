@@ -16,12 +16,12 @@ publish: build
 	poetry publish
 
 format:
-	poetry run ruff format pyre_tui/ tests/
-	poetry run ruff --fix pyre_tui/ tests/
+	poetry run ruff format pyreg/ tests/
+	poetry run ruff --fix pyreg/ tests/
 
 lint:
-	poetry run ruff pyre_tui/ tests/
-	poetry run mypy pyre_tui/ tests/
+	poetry run ruff pyreg/ tests/
+	poetry run mypy pyreg/ tests/
 
 bump:
 	poetry run bump-my-version bump $(BUMP_PART)

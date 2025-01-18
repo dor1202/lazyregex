@@ -1,17 +1,17 @@
 import typer
 
-from .tmp_pyre import PyreApp
+from .pyreg import PyregApp
 
 app = typer.Typer()
 
 
-@app.command("pyre")
+@app.command("pyreg")
 def pyre_cli() -> None:
-    PyreApp().run()
+    PyregApp().run()
 
 # Debug code:
 # Terminal 1: textual console
-# Terminal 1: textual run --dev pyre_tui.cli:app
+# Terminal 1: textual run --dev pyreg.cli:app
 
 # Publish release:
 # poetry run bump-my-version patch

@@ -18,7 +18,9 @@ class FooterMode(Widget):
     }
     """
 
-    mode = reactive("match", recompose=True)
+    def __init__(self, mode, **kwargs):
+        super().__init__(**kwargs)
+        self.mode = mode
 
     def compose(self) -> ComposeResult:
         yield Label(self.mode, classes="modeValue")

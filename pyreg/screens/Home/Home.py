@@ -36,7 +36,7 @@ class HomeScreen(Screen):
             yield Grid(ColoredInputArea(), GroupsArea(), classes="hitsArea")
             yield Grid(
                 FooterOptions(id="FooterOptions"),
-                FooterMode(id="FooterMode"),
+                FooterMode(id="FooterMode", mode=self.regex_method),
                 classes="FooterArea",
             )
         elif self.regex_method == "substitution":
@@ -45,7 +45,7 @@ class HomeScreen(Screen):
             yield SubstitutionInputArea()
             yield Grid(
                 FooterOptions(id="FooterOptions"),
-                FooterMode(id="FooterMode"),
+                FooterMode(id="FooterMode", mode=self.regex_method),
                 classes="FooterArea",
             )
         else:
