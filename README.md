@@ -27,9 +27,9 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 ---
 
-[![Release](https://img.shields.io/github/release-pre/dor1202/mochi-re.svg)](https://github.com/dor1202/mochi-re/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/mochi-re/blob/main/LICENSE)
-<!-- [![Downloads](https://img.shields.io/github/downloads/dor1202/mochi-re/total.svg)](https://github.com/dor1202/mochi-re/releases) -->
+[![Release](https://img.shields.io/github/release-pre/dor1202/mochi_re.svg)](https://github.com/dor1202/mochi_re/releases)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/mochi_re/blob/main/LICENSE)
+<!-- [![Downloads](https://img.shields.io/github/downloads/dor1202/mochi_re/total.svg)](https://github.com/dor1202/mochi_re/releases) -->
 
 ---
 
@@ -47,7 +47,7 @@ Your donations will go a long way in keeping the project alive and beers in my f
 * Via [Pypi](https://pypi.org/)
 
    ```shell
-   pip install mochi-re
+   pip install mochi_re
    ```
 
 ---
@@ -86,8 +86,8 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 Without the contributions from these fine folks, this project would be a total dud!
 
-<a href="https://github.com/dor1202/mochi-re/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=dor1202/mochi-re" />
+<a href="https://github.com/dor1202/mochi_re/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=dor1202/mochi_re" />
 </a>
 
 ---
