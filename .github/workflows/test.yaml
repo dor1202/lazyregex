@@ -4,11 +4,11 @@ on:
     branches:
       - master
     paths:
-      - pyreg/**
+      - mochi/**
       - tests/**
   pull_request:
     paths:
-      - pyreg/**
+      - mochi/**
       - tests/**
 
 jobs:

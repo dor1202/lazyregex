@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pyreg"
+name = "mochi"
 version = "0.1.15"
 description = ""
 authors = ["Dor Schrieber <schreiberdor@gmail.com>"]
@@ -13,8 +13,8 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12"
 ]
-homepage = "https://github.com/dor1202/pyre"
-repository = "https://github.com/dor1202/pyre"
+homepage = "https://github.com/dor1202/mochi"
+repository = "https://github.com/dor1202/mochi"
 
 [tool.poetry.scripts]
 mochi = "mochi.cli:app"
@@ -55,7 +55,7 @@ serialize = [
 ]
 
 [[tool.bumpversion.files]]
-filename = "pyreg/__init__.py"
+filename = "mochi/__init__.py"
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"
