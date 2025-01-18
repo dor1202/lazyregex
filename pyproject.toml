@@ -55,7 +55,7 @@ serialize = [
 ]
 
 [[tool.bumpversion.files]]
-filename = "mochi/__init__.py"
+filename = "mochi-re/__init__.py"
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"
