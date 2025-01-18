@@ -36,11 +36,11 @@ Your donations will go a long way in keeping the project alive and beers in my f
 ## Screenshots
 
 1. Match
-   <img src="assets/match_example.png"/>
+   <img src="https://github.com/dor1202/mochi_re/blob/main/assets/match_example.png?raw=true"/>
 2. Substitution
-   <img src="assets/sub_example.png"/>
+   <img src="https://github.com/dor1202/mochi_re/blob/main/assets/sub_example.png?raw=true"/>
 3. Regex Options
-   <img src="assets/options_example.png"/>
+   <img src="https://github.com/dor1202/mochi_re/blob/main/assets/options_example.png?raw=true"/>
 
 ## Installation
 
