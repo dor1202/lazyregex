@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mochi"
+name = "mochi-re"
 version = "0.1.16"
 description = ""
 authors = ["Dor Schrieber <schreiberdor@gmail.com>"]
