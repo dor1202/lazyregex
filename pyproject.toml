@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "mochi_re"
 version = "0.2.4"
-description = ""
+description = "TUI to test and develop regexes"
 authors = ["Dor Schrieber <schreiberdor@gmail.com>"]
 readme = "README.md"
 classifiers = [
