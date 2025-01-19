@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "mochi-re"
-version = "0.1.16"
+name = "mochi_re"
+version = "0.1.21"
 description = ""
 authors = ["Dor Schrieber <schreiberdor@gmail.com>"]
 readme = "README.md"
@@ -13,11 +13,11 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12"
 ]
-homepage = "https://github.com/dor1202/mochi"
-repository = "https://github.com/dor1202/mochi"
+homepage = "https://github.com/dor1202/mochi_re"
+repository = "https://github.com/dor1202/mochi_re"
 
 [tool.poetry.scripts]
-mochi = "mochi.cli:app"
+mochi_re = "mochi_re.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -43,7 +43,7 @@ select = ["E", "F", "B", "I"]
 strict = true
 
 [tool.bumpversion]
-current_version = "0.1.16"
+current_version = "0.1.21"
 commit = true
 tag = true
 tag_name = "v{new_version}"
@@ -55,7 +55,7 @@ serialize = [
 ]
 
 [[tool.bumpversion.files]]
-filename = "mochi/__init__.py"
+filename = "mochi_re/__init__.py"
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"
@@ -79,8 +79,18 @@ replace = "version = \"{new_version}\""
 
 
 
+
+
+
+
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+
+
+
+
+
 
 
 
