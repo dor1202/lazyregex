@@ -76,18 +76,13 @@ class ColoredInputArea(TextArea):
         await self.debouncer.debounce(self.process_input)
 
     def _calc_color(self, name: str, group_index: int, row: int, start_column: int):
-        print(name, group_index, row, start_column)
-        print(self._highlights[row])
         prev_color = next((color for start, end, color in self._highlights[row] if end == start_column), None)
-        print(prev_color)
         if "match" in name.lower():
             color = MATCH_COLOR
         else:
             color = GROUP_COLORs[group_index % len(GROUP_COLORs)]
-        print(color)
         if prev_color and prev_color == color:
             color = PREV_MATCH_COLOR
-        print(color)
         return color
 
     def process_input(self):

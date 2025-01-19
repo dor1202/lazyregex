@@ -39,4 +39,5 @@ class SubstitutionInputArea(TextArea):
         for index, (name, position, _) in enumerate(GlobalState().groups):
             start, _ = position.split("-")
             start = int(start)
-            self.highlight(0, start, start + sub_length, "cyan")
+            calc_start = (index * (sub_length - 1)) + start
+            self.highlight(0, calc_start, calc_start + sub_length, "cyan")
