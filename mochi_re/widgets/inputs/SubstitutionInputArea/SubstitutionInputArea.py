@@ -1,6 +1,8 @@
 from textual.widgets import TextArea
 from textual.reactive import reactive
 
+from ....logic.GlobalState import GlobalState
+
 
 class SubstitutionInputArea(TextArea):
     DEFAULT_CSS = """
@@ -22,4 +24,19 @@ class SubstitutionInputArea(TextArea):
 
     def watch_output_text(self, value):
         self.text = value
+        self._add_colors()
 
+    def highlight(
+            self, row: int, start_column: int, end_column: int, color: str
+    ) -> None:
+        self._highlights[row].append((start_column, end_column, color))
+
+    def _add_colors(self):
+        if not GlobalState().groups:
+            return
+
+        sub_length = len(GlobalState().substitution_input)
+        for index, (name, position, _) in enumerate(GlobalState().groups):
+            start, _ = position.split("-")
+            start = int(start)
+            self.highlight(0, start, start + sub_length, "cyan")
