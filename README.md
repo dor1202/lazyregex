@@ -47,7 +47,7 @@ Your donations will go a long way in keeping the project alive and beers in my f
 * Via [Pypi](https://pypi.org/)
 
    ```shell
-   pip install mochi_re
+   pip install mochi-re
    ```
 
 ---
@@ -55,7 +55,7 @@ Your donations will go a long way in keeping the project alive and beers in my f
 ## Starting Mochi
 
   ```shell
-  mochi
+  mochi_re
   ```
 
 ---
@@ -69,7 +69,7 @@ Your donations will go a long way in keeping the project alive and beers in my f
  2. Build and run the executable
 
       ```shell
-      poetry run mochi
+      poetry run mochi_re
       ```
 
 ---
