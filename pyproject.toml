@@ -17,7 +17,7 @@ homepage = "https://github.com/dor1202/mochi_re"
 repository = "https://github.com/dor1202/mochi_re"
 
 [tool.poetry.scripts]
-mochi_re = "mochi_re.cli:app"
+mochi = "mochi_re.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.11"
