@@ -22,7 +22,7 @@ jobs:
         uses: tj-actions/changed-files@v45
         with:
           files: |
-            mochi_re/__init__.py
+            moch/__init__.py
 
   pypi-publish:
     name: upload release to PyPI
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/mochi_re
+      url: https://pypi.org/p/moch
     permissions: write-all
     steps:
       - uses: actions/checkout@v4

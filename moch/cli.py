@@ -11,7 +11,7 @@ def mochi_cli() -> None:
 
 # Debug code:
 # Terminal 1: textual console
-# Terminal 1: textual run --dev mochi_re.cli:app
+# Terminal 1: textual run --dev moch.cli:app
 
 # Publish release:
 # poetry run bump-my-version patch

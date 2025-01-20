@@ -27,20 +27,20 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 ---
 
-[![Release](https://img.shields.io/github/release-pre/dor1202/mochi_re.svg)](https://github.com/dor1202/mochi_re/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/mochi_re/blob/main/LICENSE)
-<!-- [![Downloads](https://img.shields.io/github/downloads/dor1202/mochi_re/total.svg)](https://github.com/dor1202/mochi_re/releases) -->
+[![Release](https://img.shields.io/github/release-pre/dor1202/moch.svg)](https://github.com/dor1202/moch/releases)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/moch/blob/main/LICENSE)
+<!-- [![Downloads](https://img.shields.io/github/downloads/dor1202/moch/total.svg)](https://github.com/dor1202/moch/releases) -->
 
 ---
 
 ## Screenshots
 
 1. Match
-   <img src="https://github.com/dor1202/mochi_re/blob/main/assets/match_example.png?raw=true"/>
+   <img src="https://github.com/dor1202/moch/blob/main/assets/match_example.png?raw=true"/>
 2. Substitution
-   <img src="https://github.com/dor1202/mochi_re/blob/main/assets/sub_example.png?raw=true"/>
+   <img src="https://github.com/dor1202/moch/blob/main/assets/sub_example.png?raw=true"/>
 3. Regex Options
-   <img src="https://github.com/dor1202/mochi_re/blob/main/assets/options_example.png?raw=true"/>
+   <img src="https://github.com/dor1202/moch/blob/main/assets/options_example.png?raw=true"/>
 
 ## Installation
 
@@ -55,7 +55,7 @@ Your donations will go a long way in keeping the project alive and beers in my f
 ## Starting Mochi
 
   ```shell
-  mochi_re
+  moch
   ```
 
 ---
@@ -69,7 +69,7 @@ Your donations will go a long way in keeping the project alive and beers in my f
  2. Build and run the executable
 
       ```shell
-      poetry run mochi_re
+      poetry run moch
       ```
 
 ---
@@ -86,8 +86,8 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 Without the contributions from these fine folks, this project would be a total dud!
 
-<a href="https://github.com/dor1202/mochi_re/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=dor1202/mochi_re" />
+<a href="https://github.com/dor1202/moch/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=dor1202/moch" />
 </a>
 
 ---

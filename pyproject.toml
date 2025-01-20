@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mochi_re"
+name = "moch"
 version = "0.2.5"
 description = "TUI to test and develop regexes"
 authors = ["Dor Schrieber <schreiberdor@gmail.com>"]
@@ -13,11 +13,11 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12"
 ]
-homepage = "https://github.com/dor1202/mochi_re"
-repository = "https://github.com/dor1202/mochi_re"
+homepage = "https://github.com/dor1202/moch"
+repository = "https://github.com/dor1202/moch"
 
 [tool.poetry.scripts]
-mochi_re = "mochi_re.cli:app"
+moch = "moch.cli:app"
 
 [tool.poetry.dependencies]
 python = ">= 3.8"
@@ -55,7 +55,7 @@ serialize = [
 ]
 
 [[tool.bumpversion.files]]
-filename = "mochi_re/__init__.py"
+filename = "moch/__init__.py"
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"

@@ -4,11 +4,11 @@ on:
     branches:
       - master
     paths:
-      - mochi_re/**
+      - moch/**
       - tests/**
   pull_request:
     paths:
-      - mochi_re/**
+      - moch/**
       - tests/**
 
 jobs:
