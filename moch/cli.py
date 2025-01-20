@@ -1,13 +1,13 @@
 import typer
 
-from .mochi import MochiApp
+from .moch import MochApp
 
 app = typer.Typer()
 
 
-@app.command("mochi")
-def mochi_cli() -> None:
-    MochiApp().run()
+@app.command("moch")
+def moch_cli() -> None:
+    MochApp().run()
 
 # Debug code:
 # Terminal 1: textual console
