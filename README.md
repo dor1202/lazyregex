@@ -1,14 +1,14 @@
 ```text
-____________________________
- _ __ ___   ___   ___| |____
-| '_ ` _ \ / _ \ / __| '_ \|
-| | | | | | (_) | (__| | | |
-|_| |_| |_|\___/ \___|_| |_|
+                       _    _____.
+  _ __ ___   ___   ___| |__ \____|
+ | '_ ` _ \ / _ \ / __| '_ \     |
+ | | | | | | (_) | (__| | | |    |
+ |_| |_| |_|\___/ \___|_| |_|    |
 ```
 
-## Mochi - Python Regex CLI Tool!
+## Moch - Python Regex CLI Tool!
 
-Mochi provides a terminal UI to test and develop regexes.
+Moch provides a terminal UI to test and develop regexes.
 
 The aim of this project is to make it easier to test and develop regexes without having to leave the terminal or browse the web.
 
@@ -16,11 +16,11 @@ The aim of this project is to make it easier to test and develop regexes without
 
 ## Note...
 
-Mochi is an idea of a frustrated developer who got the task of developing regexes and not by a big corporation with deep pockets.
+Moch is an idea of a frustrated developer who got the task of developing regexes and not by a big corporation with deep pockets.
 
 It is a project that is being developed by a single person in their free time.
 
-If you feel Mochi makes your regex journey a bit easier, saves you time and makes you more productive, please consider [sponsoring!](https://github.com/sponsors/dor1202)
+If you feel Moch makes your regex journey a bit easier, saves you time and makes you more productive, please consider [sponsoring!](https://github.com/sponsors/dor1202)
 Your donations will go a long way in keeping the project alive and beers in my fridge! 🍺
 
 **Thank you!**
@@ -47,12 +47,12 @@ Your donations will go a long way in keeping the project alive and beers in my f
 * Via [Pypi](https://pypi.org/)
 
    ```shell
-   pip install mochi-re
+   pip install mochi
    ```
 
 ---
 
-## Starting Mochi
+## Starting Moch
 
   ```shell
   moch
@@ -62,8 +62,8 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 ## Building From Source
 
- Mochi is currently using Python v3.8.X or above.
- In order to build Mochi from source you must:
+ Moch is currently using Python v3.8.X or above.
+ In order to build Moch from source you must:
 
  1. Clone the repo
  2. Build and run the executable
@@ -74,9 +74,9 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 ---
 
-## Mochi Compatibility Matrix
+## Moch Compatibility Matrix
 
-|         Mochi        | python |
+|         Moch        | python |
 | ------------------ | ---------- |
 |     LTS     |   "3.8", "3.9", "3.10", "3.11", "3.12"   |
 
