@@ -47,7 +47,7 @@ Your donations will go a long way in keeping the project alive and beers in my f
 * Via [Pypi](https://pypi.org/)
 
    ```shell
-   pip install mochi
+   pip install moch
    ```
 
 ---
