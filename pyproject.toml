@@ -66,68 +66,8 @@ regex = true
 search = "^version = \"{current_version}\""
 replace = "version = \"{new_version}\""
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 [build-system]
 requires = ["poetry-core"]
