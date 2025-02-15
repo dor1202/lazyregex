@@ -16,12 +16,12 @@ publish: build
 	poetry publish
 
 format:
-	poetry run ruff format moch/ tests/
-	poetry run ruff --fix moch/ tests/
+	poetry run ruff format lazyregex/ tests/
+	poetry run ruff --fix lazyregex/ tests/
 
 lint:
-	poetry run ruff moch/ tests/
-	poetry run mypy moch/ tests/
+	poetry run ruff lazyregex/ tests/
+	poetry run mypy lazyregex/ tests/
 
 bump:
 	poetry run bump-my-version bump $(BUMP_PART)

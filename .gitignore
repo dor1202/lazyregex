@@ -143,8 +143,8 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-# moch type checker
-.moch/
+# lazyregex type checker
+.lazyregex/
 
 # pytype static type analyzer
 .pytype/

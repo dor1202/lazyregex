@@ -6,7 +6,7 @@ from .screens.RegexModes.RegexModes import RegexModesScreen
 from .screens.RegexOptions.RegexOptions import RegexOptionsScreen
 
 
-class MochApp(App):
+class LazyRegexApp(App):
     SCREENS = {
         "home": HomeScreen,
         "options": RegexOptionsScreen,

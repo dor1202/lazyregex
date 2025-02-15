@@ -4,11 +4,11 @@ on:
     branches:
       - master
     paths:
-      - moch/**
+      - lazyregex/**
       - tests/**
   pull_request:
     paths:
-      - moch/**
+      - lazyregex/**
       - tests/**
 
 jobs:
