@@ -14,6 +14,7 @@ class Debouncer:
     async def _execute(self, coro):
         try:
             await asyncio.sleep(self.delay)
-            await coro()
+            if coro is not None:
+                await coro()
         except asyncio.CancelledError:
             pass
