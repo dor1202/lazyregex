@@ -37,6 +37,7 @@ type Model struct {
 	panels  map[PanelID]Panel
 	theme   *Theme
 	library config.Library
+	ev      evalLoop
 }
 
 // patternModes maps the Pattern panel's tabs to evaluation modes.
@@ -67,6 +68,7 @@ func New(d Deps) tea.Model {
 		Text:        text,
 		Manual:      prep.Manual,
 		InvalidUTF8: prep.InvalidUTF8,
+		Stale:       prep.Manual,
 		Focus:       PPattern,
 		Editing:     true,
 		Tab:         map[PanelID]int{},
@@ -90,37 +92,75 @@ func New(d Deps) tea.Model {
 }
 
 // Init asks the terminal for its background colour (to pick the light or
-// dark theme) and initialises the panels.
+// dark theme), starts loading the initial flavor, listens for runner events
+// and initialises the panels.
 func (m *Model) Init() tea.Cmd {
-	cmds := []tea.Cmd{tea.RequestBackgroundColor}
+	cmds := []tea.Cmd{tea.RequestBackgroundColor, m.initEval()}
 	for id := PanelID(1); id <= panelCount; id++ {
 		cmds = append(cmds, m.panels[id].Init(&m.state))
 	}
 	return tea.Batch(cmds...)
 }
 
-// Update handles global messages and keys and forwards the rest: keys go to
-// the focused panel, other messages to every panel.
+// Update handles global messages and keys and forwards the rest: keys and
+// pastes go to the focused panel, other messages to every panel. Afterwards
+// any change to the evaluation inputs schedules an evaluation.
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	cmd := m.update(msg)
+	return m, tea.Batch(cmd, m.afterUpdate())
+}
+
+func (m *Model) update(msg tea.Msg) tea.Cmd {
+	if cmd, ok := m.updateEval(msg); ok {
+		// Runner events are also broadcast so panels can react to them.
+		if _, ev := msg.(runnerEventMsg); !ev {
+			return cmd
+		}
+		return tea.Batch(cmd, m.broadcast(msg))
+	}
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		m.state.Width, m.state.Height = msg.Width, msg.Height
-		return m, nil
+		return nil
 	case tea.BackgroundColorMsg:
 		m.theme = newTheme(msg.IsDark(), m.state.Config.Theme)
 		m.state.Theme = m.theme
-		return m, nil
-	case tea.KeyPressMsg:
-		if b, ok := m.globalBinding(msg.String()); ok {
-			return m, b.run(m, msg.String())
+		return nil
+	case tea.PasteMsg:
+		// Only the editor being edited receives a paste.
+		if m.editing() {
+			return m.panels[m.state.Focus].Update(msg, &m.state)
 		}
-		return m, m.panels[m.state.Focus].Update(msg, &m.state)
+		return nil
+	case tea.KeyPressMsg:
+		if m.manualEnter(msg) {
+			return func() tea.Msg { return evalNowMsg{} }
+		}
+		if b, ok := m.globalBinding(msg.String()); ok {
+			return b.run(m, msg.String())
+		}
+		return m.panels[m.state.Focus].Update(msg, &m.state)
 	}
+	return m.broadcast(msg)
+}
+
+// broadcast sends msg to every panel.
+func (m *Model) broadcast(msg tea.Msg) tea.Cmd {
 	var cmds []tea.Cmd
 	for id := PanelID(1); id <= panelCount; id++ {
 		cmds = append(cmds, m.panels[id].Update(msg, &m.state))
 	}
-	return m, tea.Batch(cmds...)
+	return tea.Batch(cmds...)
+}
+
+// manualEnter reports whether key is enter asking for a manual evaluation:
+// large input, in the pattern editor or on the (read-only) test string.
+func (m *Model) manualEnter(k tea.KeyPressMsg) bool {
+	s := &m.state
+	if !s.Manual || k.String() != "enter" {
+		return false
+	}
+	return (s.Focus == PPattern && s.Editing) || s.Focus == PText
 }
 
 // editing reports whether keys go straight to an editor panel.

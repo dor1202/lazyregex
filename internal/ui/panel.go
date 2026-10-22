@@ -4,6 +4,7 @@ package ui
 
 import (
 	"fmt"
+	"time"
 
 	tea "charm.land/bubbletea/v2"
 
@@ -93,6 +94,17 @@ type State struct {
 	ConfigDir string
 	Library   *config.Library
 	Theme     *Theme
+
+	// Evaluation (Task 14). Result and Err belong to EvalFlavor/EvalPattern
+	// and to ResultText, which may lag the live inputs by one debounce.
+	Matches     []engine.Match // Result's matches with byte spans into ResultText
+	ResultText  string
+	EvalFlavor  engine.Flavor
+	EvalPattern string
+	EvalTime    time.Duration
+	Evaluating  bool                             // a manual evaluation is running
+	Stale       bool                             // manual mode: inputs changed since the last evaluation
+	All         map[engine.Flavor]runner.Outcome // EvalAll outcomes of the other Ready flavors
 }
 
 // basePanel provides defaults for the optional parts of Panel.
