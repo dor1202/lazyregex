@@ -25,6 +25,7 @@ type Deps struct {
 type InitialInput struct {
 	Flavor       engine.Flavor
 	Pattern      string
+	Flags        string // flag letters for Flavor; empty keeps the flavor default
 	Text         string
 	TextPrepared runner.Prepared
 }
@@ -86,6 +87,9 @@ func New(d Deps) tea.Model {
 		ConfigDir:   d.ConfigDir,
 		Library:     &m.library,
 		Theme:       m.theme,
+	}
+	if d.Initial.Flags != "" {
+		m.state.Flags[flavor] = d.Initial.Flags
 	}
 	m.panels = map[PanelID]Panel{
 		PFlavor:  newFlavorPanel(),
