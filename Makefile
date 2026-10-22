@@ -1,27 +1,17 @@
-BUMP_PART ?=
-PYTEST_COV ?= xml
-setup:
-	python3 -m pip install poetry
+VERSION ?= dev
+LDFLAGS := -X github.com/dor1202/lazyregex/internal/version.Version=$(VERSION)
 
-install:
-	poetry install
-
-test:
-	poetry run pytest -ssv --cov --cov-report=$(PYTEST_COV)
+.PHONY: build test lint wasm
 
 build:
-	poetry build
+	CGO_ENABLED=0 go build -ldflags "$(LDFLAGS)" -o bin/lazyregex ./cmd/lazyregex
 
-publish: build
-	poetry publish
-
-format:
-	poetry run ruff format lazyregex/ tests/
-	poetry run ruff --fix lazyregex/ tests/
+test:
+	go test ./...
 
 lint:
-	poetry run ruff lazyregex/ tests/
-	poetry run mypy lazyregex/ tests/
+	golangci-lint run
 
-bump:
-	poetry run bump-my-version bump $(BUMP_PART)
+# Filled in by later tasks (WASM engine builds).
+wasm:
+	@echo "wasm: not implemented yet"
