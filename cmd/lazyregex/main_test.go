@@ -32,13 +32,14 @@ func TestVersionFlag(t *testing.T) {
 	}
 }
 
+// `lazyregex | cat`: the notice goes to stderr and the exit code is 1.
 func TestNonInteractivePrintsNotice(t *testing.T) {
-	var out bytes.Buffer
-	if code := run(nil, strings.NewReader(""), &out, io.Discard); code != 0 {
-		t.Fatalf("exit %d", code)
+	var out, errb bytes.Buffer
+	if code := run(nil, strings.NewReader(""), &out, &errb); code != 1 {
+		t.Fatalf("exit %d, want 1", code)
 	}
-	if !strings.Contains(out.String(), "needs a terminal") {
-		t.Fatalf("got %q", out.String())
+	if out.Len() != 0 || !strings.Contains(errb.String(), "needs a terminal") {
+		t.Fatalf("stdout %q, stderr %q", out.String(), errb.String())
 	}
 }
 

@@ -198,8 +198,8 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	}
 
 	if !interactive(stdout) {
-		fmt.Fprintln(stdout, "lazyregex needs a terminal")
-		return 0
+		fmt.Fprintln(stderr, "lazyregex: needs a terminal (stdout is not one)")
+		return 1
 	}
 
 	initial := ui.InitialInput{Flavor: flavor, Pattern: pattern, Flags: flags}
