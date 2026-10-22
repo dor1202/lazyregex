@@ -26,3 +26,6 @@
 - {id: replace.word_unicode, mode: replace, pattern: '\w', flags: g, text: 'hé', replacement: '_'}
 - {id: replace.backslash_python, flavors: [python], mode: replace, pattern: 'a', text: 'a', replacement: '\\'}
 - {id: replace.delete, mode: replace, pattern: '\s+', flags: g, text: 'a b  c', replacement: ''}
+- {id: replace.unknown_group_name, mode: replace, pattern: '(a)', text: 'a', replacement: '\g<x>'}
+- {id: replace.unknown_group_name_other_named, flavors: [python, pcre, go], mode: replace, pattern: '(?P<n>a)', text: 'a', replacement: '\g<x>'}
+- {id: replace.backslash_nine_few_groups, mode: replace, pattern: '(a)', text: 'a', replacement: '\9'}

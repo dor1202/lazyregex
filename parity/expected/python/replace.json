@@ -117,5 +117,26 @@
     "matches": [],
     "output": "abc",
     "unit": "codepoints"
+  },
+  {
+    "id": "replace.unknown_group_name",
+    "ok": false,
+    "error_message": "unknown group name 'x'",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "replace.unknown_group_name_other_named",
+    "ok": false,
+    "error_message": "unknown group name 'x'",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "replace.backslash_nine_few_groups",
+    "ok": false,
+    "error_message": "invalid group reference 9 at position 1",
+    "matches": [],
+    "unit": ""
   }
 ]

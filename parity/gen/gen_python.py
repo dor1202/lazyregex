@@ -63,7 +63,9 @@ def run_case(case):
                     "span": list(m.span()),
                     "groups": _group_entries(m, rx, names),
                 })
-    except (re.error, ValueError, OverflowError, RecursionError) as e:
+    except (re.error, ValueError, IndexError, OverflowError, RecursionError) as e:
+        return {"id": case["id"], "ok": False, "error_message": str(e), "matches": [], "unit": ""}
+    except Exception as e:  # anything else is still reported, never fatal
         return {"id": case["id"], "ok": False, "error_message": str(e), "matches": [], "unit": ""}
     return res
 # --- shared ---

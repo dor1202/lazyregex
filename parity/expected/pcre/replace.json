@@ -103,5 +103,26 @@
     "matches": [],
     "output": "abc",
     "unit": "bytes"
+  },
+  {
+    "id": "replace.unknown_group_name",
+    "ok": true,
+    "matches": [],
+    "output": "\\g<x>",
+    "unit": "bytes"
+  },
+  {
+    "id": "replace.unknown_group_name_other_named",
+    "ok": true,
+    "matches": [],
+    "output": "\\g<x>",
+    "unit": "bytes"
+  },
+  {
+    "id": "replace.backslash_nine_few_groups",
+    "ok": true,
+    "matches": [],
+    "output": "",
+    "unit": "bytes"
   }
 ]

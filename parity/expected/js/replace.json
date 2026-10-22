@@ -117,5 +117,19 @@
     "matches": [],
     "output": "abc",
     "unit": "utf16"
+  },
+  {
+    "id": "replace.unknown_group_name",
+    "ok": true,
+    "matches": [],
+    "output": "\\g<x>",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.backslash_nine_few_groups",
+    "ok": true,
+    "matches": [],
+    "output": "\\9",
+    "unit": "utf16"
   }
 ]

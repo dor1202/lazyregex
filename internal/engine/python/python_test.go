@@ -128,6 +128,24 @@ func TestPythonReplacementErrorHasNoOffset(t *testing.T) {
 	}
 }
 
+// re.sub raises IndexError for an unknown group name in the template; it must
+// come back as Python's own message, not kill the guest.
+func TestPythonReplacementUnknownGroupName(t *testing.T) {
+	e := newEngine(t)
+	for _, pat := range []string{`(a)`, `(?P<n>a)`} {
+		_, err := e.Eval(context.Background(), engine.Request{
+			Pattern: pat, Flags: "g", Text: "a", Mode: engine.ModeReplace, Replacement: `\g<x>`,
+		})
+		var ce *engine.CompileError
+		if !errors.As(err, &ce) {
+			t.Fatalf("%s: err = %v, want CompileError", pat, err)
+		}
+		if ce.Message != "unknown group name 'x'" || ce.Offset != -1 {
+			t.Errorf("%s: got %q offset %d", pat, ce.Message, ce.Offset)
+		}
+	}
+}
+
 // The case-running code is shared with the fixture generator so the engine
 // and the native fixtures cannot drift apart.
 func TestShimMatchesGenerator(t *testing.T) {
