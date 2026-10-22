@@ -213,8 +213,6 @@ Without the contributions from these fine folks, this project would be a total d
 
 ---
 
----
-
 ## Known Issues
 
 This is still work in progress! If something is broken or there's a feature

@@ -105,7 +105,8 @@ aurs:
       install -m644 ./LICENSES/* "${pkgdir}/usr/share/licenses/lazyregex/third-party/"
 
 # Needs `choco` (Windows): the ubuntu release job runs with --skip=chocolatey;
-# the windows-latest job runs this pipe only (see .github/workflows/release.yaml).
+# the windows-latest job packs it with --skip=publish and pushes it by hand
+# after checking the hashes (see .github/workflows/release.yaml).
 chocolateys:
   - name: lazyregex
     owners: dor1202
@@ -118,8 +119,3 @@ chocolateys:
     tags: regex terminal tui cli
     api_key: '{{ index .Env "CHOCOLATEY_API_KEY" }}'
     source_repo: https://push.chocolatey.org/
-
-# The windows-latest chocolatey job sets GORELEASER_CHOCO=true: it rebuilds the
-# same (reproducible) windows archives but must not touch the GitHub release.
-release:
-  disable: '{{ if eq (index .Env "GORELEASER_CHOCO") "true" }}true{{ end }}'

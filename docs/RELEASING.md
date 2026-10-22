@@ -6,7 +6,7 @@ A release is a `v*` tag. Pushing it runs `.github/workflows/release.yaml`:
    `CGO_ENABLED=0`), `checksums.txt`, a deb and an rpm per Linux arch, creates the
    GitHub release, and publishes the Homebrew formula, Scoop manifest and AUR package.
 2. **chocolatey** (windows-latest, needs `goreleaser`): packs and pushes the
-   Chocolatey package. Without `CHOCOLATEY_API_KEY` every step is skipped and the job
+   Chocolatey package (after checking its hashes match the release). Without `CHOCOLATEY_API_KEY` every step is skipped and the job
    still succeeds.
 
 ```sh
@@ -41,8 +41,8 @@ after adding the secret (GoReleaser replaces the existing release assets).
 
 - Archives are reproducible (`-trimpath`, commit-time `mod_timestamp` and archive
   mtimes). The Chocolatey job rebuilds the Windows zips on a different runner and the
-  package points at the zips released from ubuntu, so the job compares their SHA-256 to
-  `checksums.txt` and fails if they differ.
+  package points at the zips released from ubuntu, so the job packs with `--skip=publish`, compares their SHA-256 to
+  `checksums.txt`, and only then runs `choco push`; on a mismatch nothing is pushed.
 - `brews` is deprecated in GoReleaser v2 in favour of `homebrew_casks`, but casks are
   macOS-only and cannot replace the existing formula. `goreleaser check` therefore exits
   non-zero with a deprecation notice while the config is valid; a release still works.
