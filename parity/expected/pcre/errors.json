@@ -1,0 +1,156 @@
+[
+  {
+    "id": "errors.unbalanced_open",
+    "ok": false,
+    "error_message": "Compilation failed: missing closing parenthesis at offset 1",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.unbalanced_close",
+    "ok": false,
+    "error_message": "Compilation failed: unmatched closing parenthesis at offset 1",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.unclosed_class",
+    "ok": false,
+    "error_message": "Compilation failed: missing terminating ] for character class at offset 2",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.leading_star",
+    "ok": false,
+    "error_message": "Compilation failed: quantifier does not follow a repeatable item at offset 0",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.bad_repeat_range",
+    "ok": false,
+    "error_message": "Compilation failed: numbers out of order in {} quantifier at offset 5",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.lookbehind_go_only",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          6,
+          8
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "errors.named_backref_missing",
+    "ok": false,
+    "error_message": "Compilation failed: reference to non-existent subpattern at offset 3",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.duplicate_name_python",
+    "ok": false,
+    "error_message": "Compilation failed: two named subpatterns have the same name (PCRE2_DUPNAMES not set) at offset 14",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.trailing_backslash",
+    "ok": false,
+    "error_message": "No ending delimiter '/' found",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.bad_inline_flag",
+    "ok": false,
+    "error_message": "Compilation failed: unrecognized character after (? or (?- at offset 2",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.double_quantifier",
+    "ok": false,
+    "error_message": "Compilation failed: quantifier does not follow a repeatable item at offset 2",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.unclosed_named_group",
+    "ok": false,
+    "error_message": "Compilation failed: missing closing parenthesis at offset 6",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.backref_no_group",
+    "ok": false,
+    "error_message": "Compilation failed: reference to non-existent subpattern at offset 1",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.reversed_range",
+    "ok": false,
+    "error_message": "Compilation failed: range out of order in character class at offset 3",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.unknown_property",
+    "ok": false,
+    "error_message": "Compilation failed: unknown property after \\P or \\p at offset 7",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.bad_flag_group",
+    "ok": false,
+    "error_message": "Compilation failed: missing closing parenthesis at offset 2",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.nothing_to_repeat_plus",
+    "ok": false,
+    "error_message": "Compilation failed: quantifier does not follow a repeatable item at offset 0",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.invalid_lookahead_quantifier",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "errors.replace_mode_bad_pattern",
+    "ok": false,
+    "error_message": "Compilation failed: missing closing parenthesis at offset 1",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.split_mode_bad_pattern",
+    "ok": false,
+    "error_message": "Compilation failed: missing terminating ] for character class at offset 1",
+    "matches": [],
+    "unit": ""
+  }
+]
