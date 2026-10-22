@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 type req struct {
@@ -17,6 +18,10 @@ type req struct {
 }
 
 func main() {
+	// ECHO_START_DELAY (a time.Duration) simulates a slow-starting engine.
+	if d, err := time.ParseDuration(os.Getenv("ECHO_START_DELAY")); err == nil {
+		time.Sleep(d)
+	}
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Buffer(make([]byte, 1<<20), 1<<30)
 	out := bufio.NewWriter(os.Stdout)

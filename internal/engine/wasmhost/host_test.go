@@ -157,3 +157,51 @@ func TestHostCompileCache(t *testing.T) {
 		t.Fatalf("cache dir empty: %v", err)
 	}
 }
+
+// killByTimeout times out a Call so that the next Call has to restart.
+func killByTimeout(t *testing.T, h *Host) {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
+	defer cancel()
+	if _, err := eval(h, ctx, "hang", ""); !errors.Is(err, context.DeadlineExceeded) {
+		t.Fatalf("hang: err = %v", err)
+	}
+}
+
+func TestHostRestartNotChargedToCall(t *testing.T) {
+	if echoGZ == nil {
+		t.Skip("go toolchain not on PATH")
+	}
+	spec := Spec{Name: "echo", ModuleGZ: echoGZ, Env: map[string]string{"ECHO_START_DELAY": "500ms"}}
+	h, err := New(context.Background(), spec, t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer h.Close()
+	killByTimeout(t, h)
+	// The restart takes longer than this Call's whole budget.
+	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
+	defer cancel()
+	resp, err := eval(h, ctx, "", "x")
+	if err != nil || resp.Output != "X" {
+		t.Fatalf("after restart: %+v, %v", resp, err)
+	}
+}
+
+func TestHostCanceledDuringRestart(t *testing.T) {
+	h := newHost(t, t.TempDir())
+	killByTimeout(t, h)
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	if _, err := eval(h, ctx, "", "x"); !errors.Is(err, context.Canceled) {
+		t.Fatalf("err = %v, want context.Canceled", err)
+	}
+	// The restarted instance was not killed: no request had been sent.
+	if h.inst == nil {
+		t.Fatal("instance dropped")
+	}
+	resp, err := eval(h, context.Background(), "", "y")
+	if err != nil || resp.Output != "Y" {
+		t.Fatalf("after cancel: %+v, %v", resp, err)
+	}
+}

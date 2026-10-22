@@ -1,7 +1,7 @@
 // Package wasmhost runs a regex engine compiled to a WASI command module
 // in-process with wazero, speaking newline-delimited JSON over stdin/stdout.
 // A Call whose context ends kills the instance; the next Call transparently
-// starts a fresh one.
+// starts a fresh one, without charging the restart to that Call's deadline.
 package wasmhost
 
 import (
@@ -16,6 +16,7 @@ import (
 	"io/fs"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/imports/wasi_snapshot_preview1"
@@ -24,6 +25,11 @@ import (
 )
 
 const stderrRingSize = 64 << 10
+
+// startupTimeout bounds starting and pinging a replacement instance inside
+// Call. The restart runs on its own deadline rather than the Call's, so an
+// engine slower to start than a typical eval timeout still comes back up.
+const startupTimeout = 30 * time.Second
 
 // Spec describes an engine module.
 type Spec struct {
@@ -98,17 +104,46 @@ func (h *Host) Close() error {
 }
 
 // Call sends one request and returns its response. If ctx ends first the
-// instance is killed and ctx.Err() is returned.
+// instance is killed and ctx.Err() is returned. When the instance has to be
+// restarted first (after a timeout or crash), the restart is bounded by
+// startupTimeout instead of ctx, and ctx's deadline is extended by the time
+// it took: only the request itself is charged to the caller.
 func (h *Host) Call(ctx context.Context, req protocol.Req) (protocol.Resp, error) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	if h.closed {
 		return protocol.Resp{}, errors.New(h.spec.Name + ": host closed")
 	}
-	if err := h.ensureLocked(ctx); err != nil {
-		return protocol.Resp{}, err
+	if h.inst == nil {
+		began := time.Now()
+		startCtx, cancel := context.WithTimeout(context.Background(), startupTimeout)
+		err := h.ensureLocked(startCtx)
+		cancel()
+		if err != nil {
+			return protocol.Resp{}, err
+		}
+		var stop func()
+		ctx, stop = extendDeadline(ctx, time.Since(began))
+		defer stop()
 	}
 	return h.roundTripLocked(ctx, req)
+}
+
+// extendDeadline returns a context whose deadline, if ctx has one, is d
+// later than ctx's. Cancellation of ctx (other than by its deadline) still
+// propagates. stop releases the context.
+func extendDeadline(ctx context.Context, d time.Duration) (_ context.Context, stop func()) {
+	deadline, ok := ctx.Deadline()
+	if !ok {
+		return ctx, func() {}
+	}
+	shifted, cancel := context.WithDeadline(context.WithoutCancel(ctx), deadline.Add(d))
+	unwatch := context.AfterFunc(ctx, func() {
+		if !errors.Is(ctx.Err(), context.DeadlineExceeded) {
+			cancel()
+		}
+	})
+	return shifted, func() { unwatch(); cancel() }
 }
 
 // ensureLocked starts and pings an instance if none is live.
@@ -139,6 +174,9 @@ func (h *Host) dropLocked() {
 }
 
 func (h *Host) roundTripLocked(ctx context.Context, req protocol.Req) (protocol.Resp, error) {
+	if err := ctx.Err(); err != nil {
+		return protocol.Resp{}, err // nothing sent: the instance stays usable
+	}
 	inst := h.inst
 	h.nextID++
 	req.ID = h.nextID
