@@ -239,6 +239,9 @@ func compareRow(s *State, f engine.Flavor) (result, matches, tok string) {
 	case err != nil:
 		return "✗ error", firstLine(err.Error()), "error"
 	}
+	if f != s.Flavor && s.Manual {
+		return "✓ compiles", "text too large to compare", "ok"
+	}
 	if f != s.Flavor && text != s.Text {
 		return "✓ compiles", "…", "ok" // values arrive with the next EvalAll
 	}

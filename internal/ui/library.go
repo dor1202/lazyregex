@@ -3,11 +3,13 @@ package ui
 import (
 	"errors"
 	"fmt"
+	"slices"
 	"strings"
 
 	tea "charm.land/bubbletea/v2"
 
 	"github.com/dor1202/lazyregex/internal/config"
+	"github.com/dor1202/lazyregex/internal/engine"
 	"github.com/dor1202/lazyregex/internal/runner"
 )
 
@@ -57,7 +59,9 @@ func (p *libraryPanel) Update(msg tea.Msg, s *State) tea.Cmd {
 		s.ask = newPrompt("save ")
 	case "enter":
 		if n > 0 {
-			loadEntry(s, s.Library.Entries[p.sel])
+			if err := loadEntry(s, s.Library.Entries[p.sel]); err != nil {
+				return errNotice(err)
+			}
 		}
 	case "d":
 		if n > 0 {
@@ -86,16 +90,19 @@ func (p *libraryPanel) View(s *State, w, h int) string {
 }
 
 // loadEntry puts a library entry into the state: flavor, its flags,
-// pattern, replacement and text.
-func loadEntry(s *State, e config.Entry) {
-	if e.Flavor != "" {
-		s.Flavor = e.Flavor
+// pattern, replacement and text. An entry with an unknown flavor (a
+// hand-edited library.yaml) is refused and the state left as it was.
+func loadEntry(s *State, e config.Entry) error {
+	if !slices.Contains(engine.Flavors, e.Flavor) {
+		return fmt.Errorf("library entry %q: unknown flavor %q", e.Name, e.Flavor)
 	}
+	s.Flavor = e.Flavor
 	s.Flags[s.Flavor] = e.Flags
 	s.Pattern, s.Replacement = e.Pattern, e.Replacement
 	prep := runner.PrepareText([]byte(e.Text))
 	s.Text, s.Manual, s.InvalidUTF8, s.Stale = prep.Text, prep.Manual, prep.InvalidUTF8, prep.Manual
 	s.ExplainSel = 0
+	return nil
 }
 
 // errNoConfigDir is returned when the library cannot be written.
@@ -134,8 +141,7 @@ func deleteEntry(s *State, name string) (string, error) {
 func openEntry(s *State, name string) error {
 	for _, e := range s.Library.Entries {
 		if e.Name == name {
-			loadEntry(s, e)
-			return nil
+			return loadEntry(s, e)
 		}
 	}
 	return fmt.Errorf("no saved pattern named %q", name)

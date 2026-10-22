@@ -71,12 +71,8 @@ func (p *patternPanel) Keys(s *State) []KeyHelp {
 // sync loads text changed outside the editors (initial input, library);
 // it runs before every edit and render.
 func (p *patternPanel) sync(s *State) {
-	if p.pat.Value() != s.Pattern {
-		p.pat.SetValue(s.Pattern)
-	}
-	if p.repl.Value() != s.Replacement {
-		p.repl.SetValue(s.Replacement)
-	}
+	p.pat.Sync(s.Pattern)
+	p.repl.Sync(s.Replacement)
 	if s.Mode != engine.ModeReplace {
 		p.line = 0
 	}

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+	"unicode/utf8"
 
 	tea "charm.land/bubbletea/v2"
 
@@ -237,7 +238,8 @@ func commonPrefix(xs []string) string {
 	p := xs[0]
 	for _, x := range xs[1:] {
 		for !strings.HasPrefix(x, p) {
-			p = p[:len(p)-1]
+			_, n := utf8.DecodeLastRuneInString(p)
+			p = p[:len(p)-n]
 		}
 	}
 	return p

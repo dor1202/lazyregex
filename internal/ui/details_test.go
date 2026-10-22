@@ -152,6 +152,71 @@ func TestCompareApplyRewrite(t *testing.T) {
 	if s.state.Flavor != engine.Go {
 		t.Errorf("flavor changed to %v", s.state.Flavor)
 	}
+	// The rewrite is one undoable edit in [5].
+	send(tm, key('5'), ctrlZ)
+	waitFor(t, tm, "the original pattern back", func(s snapshot) bool { return s.state.Pattern == lookbehind })
+	send(tm, ctrlY)
+	waitFor(t, tm, "the rewrite redone", func(s snapshot) bool { return s.state.Pattern == lookbehindRewrite })
+	done(t, tm)
+}
+
+var (
+	ctrlZ = tea.KeyPressMsg{Code: 'z', Mod: tea.ModCtrl}
+	ctrlY = tea.KeyPressMsg{Code: 'y', Mod: tea.ModCtrl}
+)
+
+func TestLibraryLoadIsUndoable(t *testing.T) {
+	r := setup(t, nil, time.Second, nil, nil)
+	d := depsFor(r, engine.Python, "mine", "my big pasted text")
+	d.Library = config.Library{Entries: []config.Entry{{Name: "e", Flavor: engine.JS, Flags: "g", Pattern: "entry", Text: "entry text"}}}
+	tm := run(t, d)
+	waitFor(t, tm, "python ready", ready(engine.Python))
+	send(tm, escKey, key('4'), enterKey)
+	waitFor(t, tm, "the entry loaded", func(s snapshot) bool { return s.state.Text == "entry text" && s.state.Pattern == "entry" })
+	send(tm, key('6'), ctrlZ)
+	waitFor(t, tm, "the text back", func(s snapshot) bool { return s.state.Text == "my big pasted text" })
+	send(tm, escKey, key('5'), ctrlZ)
+	s := waitFor(t, tm, "the pattern back", func(s snapshot) bool { return s.state.Pattern == "mine" })
+	if !strings.Contains(s.screen, "1 my big pasted text") {
+		t.Errorf("[6] does not show the restored text:\n%s", s.screen)
+	}
+	done(t, tm)
+}
+
+func TestLibraryUnknownFlavorRefused(t *testing.T) {
+	for _, flavor := range []engine.Flavor{"ruby", ""} {
+		r := setup(t, nil, time.Second, nil, nil)
+		d := depsFor(r, engine.Python, "mine", "text")
+		d.Library = config.Library{Entries: []config.Entry{{Name: "bad", Flavor: flavor, Pattern: "x", Text: "y"}}}
+		tm := run(t, d)
+		waitFor(t, tm, "python ready", ready(engine.Python))
+		want := `library entry "bad": unknown flavor "` + string(flavor) + `"`
+		send(tm, escKey, key('4'), enterKey)
+		s := waitFor(t, tm, "the notice", contains(want))
+		if s.state.Flavor != engine.Python || s.state.Pattern != "mine" || s.state.Text != "text" {
+			t.Errorf("%q: state changed: %v %q %q", flavor, s.state.Flavor, s.state.Pattern, s.state.Text)
+		}
+		if _, err := runCommand("open bad", &s.state); err == nil || err.Error() != want {
+			t.Errorf(":open bad: %v", err)
+		}
+		done(t, tm)
+	}
+}
+
+func TestCommonPrefixRunes(t *testing.T) {
+	if got := commonPrefix([]string{"日本", "日語"}); got != "日" {
+		t.Errorf("commonPrefix = %q", got)
+	}
+}
+
+func TestCompareManualText(t *testing.T) {
+	r := setup(t, nil, time.Second, nil, nil)
+	d := depsFor(r, engine.Python, "a", "")
+	d.Initial.TextPrepared = runner.Prepared{Text: "abc", Manual: true}
+	tm := run(t, d)
+	waitFor(t, tm, "python ready", ready(engine.Python))
+	detailsTab(tm, tabCompare)
+	waitFor(t, tm, "the manual note", contains("  js     ✓ compiles   text too large to compare"))
 	done(t, tm)
 }
 

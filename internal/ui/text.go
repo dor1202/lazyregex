@@ -72,9 +72,7 @@ func (p *textPanel) Update(msg tea.Msg, s *State) tea.Cmd {
 	if s.Manual {
 		return nil // read-only
 	}
-	if p.ed.Value() != s.Text {
-		p.ed.SetValue(s.Text)
-	}
+	p.ed.Sync(s.Text)
 	if p.ed.Update(msg) {
 		s.Text = p.ed.Value()
 	}
@@ -145,9 +143,7 @@ func (p *textPanel) textLines(s *State, w, h int) []string {
 	gw := len(fmt.Sprint(n))
 	cw := max(1, w-gw-1) // content width
 
-	if p.ed.Value() != text { // changed outside the editor
-		p.ed.SetValue(text)
-	}
+	p.ed.Sync(text) // changed outside the editor: undoable
 	editing := s.Focus == PText && s.Editing && !s.Manual
 	cursor := -1
 	if editing {

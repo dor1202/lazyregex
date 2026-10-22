@@ -21,6 +21,7 @@ type editor struct {
 
 	undo, redo []edit
 	typing     bool // the last edit was typed text (consecutive typing is one undo step)
+	loaded     bool // Sync has seen the first value
 }
 
 // edit replaces old with new at pos; before and after are the cursor
@@ -41,6 +42,21 @@ func newEditor(multiline bool) *editor { return &editor{multiline: multiline, go
 func (e *editor) SetValue(s string) {
 	e.text, e.cur, e.goal = s, len(s), -1
 	e.undo, e.redo, e.typing = nil, nil, false
+}
+
+// Sync takes a value that changed outside the editor (a library load, an
+// applied rewrite). The first value is loaded as is; every later change is
+// recorded as one undoable edit, so ctrl+z brings the previous text back.
+func (e *editor) Sync(s string) {
+	switch {
+	case s == e.text:
+	case !e.loaded:
+		e.SetValue(s)
+	default:
+		e.goal, e.typing = -1, false
+		e.replace(0, len(e.text), s)
+	}
+	e.loaded = true
 }
 
 func (e *editor) Value() string { return e.text }
