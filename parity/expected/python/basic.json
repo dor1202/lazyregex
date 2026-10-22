@@ -507,5 +507,47 @@
       }
     ],
     "unit": "codepoints"
+  },
+  {
+    "id": "basic.bare_slash",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "basic.escaped_slash",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "basic.escaped_backslash_then_slash",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          4
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "codepoints"
   }
 ]

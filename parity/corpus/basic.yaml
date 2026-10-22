@@ -24,3 +24,6 @@
 - {id: basic.verbose_flag, flavors: [python, pcre], pattern: 'a b # comment', flags: x, text: 'xabx'}
 - {id: basic.whitespace_class, pattern: '\s+', flags: g, text: "a \t b\n\nc"}
 - {id: basic.optional, pattern: 'colou?r', flags: g, text: 'color colour'}
+- {id: basic.bare_slash, pattern: 'a/b', flags: g, text: 'a/b ab'}
+- {id: basic.escaped_slash, pattern: 'a\/b', flags: g, text: 'a/b a\/b'}
+- {id: basic.escaped_backslash_then_slash, pattern: 'a\\/b', flags: g, text: 'a\/b a/b'}

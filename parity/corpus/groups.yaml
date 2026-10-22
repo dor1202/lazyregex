@@ -19,3 +19,4 @@
 - {id: groups.star_of_star, pattern: '(a*)*', text: 'b'}
 - {id: groups.star_of_plus, pattern: '(a+)*', text: 'aab'}
 - {id: groups.multi_line_groups, pattern: '^(\w+):\s*(.*)$', flags: gm, text: "k1: v1\nk2: v2"}
+- {id: groups.recursion_balanced_parens, flavors: [pcre], pattern: '\((?:[^()]|(?R))*\)', flags: g, text: '(a(b)c) (d'}

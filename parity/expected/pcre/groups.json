@@ -891,5 +891,19 @@
       }
     ],
     "unit": "bytes"
+  },
+  {
+    "id": "groups.recursion_balanced_parens",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          7
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
   }
 ]

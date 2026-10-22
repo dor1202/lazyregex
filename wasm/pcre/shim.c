@@ -3,7 +3,8 @@
  *
  * It reproduces PHP 8.4's ext/pcre/php_pcre.c, which is the referee for the
  * PCRE flavor: the user's pattern is wrapped as PHP code would write it,
- * '/' . addcslashes($pattern, '/') . '/' . $modifiers, and then
+ * '/' . $pattern . '/' . $modifiers with each '/' that is not already
+ * escaped given a backslash (gen_php.php's delimit()), and then
  *   match:   preg_match / preg_match_all (PREG_SET_ORDER | PREG_OFFSET_CAPTURE
  *            | PREG_UNMATCHED_AS_NULL)
  *   replace: preg_replace($re, $replacement, $text, g ? -1 : 1)
@@ -57,6 +58,13 @@ static const char *exec_error_msg(int rc) {
 		return "Recursion limit exhausted";
 	case PCRE2_ERROR_BADUTFOFFSET:
 		return "The offset did not correspond to the beginning of a valid UTF-8 code point";
+	case PCRE2_ERROR_RECURSELOOP:
+		/* PHP runs with pcre.jit=1. The interpreter (all that exists on
+		 * wasm) detects a recursion that repeats without consuming input,
+		 * e.g. (?R) at one position, and fails with this code, which PHP
+		 * itself only reports (as "Internal error") with the JIT off. The
+		 * JIT has no such check: it recurses until its stack is gone. */
+		return "JIT stack limit exhausted";
 	}
 	if (rc <= PCRE2_ERROR_UTF8_ERR1 && rc >= PCRE2_ERROR_UTF8_ERR21)
 		return "Malformed UTF-8 characters, possibly incorrectly encoded";
@@ -75,7 +83,11 @@ static size_t unit_length(const pce_t *pce, const char *start) {
 /* pcre_get_compiled_regex_cache_ex for the regex PHP would see. Returns 0 on
  * success. */
 static int compile(const jstr *pattern, const jstr *flags, pce_t *pce, outcome *o) {
-	/* $rx = '/' . addcslashes($pattern, '/') . '/' . str_replace('g', '', $flags);
+	/* $rx = '/' . delimit($pattern) . '/' . str_replace('g', '', $flags);
+	 * delimit() escapes each '/' preceded by an even number of backslashes,
+	 * so "a/b" becomes "a\/b" and "a\/b" is kept. A trailing lone
+	 * backslash escapes the closing delimiter and the scan below reports
+	 * "No ending delimiter", as PHP does for that regex.
 	 * rawpos[i] maps byte i of the escaped pattern back to the user's pattern. */
 	size_t cap = 2 * pattern->n + flags->n + 3;
 	char *regex = malloc(cap);
@@ -86,15 +98,17 @@ static int compile(const jstr *pattern, const jstr *flags, pce_t *pce, outcome *
 		fail(o, "Internal error", -1);
 		return -1;
 	}
-	size_t n = 0, e = 0;
+	size_t n = 0, e = 0, backslashes = 0;
 	regex[n++] = '/';
 	for (size_t i = 0; i < pattern->n; i++) {
-		if (pattern->p[i] == '/') {
+		char ch = pattern->p[i];
+		if (ch == '/' && backslashes % 2 == 0) {
 			rawpos[e++] = i;
 			regex[n++] = '\\';
 		}
 		rawpos[e++] = i;
-		regex[n++] = pattern->p[i];
+		regex[n++] = ch;
+		backslashes = ch == '\\' ? backslashes + 1 : 0;
 	}
 	rawpos[e] = pattern->n;
 	regex[n++] = '/';

@@ -20,3 +20,8 @@
 - {id: errors.invalid_lookahead_quantifier, pattern: '(?=a)*', text: 'a'}
 - {id: errors.replace_mode_bad_pattern, mode: replace, pattern: '(', text: 'a', replacement: 'x'}
 - {id: errors.split_mode_bad_pattern, mode: split, pattern: '[', text: 'a'}
+- {id: errors.trailing_backslash_with_modifier, flavors: [pcre], pattern: 'a\', flags: i, text: 'a'}
+- {id: errors.after_escaped_slash, flavors: [pcre], pattern: '\/(', text: '/'}
+- {id: errors.recursion_loop_empty, flavors: [pcre], pattern: '(?R)', text: ''}
+- {id: errors.recursion_loop_optional_empty, flavors: [pcre], pattern: '(?R)?', text: ''}
+- {id: errors.recursion_loop_optional_global, flavors: [pcre], pattern: '(?R)?', flags: g, text: 'ab'}

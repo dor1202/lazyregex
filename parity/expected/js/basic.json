@@ -493,5 +493,47 @@
       }
     ],
     "unit": "utf16"
+  },
+  {
+    "id": "basic.bare_slash",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "basic.escaped_slash",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "basic.escaped_backslash_then_slash",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          4
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
   }
 ]

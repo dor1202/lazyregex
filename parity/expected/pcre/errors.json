@@ -152,5 +152,40 @@
     "error_message": "Compilation failed: missing terminating ] for character class at offset 1",
     "matches": [],
     "unit": ""
+  },
+  {
+    "id": "errors.trailing_backslash_with_modifier",
+    "ok": false,
+    "error_message": "No ending delimiter '/' found",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.after_escaped_slash",
+    "ok": false,
+    "error_message": "Compilation failed: missing closing parenthesis at offset 3",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.recursion_loop_empty",
+    "ok": false,
+    "error_message": "JIT stack limit exhausted",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.recursion_loop_optional_empty",
+    "ok": false,
+    "error_message": "JIT stack limit exhausted",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "errors.recursion_loop_optional_global",
+    "ok": false,
+    "error_message": "JIT stack limit exhausted",
+    "matches": [],
+    "unit": ""
   }
 ]

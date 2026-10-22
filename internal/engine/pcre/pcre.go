@@ -20,8 +20,9 @@ type pcreEngine struct{ host *wasmhost.Host }
 
 // New starts the PCRE engine. cacheDir, if non-empty, holds wazero's
 // compilation cache. Matching follows PHP: the pattern is used as
-// '/'.addcslashes($pattern, '/').'/'.$modifiers, match mode is
-// preg_match/preg_match_all, replace is preg_replace and split preg_split.
+// '/'.$pattern.'/'.$modifiers with every '/' not already escaped given a
+// backslash, match mode is preg_match/preg_match_all, replace is
+// preg_replace and split preg_split.
 func New(ctx context.Context, cacheDir string) (engine.Engine, error) {
 	h, err := wasmhost.New(ctx, wasmhost.Spec{Name: "pcre", ModuleGZ: moduleGZ}, cacheDir)
 	if err != nil {

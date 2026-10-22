@@ -535,5 +535,47 @@
       }
     ],
     "unit": "bytes"
+  },
+  {
+    "id": "basic.bare_slash",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.escaped_slash",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.escaped_backslash_then_slash",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          4
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
   }
 ]

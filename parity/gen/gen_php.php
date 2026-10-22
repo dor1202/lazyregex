@@ -8,6 +8,25 @@ function pcre_error(string $warning, string $fallback): string {
     return $msg !== '' ? $msg : $fallback;
 }
 
+// The user types the pattern a PHP developer writes between the slashes, so
+// only a '/' that is not already escaped (preceded by an odd number of
+// backslashes) gets a backslash: 'a/b' -> 'a\/b', 'a\/b' stays as it is.
+// A trailing lone backslash then escapes the closing delimiter, which PHP
+// reports as "No ending delimiter '/' found".
+function delimit(string $pattern): string {
+    $out = '';
+    $backslashes = 0;
+    for ($i = 0, $n = strlen($pattern); $i < $n; $i++) {
+        $ch = $pattern[$i];
+        if ($ch === '/' && $backslashes % 2 === 0) {
+            $out .= '\\';
+        }
+        $out .= $ch;
+        $backslashes = $ch === '\\' ? $backslashes + 1 : 0;
+    }
+    return $out;
+}
+
 function span_of($cap): array {
     // $cap is [string|null, offset] (PREG_OFFSET_CAPTURE | PREG_UNMATCHED_AS_NULL).
     if ($cap[0] === null) {
@@ -46,7 +65,7 @@ function run_case(array $c): array {
     $flags = $c['flags'] ?? '';
     $glob = strpos($flags, 'g') !== false;
     $mods = str_replace('g', '', $flags);
-    $rx = '/' . addcslashes($c['pattern'], '/') . '/' . $mods;
+    $rx = '/' . delimit($c['pattern']) . '/' . $mods;
     $text = $c['text'];
     $mode = ($c['mode'] ?? '') ?: 'match';
     $fl = PREG_OFFSET_CAPTURE | PREG_UNMATCHED_AS_NULL;
