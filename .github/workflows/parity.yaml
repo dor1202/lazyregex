@@ -25,16 +25,11 @@ jobs:
         run: |
           set -euo pipefail
           out="$(mktemp -d)"
-          # Only flavors that already have committed fixtures (engines land in later tasks).
           for flavor in python js pcre go; do
-            if [ -d "parity/expected/$flavor" ]; then
-              go run ./parity/gen/driver -flavor "$flavor" -out "$out"
-            fi
+            go run ./parity/gen/driver -flavor "$flavor" -out "$out"
           done
           for flavor in python js pcre go; do
-            if [ -d "parity/expected/$flavor" ]; then
-              diff -r "parity/expected/$flavor" "$out/$flavor" \
-                || { echo "::error::parity/expected/$flavor is stale; run: make parity-gen FLAVOR=$flavor"; exit 1; }
-            fi
+            diff -r "parity/expected/$flavor" "$out/$flavor" \
+              || { echo "::error::parity/expected/$flavor is stale; run: make parity-gen FLAVOR=$flavor"; exit 1; }
           done
       - run: go test ./parity/...
