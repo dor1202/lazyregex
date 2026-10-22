@@ -77,32 +77,36 @@ func SaveLibrary(dir string, l Library) error {
 	return writeAtomic(dir, libraryFile, data)
 }
 
-// MarshalYAML forces double-quoted style for text that yaml's literal block
-// style would not preserve exactly (leading spaces/tabs on the first line,
-// carriage returns, trailing whitespace), keeping the round trip lossless.
+// MarshalYAML forces double-quoted style for every string field that yaml's
+// block styles would not preserve exactly (any newline, carriage return, or
+// leading/trailing whitespace), keeping the round trip lossless.
 func (e Entry) MarshalYAML() (any, error) {
-	type plain Entry
-	var n yaml.Node
-	if err := n.Encode(plain(e)); err != nil {
-		return nil, err
-	}
-	if needsQuoting(e.Text) {
-		for i := 0; i+1 < len(n.Content); i += 2 {
-			if n.Content[i].Value == "text" {
-				n.Content[i+1].Style = yaml.DoubleQuotedStyle
-			}
+	// Nodes are built by hand: Node.Encode on a struct already mangles
+	// multi-line strings (it drops a leading newline) before styling.
+	n := &yaml.Node{Kind: yaml.MappingNode, Tag: "!!map"}
+	add := func(key, val string) {
+		v := &yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Value: val}
+		if needsQuoting(val) {
+			v.Style = yaml.DoubleQuotedStyle
 		}
+		n.Content = append(n.Content,
+			&yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Value: key}, v)
 	}
-	return &n, nil
+	add("name", e.Name)
+	add("flavor", string(e.Flavor))
+	add("flags", e.Flags)
+	add("pattern", e.Pattern)
+	add("replacement", e.Replacement)
+	add("text", e.Text)
+	return n, nil
 }
 
 func needsQuoting(s string) bool {
 	if s == "" {
 		return false
 	}
-	if s[0] == ' ' || s[0] == '\t' || strings.Contains(s, "\r") {
+	if strings.ContainsAny(s, "\n\r") {
 		return true
 	}
-	last := s[len(s)-1]
-	return last == ' ' || last == '\t'
+	return strings.ContainsAny(s[:1], " \t") || strings.ContainsAny(s[len(s)-1:], " \t")
 }

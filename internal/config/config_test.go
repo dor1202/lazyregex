@@ -173,3 +173,29 @@ func TestSaveAtomic(t *testing.T) {
 		t.Fatalf("leftover files: %v", names)
 	}
 }
+
+func TestLibraryRoundTripAllFields(t *testing.T) {
+	vals := []string{"\n", "\n\n", "\nlead", "\n a", "\n\nx", " x", "x ", "\tx", "a\nb", "a\n", "x\r\ny", "plain", ""}
+	set := map[string]func(*Entry, string){
+		"Name":        func(e *Entry, v string) { e.Name = v },
+		"Flags":       func(e *Entry, v string) { e.Flags = v },
+		"Pattern":     func(e *Entry, v string) { e.Pattern = v },
+		"Replacement": func(e *Entry, v string) { e.Replacement = v },
+		"Text":        func(e *Entry, v string) { e.Text = v },
+	}
+	for field, f := range set {
+		for _, v := range vals {
+			e := Entry{Name: "n", Flavor: engine.Go}
+			f(&e, v)
+			d := t.TempDir()
+			l := Library{Entries: []Entry{e, {Name: "other", Pattern: "p"}}}
+			if err := SaveLibrary(d, l); err != nil {
+				t.Fatal(err)
+			}
+			got, err := LoadLibrary(d)
+			if err != nil || !reflect.DeepEqual(l, got) {
+				t.Errorf("%s=%q: err=%v got=%#v", field, v, err, got)
+			}
+		}
+	}
+}
