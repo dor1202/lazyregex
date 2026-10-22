@@ -231,19 +231,26 @@ func (t *Theme) highlightText(text string, res engine.Result, sel int) string {
 // underline. underline[0] < 0 means none; a range starting at len(pattern)
 // underlines a trailing space.
 func (t *Theme) highlightPattern(pattern string, f engine.Flavor, flags string, underline [2]int) string {
-	return t.paintPattern(pattern, f, flags, underline, -1)
+	return t.paintPattern(pattern, f, flags, underline, noSpan, -1)
 }
 
-func (t *Theme) paintPattern(pattern string, f engine.Flavor, flags string, underline [2]int, cursor int) string {
+// noSpan is an empty underline or selection range.
+var noSpan = [2]int{-1, -1}
+
+// paintPattern is highlightPattern plus sel, a byte range drawn with a plain
+// underline in its syntax colours (the selected [7] explanation row), and a
+// cursor.
+func (t *Theme) paintPattern(pattern string, f engine.Flavor, flags string, underline, sel [2]int, cursor int) string {
 	toks := patternTokens(pattern, f, flags)
 	out := t.renderRuns(pattern, 0, len(pattern), func(i int) paint {
 		if underline[0] >= 0 && underline[0] <= i && i < underline[1] {
 			return paint{fg: "error", curly: true}
 		}
-		if toks[i] == "" {
-			return paint{fg: "text"}
+		p := paint{fg: "text", underline: sel[0] <= i && i < sel[1]}
+		if toks[i] != "" {
+			p.fg = toks[i]
 		}
-		return paint{fg: toks[i]}
+		return p
 	}, cursor)
 	if underline[0] >= 0 && underline[0] >= len(pattern) && cursor != len(pattern) {
 		out += t.paintStyle(paint{fg: "error", curly: true}).Render(" ")

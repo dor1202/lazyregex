@@ -105,6 +105,15 @@ type State struct {
 	Evaluating  bool                             // a manual evaluation is running
 	Stale       bool                             // manual mode: inputs changed since the last evaluation
 	All         map[engine.Flavor]runner.Outcome // EvalAll outcomes of the other Ready flavors
+
+	// Task 15. AllPattern and AllText are what All was evaluated on; the
+	// text is "" (a compile check for the [1] markers) unless the Compare
+	// tab was visible.
+	AllPattern string
+	AllText    string
+	ExplainSel int           // the selected [7] Explanation row
+	explained  *explainCache // explanation rows of the current pattern
+	ask        *prompt       // set by a panel to open the prompt line
 }
 
 // basePanel provides defaults for the optional parts of Panel.

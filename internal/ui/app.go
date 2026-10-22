@@ -38,6 +38,10 @@ type Model struct {
 	theme   *Theme
 	library config.Library
 	ev      evalLoop
+
+	prompt *prompt    // the ":" or y/n prompt line, when open
+	help   *helpPopup // the "?" popup, when open
+	note   *noticeMsg // shown on the bottom line until the next key
 }
 
 // patternModes maps the Pattern panel's tabs to evaluation modes.
@@ -126,20 +130,39 @@ func (m *Model) update(msg tea.Msg) tea.Cmd {
 		m.theme = newTheme(msg.IsDark(), m.state.Config.Theme)
 		m.state.Theme = m.theme
 		return nil
+	case noticeMsg:
+		m.note = &msg
+		return nil
 	case tea.PasteMsg:
+		switch {
+		case m.prompt != nil:
+			cmd, _ := m.prompt.update(msg, &m.state)
+			return cmd
+		case m.help != nil:
+			m.help.update(msg)
+			return nil
+		}
 		// Only the editor being edited receives a paste.
 		if m.editing() {
 			return m.panels[m.state.Focus].Update(msg, &m.state)
 		}
 		return nil
 	case tea.KeyPressMsg:
+		m.note = nil
+		if cmd, ok := m.overlayKey(msg); ok {
+			return cmd
+		}
 		if m.manualEnter(msg) {
 			return func() tea.Msg { return evalNowMsg{} }
 		}
 		if b, ok := m.globalBinding(msg.String()); ok {
 			return b.run(m, msg.String())
 		}
-		return m.panels[m.state.Focus].Update(msg, &m.state)
+		cmd := m.panels[m.state.Focus].Update(msg, &m.state)
+		if m.state.ask != nil { // the panel asked for the prompt line
+			m.prompt, m.state.ask = m.state.ask, nil
+		}
+		return cmd
 	}
 	return m.broadcast(msg)
 }
@@ -195,11 +218,39 @@ func (m *Model) resizeLeft(delta int) {
 	m.state.LeftWidth = clamp(leftWidth(&m.state)+delta, minLeft, maxLeft)
 }
 
-// openHelp opens the keybindings popup (Task 15).
-func (m *Model) openHelp() tea.Cmd { return nil }
+// openHelp opens the keybindings popup.
+func (m *Model) openHelp() tea.Cmd {
+	m.help = m.newHelp()
+	return nil
+}
 
-// openPrompt opens the command prompt (Task 15).
-func (m *Model) openPrompt() tea.Cmd { return nil }
+// openPrompt opens the command prompt.
+func (m *Model) openPrompt() tea.Cmd {
+	m.prompt = newPrompt("")
+	return nil
+}
+
+// overlayKey gives a key to the open prompt or help popup, which take every
+// key but ctrl+c; ok is false when neither is open.
+func (m *Model) overlayKey(k tea.KeyPressMsg) (tea.Cmd, bool) {
+	if m.prompt == nil && m.help == nil {
+		return nil, false
+	}
+	if k.String() == "ctrl+c" {
+		return tea.Quit, true
+	}
+	if m.prompt != nil {
+		cmd, done := m.prompt.update(k, &m.state)
+		if done {
+			m.prompt = nil
+		}
+		return cmd, true
+	}
+	if m.help.update(k) {
+		m.help = nil
+	}
+	return nil, true
+}
 
 // View renders the panels and the key bar, or a notice when the terminal is
 // smaller than 80x24.
@@ -233,7 +284,26 @@ func (m *Model) render() string {
 	left := lipgloss.JoinVertical(lipgloss.Left, box(PFlavor), box(PFlags), box(PMatches), box(PLibrary))
 	right := lipgloss.JoinVertical(lipgloss.Left, box(PPattern), box(PText), box(PDetails))
 	body := lipgloss.JoinHorizontal(lipgloss.Top, left, right)
-	return body + "\n" + m.keyBar(s.Width)
+	if m.help != nil {
+		box, bw, bh := m.help.view(m.theme, s.Width, s.Height-1)
+		body = overlay(body, box, s.Width, bw, bh)
+	}
+	return body + "\n" + m.bottomLine(s.Width)
+}
+
+// bottomLine is the prompt when it is open, else a notice, else the key bar.
+func (m *Model) bottomLine(w int) string {
+	switch {
+	case m.prompt != nil:
+		return m.prompt.view(m.theme, w)
+	case m.note != nil:
+		tok := "ok"
+		if m.note.err {
+			tok = "error"
+		}
+		return fitWidth(m.theme.fg(tok).Render(sanitize(m.note.text)), w)
+	}
+	return m.keyBar(w)
 }
 
 // borderToken is the border colour: red for a pattern error, green for the

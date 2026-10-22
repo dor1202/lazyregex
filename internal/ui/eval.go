@@ -40,8 +40,9 @@ type (
 	}
 	// allDoneMsg carries the outcomes of the other Ready flavors.
 	allDoneMsg struct {
-		seq int
-		out map[engine.Flavor]runner.Outcome
+		seq           int
+		pattern, text string
+		out           map[engine.Flavor]runner.Outcome
 	}
 )
 
@@ -64,6 +65,7 @@ type evalLoop struct {
 	initial engine.Flavor
 	warmed  bool                   // WarmUp has been called
 	loaded  map[engine.Flavor]bool // flavors seen Ready at least once
+	compare bool                   // the Compare tab was visible after the last update
 }
 
 // waitForEvent delivers the next runner event as a message. The shell
@@ -99,10 +101,18 @@ func (m *Model) currentInput() evalInput {
 }
 
 // afterUpdate schedules a debounced evaluation (or, for large input, marks
-// the result stale) and a debounced EvalAll when the inputs changed.
+// the result stale) and a debounced EvalAll when the inputs changed, and an
+// EvalAll when the Compare tab becomes visible (it needs the match values
+// that the [1] markers' compile check leaves out).
 func (m *Model) afterUpdate() tea.Cmd {
 	in := m.currentInput()
+	vis := compareVisible(&m.state)
+	shown := vis && !m.ev.compare
+	m.ev.compare = vis
 	if in == m.ev.last {
+		if shown {
+			return m.scheduleAll()
+		}
 		return nil
 	}
 	m.ev.last = in
@@ -147,6 +157,7 @@ func (m *Model) updateEval(msg tea.Msg) (cmd tea.Cmd, ok bool) {
 		return nil, true
 	case allDoneMsg:
 		if msg.seq == m.ev.allSeq {
+			s.AllPattern, s.AllText = msg.pattern, msg.text
 			s.All = map[engine.Flavor]runner.Outcome{}
 			for f, o := range msg.out {
 				if !errors.Is(o.Err, context.Canceled) && !errors.Is(o.Err, runner.ErrClosed) {
@@ -259,20 +270,22 @@ func (m *Model) finishEval(msg evalDoneMsg) {
 }
 
 // startAll evaluates the pattern on every other Ready flavor, for the ✗
-// markers. The live text is sent because Task 15's Compare tab shows each
-// flavor's match count from these outcomes; large (manual) input is not.
+// markers and the Compare tab. Only while Compare is visible is the live
+// text sent (Compare shows each flavor's first matches); otherwise, and for
+// large (manual) input, the text is empty: a compile check is all the
+// markers need.
 func (m *Model) startAll() tea.Cmd {
 	s := &m.state
 	if s.Runner == nil {
 		return nil
 	}
 	if s.Pattern == "" {
-		s.All = nil
+		s.All, s.AllPattern, s.AllText = nil, "", ""
 		return nil
 	}
-	text := s.Text
-	if s.Manual {
-		text = ""
+	text := ""
+	if compareVisible(s) && !s.Manual {
+		text = s.Text
 	}
 	reqs := map[engine.Flavor]engine.Request{}
 	for _, f := range engine.Flavors {
@@ -286,8 +299,8 @@ func (m *Model) startAll() tea.Cmd {
 	if len(reqs) == 0 {
 		return nil
 	}
-	seq, r := m.ev.allSeq, s.Runner
-	return func() tea.Msg { return allDoneMsg{seq: seq, out: r.EvalAll(reqs)} }
+	seq, r, pattern := m.ev.allSeq, s.Runner, s.Pattern
+	return func() tea.Msg { return allDoneMsg{seq: seq, pattern: pattern, text: text, out: r.EvalAll(reqs)} }
 }
 
 // compileError returns err as a *CompileError, or nil.

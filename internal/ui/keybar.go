@@ -12,15 +12,16 @@ import (
 // ones, as "Desc: key | …" in the key colour, and the version dimmed on the
 // right. Entries that do not fit are dropped from the end.
 func (m *Model) keyBar(w int) string {
-	s := &m.state
 	editing := m.editing()
-	items := m.panels[s.Focus].Keys(s)
-	if !editing && len(m.panels[s.Focus].Tabs()) > 1 {
-		items = append(items, KeyHelp{"[ ]", "Switch tab"})
-	}
-	for _, b := range globalBindings {
-		if b.bar && b.activeWhen(editing) {
-			items = append(items, b.help)
+	var items []KeyHelp
+	if m.help != nil {
+		items = helpKeys
+	} else {
+		items = m.localKeys()
+		for _, b := range globalBindings {
+			if b.bar && b.activeWhen(editing) {
+				items = append(items, b.help)
+			}
 		}
 	}
 

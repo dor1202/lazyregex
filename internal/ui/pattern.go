@@ -129,7 +129,7 @@ func (p *patternPanel) View(s *State, w, h int) string {
 	if editing && p.line == 0 {
 		cursor = p.pat.Cursor()
 	}
-	body := t.paintPattern(s.Pattern, s.Flavor, flags, underline, cursor)
+	body := t.paintPattern(s.Pattern, s.Flavor, flags, underline, explainSpan(s), cursor)
 	if s.Pattern == "" {
 		body += t.fg("dim").Render("type a pattern…")
 	}

@@ -17,32 +17,37 @@ type binding struct {
 }
 
 // globalBindings is the global keymap, walked by the key handler, the key
-// bar and the help popup.
-var globalBindings = []binding{
-	{keys: []string{"ctrl+c"}, help: KeyHelp{"ctrl+c", "Quit"}, inEditor: true,
-		run: func(*Model, string) tea.Cmd { return tea.Quit }},
-	{keys: []string{"esc"}, help: KeyHelp{"esc", "Leave editor"}, inEditor: true, onlyEditor: true, bar: true,
-		run: func(m *Model, _ string) tea.Cmd { m.state.Editing = false; return nil }},
-	{keys: []string{"tab"}, help: KeyHelp{"tab", "Next pane"}, inEditor: true, bar: true,
-		run: func(m *Model, _ string) tea.Cmd { return m.focus(m.state.Focus%panelCount + 1) }},
-	{keys: []string{"shift+tab"}, help: KeyHelp{"shift+tab", "Previous pane"}, inEditor: true,
-		run: func(m *Model, _ string) tea.Cmd { return m.focus((m.state.Focus+panelCount-2)%panelCount + 1) }},
-	{keys: []string{"1", "2", "3", "4", "5", "6", "7"}, help: KeyHelp{"1-7", "Focus pane"},
-		run: func(m *Model, k string) tea.Cmd { return m.focus(PanelID(k[0] - '0')) }},
-	{keys: []string{"["}, help: KeyHelp{"[", "Previous tab"},
-		run: func(m *Model, _ string) tea.Cmd { m.switchTab(-1); return nil }},
-	{keys: []string{"]"}, help: KeyHelp{"]", "Next tab"},
-		run: func(m *Model, _ string) tea.Cmd { m.switchTab(+1); return nil }},
-	{keys: []string{"+"}, help: KeyHelp{"+", "Widen left column"},
-		run: func(m *Model, _ string) tea.Cmd { m.resizeLeft(+resizeStep); return nil }},
-	{keys: []string{"_"}, help: KeyHelp{"_", "Narrow left column"},
-		run: func(m *Model, _ string) tea.Cmd { m.resizeLeft(-resizeStep); return nil }},
-	{keys: []string{":"}, help: KeyHelp{":", "Command"}, bar: true,
-		run: func(m *Model, _ string) tea.Cmd { return m.openPrompt() }},
-	{keys: []string{"?"}, help: KeyHelp{"?", "Keybindings"}, bar: true,
-		run: func(m *Model, _ string) tea.Cmd { return m.openHelp() }},
-	{keys: []string{"q"}, help: KeyHelp{"q", "Quit"},
-		run: func(*Model, string) tea.Cmd { return tea.Quit }},
+// bar and the help popup. (It is set in init because the help popup it
+// opens lists it.)
+var globalBindings []binding
+
+func init() {
+	globalBindings = []binding{
+		{keys: []string{"ctrl+c"}, help: KeyHelp{"ctrl+c", "Quit"}, inEditor: true,
+			run: func(*Model, string) tea.Cmd { return tea.Quit }},
+		{keys: []string{"esc"}, help: KeyHelp{"esc", "Leave editor"}, inEditor: true, onlyEditor: true, bar: true,
+			run: func(m *Model, _ string) tea.Cmd { m.state.Editing = false; return nil }},
+		{keys: []string{"tab"}, help: KeyHelp{"tab", "Next pane"}, inEditor: true, bar: true,
+			run: func(m *Model, _ string) tea.Cmd { return m.focus(m.state.Focus%panelCount + 1) }},
+		{keys: []string{"shift+tab"}, help: KeyHelp{"shift+tab", "Previous pane"}, inEditor: true,
+			run: func(m *Model, _ string) tea.Cmd { return m.focus((m.state.Focus+panelCount-2)%panelCount + 1) }},
+		{keys: []string{"1", "2", "3", "4", "5", "6", "7"}, help: KeyHelp{"1-7", "Focus pane"},
+			run: func(m *Model, k string) tea.Cmd { return m.focus(PanelID(k[0] - '0')) }},
+		{keys: []string{"["}, help: KeyHelp{"[", "Previous tab"},
+			run: func(m *Model, _ string) tea.Cmd { m.switchTab(-1); return nil }},
+		{keys: []string{"]"}, help: KeyHelp{"]", "Next tab"},
+			run: func(m *Model, _ string) tea.Cmd { m.switchTab(+1); return nil }},
+		{keys: []string{"+"}, help: KeyHelp{"+", "Widen left column"},
+			run: func(m *Model, _ string) tea.Cmd { m.resizeLeft(+resizeStep); return nil }},
+		{keys: []string{"_"}, help: KeyHelp{"_", "Narrow left column"},
+			run: func(m *Model, _ string) tea.Cmd { m.resizeLeft(-resizeStep); return nil }},
+		{keys: []string{":"}, help: KeyHelp{":", "Command"}, bar: true,
+			run: func(m *Model, _ string) tea.Cmd { return m.openPrompt() }},
+		{keys: []string{"?"}, help: KeyHelp{"?", "Keybindings"}, bar: true,
+			run: func(m *Model, _ string) tea.Cmd { return m.openHelp() }},
+		{keys: []string{"q"}, help: KeyHelp{"q", "Quit"},
+			run: func(*Model, string) tea.Cmd { return tea.Quit }},
+	}
 }
 
 // globalBinding returns the binding for key in the current context.
