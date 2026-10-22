@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -101,6 +102,10 @@ func assertPerms(t *testing.T, p string, want os.FileMode) {
 	st, err := os.Stat(p)
 	if err != nil {
 		t.Fatal(err)
+	}
+	// Windows has no Unix permission bits; Go reports 0777/0666 there.
+	if runtime.GOOS == "windows" {
+		return
 	}
 	if st.Mode().Perm() != want {
 		t.Fatalf("%s perm %o want %o", p, st.Mode().Perm(), want)
