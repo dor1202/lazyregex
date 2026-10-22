@@ -3,8 +3,11 @@ package main
 import (
 	"bytes"
 	"io"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/dor1202/lazyregex/internal/engine"
 	"github.com/dor1202/lazyregex/internal/ui"
@@ -32,9 +35,14 @@ func TestNonInteractivePrintsNotice(t *testing.T) {
 }
 
 func TestInteractiveStartsTUI(t *testing.T) {
-	oldI, oldR := interactive, runTUI
-	t.Cleanup(func() { interactive, runTUI = oldI, oldR })
+	oldI, oldR, oldC := interactive, runTUI, configDir
+	t.Cleanup(func() { interactive, runTUI, configDir = oldI, oldR, oldC })
 	interactive = func(io.Reader, io.Writer) bool { return true }
+	dir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(dir, "config.yaml"), []byte("mouse: false\ntimeout: 750ms\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	configDir = func() (string, error) { return dir, nil }
 	var got *ui.Deps
 	var evalErr error
 	var n int
@@ -50,6 +58,9 @@ func TestInteractiveStartsTUI(t *testing.T) {
 	}
 	if got == nil {
 		t.Fatal("TUI not started")
+	}
+	if got.ConfigDir != dir || got.Config.Mouse || got.Config.Timeout != 750*time.Millisecond {
+		t.Fatalf("config not loaded from the hooked dir: %+v", got.Config)
 	}
 	if got.Runner == nil || got.Initial.Flavor != engine.Go {
 		t.Fatalf("deps = %+v", got)

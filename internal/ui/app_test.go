@@ -8,6 +8,7 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/x/ansi"
+	"github.com/charmbracelet/x/exp/golden"
 	"github.com/charmbracelet/x/exp/teatest/v2"
 
 	"github.com/dor1202/lazyregex/internal/config"
@@ -323,9 +324,10 @@ func TestNoForbiddenBindings(t *testing.T) {
 	}
 }
 
-// TestScreen160x48 logs the full screen (go test -v -run Screen) for review.
+// TestScreen160x48 compares the full ANSI-stripped screen with
+// testdata/TestScreen160x48.golden (go test -run Screen -update rewrites it).
 func TestScreen160x48(t *testing.T) {
 	m := New(testDeps(t)).(*Model)
 	m.Update(tea.WindowSizeMsg{Width: testW, Height: testH})
-	t.Log("\n" + screen(m))
+	golden.RequireEqual(t, []byte(screen(m)))
 }

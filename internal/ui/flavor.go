@@ -28,7 +28,11 @@ func (*flavorPanel) Height(*State, int) int { return len(engine.Flavors) }
 func (*flavorPanel) Keys(*State) []KeyHelp { return []KeyHelp{{"enter", "Select flavor"}} }
 
 func (*flavorPanel) Counter(s *State) string {
-	return counterOf(slices.Index(engine.Flavors, s.Flavor), len(engine.Flavors))
+	i := slices.Index(engine.Flavors, s.Flavor)
+	if i < 0 {
+		return ""
+	}
+	return counterOf(i, len(engine.Flavors))
 }
 
 func (*flavorPanel) View(s *State, w, h int) string {

@@ -23,9 +23,10 @@ func main() {
 	os.Exit(run(os.Args[1:], os.Stdin, os.Stdout, os.Stderr))
 }
 
-// Test hooks: whether stdin and stdout are both terminals, and how the TUI
-// is started.
+// Test hooks: whether stdin and stdout are both terminals, where the config
+// lives, and how the TUI is started.
 var (
+	configDir   = config.Dir
 	interactive = func(stdin io.Reader, stdout io.Writer) bool { return isTTY(stdin) && isTTY(stdout) }
 	runTUI      = func(d ui.Deps) error {
 		_, err := tea.NewProgram(ui.New(d)).Run() // the view requests the alt screen
@@ -60,7 +61,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 
 	// Load always returns usable values; reporting its errors is Task 18's.
 	cfg := config.Defaults()
-	dir, _ := config.Dir()
+	dir, _ := configDir()
 	var lib config.Library
 	if dir != "" {
 		cfg, _ = config.Load(dir)
