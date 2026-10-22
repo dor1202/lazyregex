@@ -212,3 +212,59 @@ func TestCacheDirEmptyWithoutUserCache(t *testing.T) {
 		t.Fatalf("cacheDir = %q, want empty (no temp-dir fallback)", d)
 	}
 }
+
+type closeTracker struct {
+	io.Reader
+	closed bool
+}
+
+// The keyboard handle must stay open until the TUI has returned.
+func TestCLITTYOpenWhileTUIRuns(t *testing.T) {
+	hookTUI(t, nil)
+	ct := &closeTracker{Reader: strings.NewReader("")}
+	openTTY = func() (io.Reader, func(), error) { return ct, func() { ct.closed = true }, nil }
+	var openDuring, sawReader bool
+	runTUI = func(d ui.Deps, in io.Reader) error {
+		sawReader = in == io.Reader(ct)
+		openDuring = !ct.closed
+		return nil
+	}
+	if code := run(nil, strings.NewReader("x"), io.Discard, io.Discard); code != 0 {
+		t.Fatalf("exit %d", code)
+	}
+	if !sawReader || !openDuring || !ct.closed {
+		t.Fatalf("passed=%v openDuring=%v closedAfter=%v", sawReader, openDuring, ct.closed)
+	}
+}
+
+// The real openTTY's handle must be usable until its close func runs (it was
+// once closed early because input and output are the same file).
+func TestOpenTTYHandleSurvives(t *testing.T) {
+	in, closeFn, err := openTTY()
+	if err != nil {
+		t.Skip("no controlling terminal:", err)
+	}
+	f, ok := in.(*os.File)
+	if !ok {
+		closeFn()
+		t.Skip("not a file")
+	}
+	if _, err := f.Stat(); err != nil {
+		t.Fatalf("handle closed on return: %v", err)
+	}
+	closeFn()
+	if _, err := f.Stat(); err == nil {
+		t.Fatal("close func did not close the handle")
+	}
+}
+
+func TestCLIStartupNotice(t *testing.T) {
+	got := hookTUI(t, okTTY)
+	dir := t.TempDir()
+	os.WriteFile(filepath.Join(dir, "config.yaml"), []byte("mouse: [unclosed\n"), 0o600)
+	configDir = func() (string, error) { return dir, nil }
+	run(nil, strings.NewReader(""), io.Discard, io.Discard)
+	if got.Initial.Notice == "" {
+		t.Fatal("config error not passed as a startup notice")
+	}
+}

@@ -57,8 +57,14 @@ var (
 		if err != nil {
 			return nil, nil, err
 		}
-		out.Close()
-		return in, func() { in.Close() }, nil
+		// On Unix in and out are the same *os.File (one /dev/tty handle):
+		// close it once, and only after the program has finished with it.
+		return in, func() {
+			in.Close()
+			if out != in {
+				out.Close()
+			}
+		}, nil
 	}
 )
 
@@ -144,6 +150,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	// Load always returns usable values; its errors are reported, not fatal.
 	cfg := config.Defaults()
 	var lib config.Library
+	var notes []string // shown in the UI as well as on stderr
 	dir := ""
 	if !doExplain {
 		dir, _ = configDir()
@@ -151,9 +158,11 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 			var err error
 			if cfg, err = config.Load(dir); err != nil {
 				fmt.Fprintln(stderr, "lazyregex:", err)
+				notes = append(notes, err.Error())
 			}
 			if lib, err = config.LoadLibrary(dir); err != nil {
 				fmt.Fprintln(stderr, "lazyregex:", err)
+				notes = append(notes, err.Error())
 			}
 		}
 	}
@@ -205,10 +214,14 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		}
 		if len(data) > maxStdin {
 			data = data[:maxStdin]
-			fmt.Fprintf(stderr, "lazyregex: stdin truncated to %d MiB\n", maxStdin>>20)
+			msg := fmt.Sprintf("stdin truncated to %d MiB", maxStdin>>20)
+			fmt.Fprintln(stderr, "lazyregex:", msg)
+			notes = append(notes, msg)
 		}
 		initial.TextPrepared = runner.PrepareText(data)
 	}
+
+	initial.Notice = strings.ReplaceAll(strings.Join(notes, "; "), "\n", " ")
 
 	r := runner.New(all.Factories(), cacheDir(), cfg.Timeout)
 	defer r.Close()

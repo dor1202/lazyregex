@@ -25,6 +25,7 @@ type Deps struct {
 type InitialInput struct {
 	Flavor       engine.Flavor
 	Pattern      string
+	Notice       string // shown on the bottom line at startup (e.g. config errors)
 	Flags        string // flag letters for Flavor; empty keeps the flavor default
 	Text         string
 	TextPrepared runner.Prepared
@@ -40,9 +41,10 @@ type Model struct {
 	library config.Library
 	ev      evalLoop
 
-	prompt *prompt    // the ":" or y/n prompt line, when open
-	help   *helpPopup // the "?" popup, when open
-	note   *noticeMsg // shown on the bottom line until the next key
+	prompt    *prompt    // the ":" or y/n prompt line, when open
+	help      *helpPopup // the "?" popup, when open
+	startNote string
+	note      *noticeMsg // shown on the bottom line until the next key
 
 	hits       hitMap // what each cell of the last frame shows (mouse)
 	dragging   bool   // the column border is being dragged
@@ -54,7 +56,7 @@ var patternModes = []engine.Mode{engine.ModeMatch, engine.ModeReplace, engine.Mo
 
 // New builds the UI model. Focus starts in the pattern editor.
 func New(d Deps) tea.Model {
-	m := &Model{library: d.Library}
+	m := &Model{library: d.Library, startNote: d.Initial.Notice}
 	m.theme = newTheme(true, d.Config.Theme)
 
 	flavor := d.Initial.Flavor
@@ -110,6 +112,9 @@ func (m *Model) Init() tea.Cmd {
 	cmds := []tea.Cmd{tea.RequestBackgroundColor, m.initEval()}
 	for id := PanelID(1); id <= panelCount; id++ {
 		cmds = append(cmds, m.panels[id].Init(&m.state))
+	}
+	if m.startNote != "" {
+		cmds = append(cmds, notice(m.startNote))
 	}
 	return tea.Batch(cmds...)
 }
