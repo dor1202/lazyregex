@@ -97,6 +97,27 @@ func TestCLIExplain(t *testing.T) {
 	}
 }
 
+// On a terminal, control characters in the pattern are shown as control
+// pictures, never written raw; piped output stays byte-exact.
+func TestCLIExplainControlChars(t *testing.T) {
+	old := interactive
+	t.Cleanup(func() { interactive = old })
+	for _, tty := range []bool{true, false} {
+		interactive = func(io.Writer) bool { return tty }
+		code, out, _ := runCLI(t, "", "--explain", "-f", "go", "a\x1b\x07")
+		if code != 0 {
+			t.Fatalf("tty %v: exit %d", tty, code)
+		}
+		raw := strings.ContainsAny(out, "\x1b\x07")
+		if tty && (raw || !strings.Contains(out, "\u241b") || !strings.HasSuffix(out, "\n")) {
+			t.Errorf("tty: control characters not mapped: %q", out)
+		}
+		if !tty && !raw {
+			t.Errorf("piped: output changed: %q", out)
+		}
+	}
+}
+
 func TestCLIExplainNeedsPattern(t *testing.T) {
 	if code, _, _ := runCLI(t, "", "--explain"); code != 2 {
 		t.Fatalf("exit %d", code)

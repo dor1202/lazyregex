@@ -18,6 +18,7 @@ import (
 	"github.com/dor1202/lazyregex/internal/engine/all"
 	"github.com/dor1202/lazyregex/internal/explain"
 	"github.com/dor1202/lazyregex/internal/runner"
+	"github.com/dor1202/lazyregex/internal/termsafe"
 	"github.com/dor1202/lazyregex/internal/ui"
 	"github.com/dor1202/lazyregex/internal/version"
 )
@@ -186,6 +187,9 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 			return usageErr(stderr, "--explain needs a pattern (-p or an argument)")
 		}
 		out := explain.Render(explain.Explain(pattern, flavor, flags))
+		if interactive(stdout) {
+			out = termsafe.Lines(out)
+		}
 		fmt.Fprint(stdout, out)
 		if !strings.HasSuffix(out, "\n") {
 			fmt.Fprintln(stdout)

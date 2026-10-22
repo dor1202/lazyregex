@@ -11,6 +11,7 @@ import (
 
 	"github.com/dor1202/lazyregex/internal/engine"
 	"github.com/dor1202/lazyregex/internal/explain"
+	"github.com/dor1202/lazyregex/internal/termsafe"
 )
 
 // paint is the look of a run of cells.
@@ -45,37 +46,12 @@ func (t *Theme) paintStyle(p paint) lipgloss.Style {
 	return st
 }
 
-// displayRune is how a rune of user or engine text is drawn, so that
-// nothing reaches the terminal raw that could act as a control sequence or
-// reorder the display, and widths stay exact: C0 controls (tab included)
-// become their one-cell Unicode control pictures, DEL becomes ␡, and C1
-// controls (U+0080–U+009F, e.g. U+009B CSI) and bidirectional controls
-// become U+FFFD.
-func displayRune(r rune) rune {
-	switch {
-	case r < 0x20:
-		return 0x2400 + r
-	case r == 0x7f:
-		return '␡'
-	case r >= 0x80 && r <= 0x9f, isBidiControl(r):
-		return utf8.RuneError
-	}
-	return r
-}
-
-// isBidiControl reports the Unicode bidirectional formatting characters.
-func isBidiControl(r rune) bool {
-	switch {
-	case r == 0x061c, r == 0x200e, r == 0x200f:
-		return true
-	case r >= 0x202a && r <= 0x202e, r >= 0x2066 && r <= 0x2069:
-		return true
-	}
-	return false
-}
+// displayRune is how a rune of user or engine text is drawn (see
+// termsafe.Rune).
+func displayRune(r rune) rune { return termsafe.Rune(r) }
 
 // sanitize applies displayRune to a whole string.
-func sanitize(s string) string { return strings.Map(displayRune, s) }
+func sanitize(s string) string { return termsafe.String(s) }
 
 // runeCells is the cell width of a rune as drawn.
 func runeCells(r rune) int { return runewidth.RuneWidth(displayRune(r)) }
