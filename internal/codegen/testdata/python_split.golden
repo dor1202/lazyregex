@@ -1,0 +1,7 @@
+import re
+
+pattern = re.compile(r",\s*|/")
+text = "a, b/c"
+
+parts = pattern.split(text)
+print(parts)

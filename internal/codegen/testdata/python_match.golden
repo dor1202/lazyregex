@@ -1,0 +1,7 @@
+import re
+
+pattern = re.compile(r"(\w+)@(\w+)\.\w+", re.IGNORECASE | re.MULTILINE)
+text = "ann@x.com, Bob@y.org\nzed@z.net"
+
+for m in pattern.finditer(text):
+    print(m.span(), m.group(0), m.groups())

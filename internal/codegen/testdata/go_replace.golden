@@ -1,0 +1,19 @@
+package main
+
+import (
+	"fmt"
+	"regexp"
+)
+
+func main() {
+	re := regexp.MustCompile(`(\w+)@(\w+)\.\w+`)
+	text := `ann@x.com, Bob@y.org
+zed@z.net`
+
+	result := text
+	if loc := re.FindStringSubmatchIndex(text); loc != nil {
+		repl := re.ExpandString(nil, `${2}@${1}`, text, loc)
+		result = text[:loc[0]] + string(repl) + text[loc[1]:]
+	}
+	fmt.Printf("%q\n", result)
+}

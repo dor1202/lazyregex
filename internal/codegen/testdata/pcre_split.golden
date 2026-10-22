@@ -1,0 +1,5 @@
+<?php
+$text = 'a, b/c';
+
+$parts = preg_split('/,\\s*|\\//', $text);
+print_r($parts);

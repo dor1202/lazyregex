@@ -1,0 +1,7 @@
+import re
+
+pattern = re.compile(r"(\w+)@(\w+)\.\w+")
+text = "ann@x.com, Bob@y.org\nzed@z.net"
+
+result = pattern.sub(r"\2@\1", text, count=1)
+print(result)

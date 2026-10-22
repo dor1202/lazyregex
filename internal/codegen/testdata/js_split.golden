@@ -1,0 +1,5 @@
+const re = /,\s*|\//g;
+const text = "a, b/c";
+
+const parts = text.split(re);
+console.log(parts);

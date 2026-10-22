@@ -1,0 +1,16 @@
+package main
+
+import (
+	"fmt"
+	"regexp"
+)
+
+func main() {
+	re := regexp.MustCompile(`(?im)(\w+)@(\w+)\.\w+`)
+	text := `ann@x.com, Bob@y.org
+zed@z.net`
+
+	for _, m := range re.FindAllStringSubmatch(text, -1) {
+		fmt.Printf("%q\n", m)
+	}
+}

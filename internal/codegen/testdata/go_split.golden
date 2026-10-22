@@ -1,0 +1,14 @@
+package main
+
+import (
+	"fmt"
+	"regexp"
+)
+
+func main() {
+	re := regexp.MustCompile(`,\s*|/`)
+	text := `a, b/c`
+
+	parts := re.Split(text, -1)
+	fmt.Printf("%q\n", parts)
+}

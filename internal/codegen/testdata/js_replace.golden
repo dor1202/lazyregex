@@ -1,0 +1,5 @@
+const re = /(\w+)@(\w+)\.\w+/;
+const text = "ann@x.com, Bob@y.org\nzed@z.net";
+
+const result = text.replace(re, "$2@$1");
+console.log(result);

@@ -1,0 +1,6 @@
+<?php
+$text = 'ann@x.com, Bob@y.org
+zed@z.net';
+
+preg_match_all('/(\\w+)@(\\w+)\\.\\w+/im', $text, $m, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
+print_r($m);

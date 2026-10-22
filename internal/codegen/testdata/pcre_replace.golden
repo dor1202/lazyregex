@@ -1,0 +1,6 @@
+<?php
+$text = 'ann@x.com, Bob@y.org
+zed@z.net';
+
+$result = preg_replace('/(\\w+)@(\\w+)\\.\\w+/', '$2@$1', $text, 1);
+var_dump($result);
