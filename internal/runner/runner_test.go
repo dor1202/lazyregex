@@ -304,3 +304,33 @@ func TestRunnerEmptyMatchesTerminate(t *testing.T) {
 		t.Fatalf("matches %+v", res.Matches)
 	}
 }
+
+func TestRunnerEvalAllIndependentOfEval(t *testing.T) {
+	r := newFake(5*time.Second, engine.Python)
+	defer r.Close()
+	r.Load(engine.Python)
+	waitState(t, r, engine.Python, Ready)
+	mainc := make(chan error, 1)
+	go func() {
+		_, err := r.Eval(engine.Python, engine.Request{Pattern: "200ms"})
+		mainc <- err
+	}()
+	time.Sleep(30 * time.Millisecond)
+	out := r.EvalAll(map[engine.Flavor]engine.Request{engine.Python: {Pattern: "100ms"}})
+	if o := out[engine.Python]; o.Err != nil {
+		t.Fatalf("EvalAll err = %v", o.Err)
+	}
+	if err := <-mainc; err != nil {
+		t.Fatalf("main Eval err = %v", err)
+	}
+	// And a main Eval started during EvalAll does not cancel it.
+	allc := make(chan map[engine.Flavor]Outcome, 1)
+	go func() { allc <- r.EvalAll(map[engine.Flavor]engine.Request{engine.Python: {Pattern: "200ms"}}) }()
+	time.Sleep(30 * time.Millisecond)
+	if _, err := r.Eval(engine.Python, engine.Request{Pattern: "10ms"}); err != nil {
+		t.Fatal(err)
+	}
+	if o := (<-allc)[engine.Python]; o.Err != nil {
+		t.Fatalf("EvalAll cancelled by Eval: %v", o.Err)
+	}
+}

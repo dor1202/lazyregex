@@ -65,14 +65,14 @@ func DefaultCacheDir() string {
 }
 
 type slot struct {
-	factory Factory
-	state   State
-	eng     engine.Engine
-	info    engine.Info
-	err     error
-	ready   chan struct{}      // closed when loading finishes (success or failure)
-	cancel  context.CancelFunc // cancels the in-flight Eval, if any
-	evalID  uint64
+	factory   Factory
+	state     State
+	eng       engine.Engine
+	info      engine.Info
+	err       error
+	ready     chan struct{}      // closed when loading finishes (success or failure)
+	cancel    context.CancelFunc // cancels the in-flight Eval, if any
+	allCancel context.CancelFunc // cancels the in-flight EvalAll entry, if any
 }
 
 // Runner manages one engine per flavor. All methods are safe for concurrent
@@ -87,7 +87,6 @@ type Runner struct {
 	mu     sync.Mutex
 	slots  map[engine.Flavor]*slot
 	closed bool
-	nextID uint64
 	loads  sync.WaitGroup
 	evals  sync.WaitGroup
 
@@ -232,6 +231,12 @@ func (r *Runner) Eval(f engine.Flavor, req engine.Request) (engine.Result, error
 // ErrTimeout, and the flavor goes Restarting then Ready (the engine restarts
 // itself on its next Eval). The timeout does not include engine load time.
 func (r *Runner) EvalTimeout(f engine.Flavor, req engine.Request, d time.Duration) (engine.Result, error) {
+	return r.eval(f, req, d, false)
+}
+
+// eval implements EvalTimeout. all selects the EvalAll cancellation scope,
+// which is independent of the main (Eval) scope of the same flavor.
+func (r *Runner) eval(f engine.Flavor, req engine.Request, d time.Duration, all bool) (engine.Result, error) {
 	r.mu.Lock()
 	s := r.slots[f]
 	if r.closed {
@@ -242,14 +247,16 @@ func (r *Runner) EvalTimeout(f engine.Flavor, req engine.Request, d time.Duratio
 		r.mu.Unlock()
 		return engine.Result{}, errors.New("unsupported flavor: " + string(f))
 	}
-	if s.cancel != nil {
-		s.cancel() // supersede the previous evaluation
+	slotCancel := &s.cancel
+	if all {
+		slotCancel = &s.allCancel
+	}
+	if *slotCancel != nil {
+		(*slotCancel)() // supersede the previous evaluation in this scope
 	}
 	ctx, cancel := context.WithCancel(r.ctx)
 	defer cancel()
-	r.nextID++
-	id := r.nextID
-	s.cancel, s.evalID = cancel, id
+	*slotCancel = cancel
 	r.startLoadLocked(f)
 	r.evals.Add(1)
 	defer r.evals.Done()
@@ -310,7 +317,10 @@ func (r *Runner) markRestarted(s *slot, f engine.Flavor) {
 }
 
 // EvalAll evaluates the request of every flavor that is Ready, concurrently.
-// Flavors that are not Ready are absent from the result.
+// Flavors that are not Ready are absent from the result. EvalAll has its own
+// cancellation scope: a newer EvalAll supersedes the entries of an older one
+// (they return context.Canceled), but it neither cancels nor is cancelled by
+// Eval/EvalTimeout on the same flavor.
 func (r *Runner) EvalAll(reqs map[engine.Flavor]engine.Request) map[engine.Flavor]Outcome {
 	out := map[engine.Flavor]Outcome{}
 	var mu sync.Mutex
@@ -322,7 +332,7 @@ func (r *Runner) EvalAll(reqs map[engine.Flavor]engine.Request) map[engine.Flavo
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			res, err := r.Eval(f, req)
+			res, err := r.eval(f, req, r.timeout, true)
 			mu.Lock()
 			out[f] = Outcome{res, err}
 			mu.Unlock()
