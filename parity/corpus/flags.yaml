@@ -1,0 +1,24 @@
+- {id: flags.ignorecase, pattern: 'abc', flags: i, text: 'ABC'}
+- {id: flags.ignorecase_global, pattern: '[a-c]+', flags: gi, text: 'aBcD'}
+- {id: flags.multiline_off, pattern: '^b', flags: g, text: "a\nb"}
+- {id: flags.multiline_on, pattern: '^b', flags: gm, text: "a\nb"}
+- {id: flags.dotall_off, pattern: 'a.c', flags: g, text: "a\nc"}
+- {id: flags.dotall_on, pattern: 'a.c', flags: gs, text: "a\nc"}
+- {id: flags.combo_ims, pattern: '^A.C$', flags: gims, text: "x\na\nC\ny"}
+- {id: flags.verbose_python_pcre, flavors: [python, pcre], pattern: '(\d+) \s* ([a-z]+)', flags: gx, text: '12 ab 34cd'}
+- {id: flags.ungreedy, flavors: [pcre, go], pattern: 'a.+b', flags: gU, text: 'axbxb'}
+- {id: flags.inline_ignorecase, flavors: [python, pcre, go], pattern: '(?i)abc', flags: g, text: 'ABC abc'}
+- {id: flags.inline_ignorecase_js, flavors: [js], pattern: '(?i)abc', flags: g, text: 'ABC abc'}
+- {id: flags.inline_scoped, flavors: [python, js, pcre, go], pattern: '(?i:a)b', flags: g, text: 'Ab AB ab'}
+- {id: flags.inline_multiline, flavors: [python, pcre, go], pattern: '(?m)^b', flags: g, text: "a\nb"}
+- {id: flags.js_sticky, flavors: [js], pattern: 'a', flags: y, text: 'ab'}
+- {id: flags.js_sticky_global, flavors: [js], pattern: 'a', flags: gy, text: 'aab aa'}
+- {id: flags.js_unicode, flavors: [js], pattern: '^.$', flags: u, text: '😀'}
+- {id: flags.js_no_unicode, flavors: [js], pattern: '^.$', text: '😀'}
+- {id: flags.pcre_anchored, flavors: [pcre], pattern: 'b', flags: gA, text: 'bba'}
+- {id: flags.pcre_dollar_endonly, flavors: [pcre], pattern: 'a$', flags: D, text: "a\n"}
+- {id: flags.pcre_dollar_default, flavors: [pcre], pattern: 'a$', text: "a\n"}
+- {id: flags.dollar_before_final_newline, pattern: 'a$', text: "a\n"}
+- {id: flags.python_ascii, flavors: [python], pattern: '\w+', flags: ga, text: 'é ab'}
+- {id: flags.python_unicode_default, flavors: [python], pattern: '\w+', flags: g, text: 'é ab'}
+- {id: flags.no_flags_global_off, pattern: 'a', text: 'aaa'}

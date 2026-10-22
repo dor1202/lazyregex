@@ -1,0 +1,21 @@
+- {id: groups.unmatched_optional, pattern: '(a)?(b)', text: 'b'}
+- {id: groups.unmatched_optional_global, pattern: '(a)?(b)', flags: g, text: 'b ab'}
+- {id: groups.alternation_groups, pattern: '(a)|(b)', flags: g, text: 'ba'}
+- {id: groups.named_p, flavors: [python, pcre, go], pattern: '(?P<year>\d{4})-(?P<mon>\d\d)', flags: g, text: '2026-10 and 1999-01'}
+- {id: groups.named_angle, flavors: [js, pcre, go], pattern: '(?<year>\d{4})-(?<mon>\d\d)', flags: g, text: '2026-10 and 1999-01'}
+- {id: groups.named_mixed_with_unnamed, flavors: [python, pcre, go], pattern: '(\w)(?P<n>\d)(\w)', text: 'a1b'}
+- {id: groups.named_mixed_angle, flavors: [js, pcre, go], pattern: '(\w)(?<n>\d)(\w)', text: 'a1b'}
+- {id: groups.nested, pattern: '((a)(b))', text: 'ab'}
+- {id: groups.nested_optional_inner, pattern: '(a(b)?)+', text: 'aba'}
+- {id: groups.repeated_last_iteration, pattern: '(a|b)+', text: 'abab'}
+- {id: groups.star_unmatched, pattern: '(a)*', text: 'b'}
+- {id: groups.non_capturing, pattern: '(?:a)(b)', text: 'ab'}
+- {id: groups.empty_group, pattern: '()a', text: 'a'}
+- {id: groups.trailing_unmatched, pattern: '(a)|b', text: 'b'}
+- {id: groups.many_groups, pattern: '(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)(k)', text: 'abcdefghijk'}
+- {id: groups.group_in_lookahead, pattern: 'a(?=(b))', text: 'ab'}
+- {id: groups.backref_to_group, pattern: '(\w+) \1', flags: g, text: 'the the cat cat sat'}
+- {id: groups.alternation_named_p, flavors: [python, pcre, go], pattern: '(?P<a>x)|(?P<b>y)', flags: g, text: 'xy'}
+- {id: groups.star_of_star, pattern: '(a*)*', text: 'b'}
+- {id: groups.star_of_plus, pattern: '(a+)*', text: 'aab'}
+- {id: groups.multi_line_groups, pattern: '^(\w+):\s*(.*)$', flags: gm, text: "k1: v1\nk2: v2"}

@@ -1,0 +1,463 @@
+[
+  {
+    "id": "basic.literal",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          2,
+          5
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.digits_global",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          6
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          8,
+          11
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.digits_first",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          2
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.no_match",
+    "ok": true,
+    "matches": [],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.ignorecase",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          11
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          12,
+          17
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.caret_multiline",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          7
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          8,
+          13
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.caret_single_line",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.dollar_multiline",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          7
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          8,
+          13
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.dot_no_newline",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          4,
+          7
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.dot_dotall",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          7
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.alternation",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          7
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          13,
+          16
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.lazy",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          6
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.greedy",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          6
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.word_boundary",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          18,
+          21
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.counted_quantifier",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          2,
+          4
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          5,
+          8
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          9,
+          12
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.char_class",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          7
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.negated_class",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          4
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          7
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          8,
+          11
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.backreference",
+    "ok": false,
+    "error_message": "error parsing regexp: invalid escape sequence: `\\1`",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "basic.lookahead",
+    "ok": false,
+    "error_message": "error parsing regexp: invalid or unsupported Perl syntax: `(?=`",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "basic.negative_lookahead",
+    "ok": false,
+    "error_message": "error parsing regexp: invalid or unsupported Perl syntax: `(?!`",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "basic.lookbehind",
+    "ok": false,
+    "error_message": "error parsing regexp: invalid named capture: `(?<=a)b`",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "basic.ungreedy_flag",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.whitespace_class",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          4
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          5,
+          7
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "basic.optional",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          12
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  }
+]

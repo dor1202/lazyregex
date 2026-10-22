@@ -1,0 +1,40 @@
+name: parity
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+      - name: Regenerate fixtures and diff against the committed ones
+        run: |
+          set -euo pipefail
+          out="$(mktemp -d)"
+          # Only flavors that already have committed fixtures (engines land in later tasks).
+          for flavor in python js pcre go; do
+            if [ -d "parity/expected/$flavor" ]; then
+              go run ./parity/gen/driver -flavor "$flavor" -out "$out"
+            fi
+          done
+          for flavor in python js pcre go; do
+            if [ -d "parity/expected/$flavor" ]; then
+              diff -r "parity/expected/$flavor" "$out/$flavor" \
+                || { echo "::error::parity/expected/$flavor is stale; run: make parity-gen FLAVOR=$flavor"; exit 1; }
+            fi
+          done
+      - run: go test ./parity/...

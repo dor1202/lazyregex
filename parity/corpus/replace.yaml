@@ -1,0 +1,28 @@
+- {id: replace.swap_python, flavors: [python], mode: replace, pattern: '(\w+)@(\w+)', flags: g, text: 'a@b c@d', replacement: '\2 at \1'}
+- {id: replace.swap_dollar, flavors: [js, pcre, go], mode: replace, pattern: '(\w+)@(\w+)', flags: g, text: 'a@b c@d', replacement: '$2 at $1'}
+- {id: replace.first_only_python, flavors: [python], mode: replace, pattern: '(\w+)@(\w+)', text: 'a@b c@d', replacement: '\2 at \1'}
+- {id: replace.first_only_dollar, flavors: [js, pcre, go], mode: replace, pattern: '(\w+)@(\w+)', text: 'a@b c@d', replacement: '$2 at $1'}
+- {id: replace.no_match, mode: replace, pattern: 'z', flags: g, text: 'abc', replacement: 'Q'}
+- {id: replace.literal, mode: replace, pattern: 'o', flags: g, text: 'foo boo', replacement: '0'}
+- {id: replace.empty_matches_global, mode: replace, pattern: 'x*', flags: g, text: 'abc', replacement: '-'}
+- {id: replace.empty_matches_first, mode: replace, pattern: 'x*', text: 'abc', replacement: '-'}
+- {id: replace.star_baaa, mode: replace, pattern: 'a*', flags: g, text: 'baaa', replacement: '-'}
+- {id: replace.whole_match_python, flavors: [python], mode: replace, pattern: '\d+', flags: g, text: 'a1 b22', replacement: '<\g<0>>'}
+- {id: replace.whole_match_js, flavors: [js], mode: replace, pattern: '\d+', flags: g, text: 'a1 b22', replacement: '<$&>'}
+- {id: replace.whole_match_pcre, flavors: [pcre], mode: replace, pattern: '\d+', flags: g, text: 'a1 b22', replacement: '<$0>'}
+- {id: replace.whole_match_go, flavors: [go], mode: replace, pattern: '\d+', flags: g, text: 'a1 b22', replacement: '<${0}>'}
+- {id: replace.named_python, flavors: [python], mode: replace, pattern: '(?P<n>\d+)', flags: g, text: 'a1 b22', replacement: '[\g<n>]'}
+- {id: replace.named_js, flavors: [js], mode: replace, pattern: '(?<n>\d+)', flags: g, text: 'a1 b22', replacement: '[$<n>]'}
+- {id: replace.named_go, flavors: [go], mode: replace, pattern: '(?P<n>\d+)', flags: g, text: 'a1 b22', replacement: '[${n}]'}
+- {id: replace.unmatched_group_python, flavors: [python], mode: replace, pattern: '(a)?b', text: 'b', replacement: '[\1]'}
+- {id: replace.unmatched_group_dollar, flavors: [js, pcre, go], mode: replace, pattern: '(a)?b', text: 'b', replacement: '[$1]'}
+- {id: replace.missing_group_python, flavors: [python], mode: replace, pattern: '(a)', text: 'a', replacement: '\5'}
+- {id: replace.missing_group_dollar, flavors: [js, pcre, go], mode: replace, pattern: '(a)', text: 'a', replacement: '$5'}
+- {id: replace.go_greedy_name, flavors: [go], mode: replace, pattern: '(a)', text: 'a', replacement: '$1x'}
+- {id: replace.dollar_escape, flavors: [js, go], mode: replace, pattern: 'a', text: 'a', replacement: '$$'}
+- {id: replace.ignorecase, mode: replace, pattern: 'hello', flags: gi, text: 'Hello HELLO', replacement: 'bye'}
+- {id: replace.newline_in_text, mode: replace, pattern: '^', flags: gm, text: "a\nb", replacement: '> '}
+- {id: replace.unicode, mode: replace, pattern: 'é', flags: g, text: 'café éé', replacement: 'e'}
+- {id: replace.word_unicode, mode: replace, pattern: '\w', flags: g, text: 'hé', replacement: '_'}
+- {id: replace.backslash_python, flavors: [python], mode: replace, pattern: 'a', text: 'a', replacement: '\\'}
+- {id: replace.delete, mode: replace, pattern: '\s+', flags: g, text: 'a b  c', replacement: ''}

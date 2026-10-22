@@ -1,0 +1,26 @@
+- {id: unicode.word_plain, pattern: '\w+', flags: g, text: 'héllo 😀 wörld'}
+- {id: unicode.word_pcre_u, flavors: [pcre], pattern: '\w+', flags: gu, text: 'héllo 😀 wörld'}
+- {id: unicode.word_js_u, flavors: [js], pattern: '\w+', flags: gu, text: 'héllo 😀 wörld'}
+- {id: unicode.word_python_ascii, flavors: [python], pattern: '\w+', flags: ga, text: 'héllo 😀 wörld'}
+- {id: unicode.dot_plain, pattern: '.', flags: g, text: 'héllo 😀 wörld'}
+- {id: unicode.dot_pcre_u, flavors: [pcre], pattern: '.', flags: gu, text: 'a😀é'}
+- {id: unicode.dot_js_u, flavors: [js], pattern: '.', flags: gu, text: 'a😀é'}
+- {id: unicode.word_boundary, pattern: '\b', flags: g, text: 'héllo 😀 wörld'}
+- {id: unicode.word_boundary_pcre_u, flavors: [pcre], pattern: '\b', flags: gu, text: 'héllo 😀 wörld'}
+- {id: unicode.literal_emoji, pattern: '😀', flags: g, text: 'a😀b😀'}
+- {id: unicode.literal_accent, pattern: 'é', flags: g, text: 'café éé'}
+- {id: unicode.class_emoji, flavors: [python, js, go], pattern: '[😀😁]', flags: g, text: 'a😀b😁c'}
+- {id: unicode.class_emoji_pcre_u, flavors: [pcre], pattern: '[😀😁]', flags: gu, text: 'a😀b😁c'}
+- {id: unicode.ignorecase_accent, pattern: 'É', flags: gi, text: 'é É'}
+- {id: unicode.ignorecase_accent_pcre_u, flavors: [pcre], pattern: 'É', flags: giu, text: 'é É'}
+- {id: unicode.property_letters_go, flavors: [go], pattern: '\p{L}+', flags: g, text: 'héllo 😀 日本語'}
+- {id: unicode.property_letters_pcre_u, flavors: [pcre], pattern: '\p{L}+', flags: gu, text: 'héllo 😀 日本語'}
+- {id: unicode.property_letters_js_u, flavors: [js], pattern: '\p{L}+', flags: gu, text: 'héllo 😀 日本語'}
+- {id: unicode.property_letters_python, flavors: [python], pattern: '\p{L}+', flags: g, text: 'héllo 😀 日本語'}
+- {id: unicode.cjk_word, pattern: '\w+', flags: g, text: '日本語 text'}
+- {id: unicode.combining_mark, pattern: '.', flags: g, text: "éx"}
+- {id: unicode.zwj_emoji, pattern: '.', flags: g, text: "👨‍👩"}
+- {id: unicode.digit_arabic, pattern: '\d+', flags: g, text: "12 ١٢"}
+- {id: unicode.codepoint_escape_js, flavors: [js], pattern: '\u{1F600}', flags: gu, text: 'x😀'}
+- {id: unicode.codepoint_escape_pcre, flavors: [pcre, go], pattern: '\x{1F600}', flags: g, text: 'x😀'}
+- {id: unicode.codepoint_escape_pcre_u, flavors: [pcre], pattern: '\x{1F600}', flags: gu, text: 'x😀'}

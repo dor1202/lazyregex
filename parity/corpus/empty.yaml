@@ -1,0 +1,19 @@
+- {id: empty.star_after_text, pattern: 'a*', flags: g, text: 'baaa'}
+- {id: empty.star_first_only, pattern: 'a*', text: 'baaa'}
+- {id: empty.word_boundary, pattern: '\b', flags: g, text: 'ab cd'}
+- {id: empty.star_on_empty_global, pattern: 'x*', flags: g, text: ''}
+- {id: empty.star_on_empty, pattern: 'x*', text: ''}
+- {id: empty.lookahead_adjacent, pattern: '(?=a)', flags: g, text: 'aa'}
+- {id: empty.caret_on_empty, pattern: '^', flags: g, text: ''}
+- {id: empty.dollar_global, pattern: '$', flags: g, text: 'abc'}
+- {id: empty.caret_multiline, pattern: '^', flags: gm, text: "a\nb"}
+- {id: empty.empty_pattern, pattern: '', flags: g, text: 'abc'}
+- {id: empty.lazy_star, pattern: 'a*?', flags: g, text: 'aa'}
+- {id: empty.optional_global, pattern: 'a?', flags: g, text: 'ba'}
+- {id: empty.star_group, pattern: '(a*)', flags: g, text: 'baa'}
+- {id: empty.mixed_nonempty_and_empty, pattern: '\d*', flags: g, text: 'a12b'}
+- {id: empty.empty_after_nonempty, pattern: 'a*', flags: g, text: 'aab'}
+- {id: empty.lookbehind_empty, pattern: '(?<=a)', flags: g, text: 'aa'}
+- {id: empty.dollar_multiline, pattern: '$', flags: gm, text: "a\nb\n"}
+- {id: empty.nonword_boundary, pattern: '\B', flags: g, text: 'ab c'}
+- {id: empty.unicode_empty, pattern: 'x*', flags: g, text: 'é😀'}

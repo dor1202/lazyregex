@@ -1,0 +1,26 @@
+# Corpus case: {id, flavors (default all), pattern, flags, text, mode (default match), replacement}
+- {id: basic.literal, pattern: 'abc', text: 'xxabcxx'}
+- {id: basic.digits_global, pattern: '\d+', flags: g, text: 'a1 b22 c333'}
+- {id: basic.digits_first, pattern: '\d+', text: 'a1 b22 c333'}
+- {id: basic.no_match, pattern: 'z', flags: g, text: 'abc'}
+- {id: basic.ignorecase, pattern: 'hello', flags: gi, text: 'Hello HELLO hello'}
+- {id: basic.caret_multiline, pattern: '^\w+', flags: gm, text: "one\ntwo\nthree"}
+- {id: basic.caret_single_line, pattern: '^\w+', flags: g, text: "one\ntwo\nthree"}
+- {id: basic.dollar_multiline, pattern: '\w+$', flags: gm, text: "one\ntwo\nthree"}
+- {id: basic.dot_no_newline, pattern: 'a.b', flags: g, text: "a\nb a-b"}
+- {id: basic.dot_dotall, pattern: 'a.b', flags: gs, text: "a\nb a-b"}
+- {id: basic.alternation, pattern: 'cat|dog', flags: g, text: 'cat dog bird cat'}
+- {id: basic.lazy, pattern: '<.+?>', flags: g, text: '<a><b>'}
+- {id: basic.greedy, pattern: '<.+>', flags: g, text: '<a><b>'}
+- {id: basic.word_boundary, pattern: '\bfoo\b', flags: g, text: 'foo foobar barfoo foo'}
+- {id: basic.counted_quantifier, pattern: '\d{2,3}', flags: g, text: '1 12 123 1234'}
+- {id: basic.char_class, pattern: '[a-c]+', flags: g, text: 'abcdabc'}
+- {id: basic.negated_class, pattern: '[^aeiou\s]+', flags: g, text: 'hello world'}
+- {id: basic.backreference, pattern: '(\w)\1', flags: g, text: 'aabbcd'}
+- {id: basic.lookahead, pattern: 'foo(?=bar)', flags: g, text: 'foobar foobaz'}
+- {id: basic.negative_lookahead, pattern: 'foo(?!bar)', flags: g, text: 'foobar foobaz'}
+- {id: basic.lookbehind, pattern: '(?<=a)b', flags: g, text: 'ab cb ab'}
+- {id: basic.ungreedy_flag, flavors: [pcre, go], pattern: 'a+', flags: gU, text: 'aaa'}
+- {id: basic.verbose_flag, flavors: [python, pcre], pattern: 'a b # comment', flags: x, text: 'xabx'}
+- {id: basic.whitespace_class, pattern: '\s+', flags: g, text: "a \t b\n\nc"}
+- {id: basic.optional, pattern: 'colou?r', flags: g, text: 'color colour'}

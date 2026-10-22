@@ -1,0 +1,186 @@
+[
+  {
+    "id": "split.comma",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.whitespace_edges",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "",
+      "a",
+      "b",
+      ""
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.no_match",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "abc"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.empty_text",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      ""
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.empty_pattern_matches",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.empty_pattern",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.capture_group",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.optional_capture",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "1",
+      "2",
+      "3"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.leading_separator",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "",
+      "a",
+      "b"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.trailing_separator",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      ""
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.adjacent_separators",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "",
+      "b"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.ignorecase",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.unicode_text",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "héllo",
+      "😀",
+      "wörld"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.global_flag_ignored",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.newline",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      ""
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.multi_capture",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "split.word_boundary",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "ab",
+      " ",
+      "cd"
+    ],
+    "unit": "bytes"
+  }
+]

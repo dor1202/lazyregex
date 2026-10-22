@@ -1,0 +1,408 @@
+[
+  {
+    "id": "unicode.word_plain",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          6
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          12,
+          13
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          15,
+          18
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.dot_plain",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          4
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          5,
+          6
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          7
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          7,
+          11
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          11,
+          12
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          12,
+          13
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          13,
+          15
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          15,
+          16
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          16,
+          17
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          17,
+          18
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.word_boundary",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          6
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          12,
+          12
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          13,
+          13
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          15,
+          15
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          18,
+          18
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.literal_emoji",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          10
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.literal_accent",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          3,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          8
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          8,
+          10
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.class_emoji",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          10
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.ignorecase_accent",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          5
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.property_letters_go",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          6
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          12,
+          21
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.cjk_word",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          10,
+          14
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.combining_mark",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          4
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.zwj_emoji",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          4
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          7
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          7,
+          11
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.digit_arabic",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          2
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "unicode.codepoint_escape_pcre",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          5
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  }
+]

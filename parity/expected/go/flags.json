@@ -1,0 +1,174 @@
+[
+  {
+    "id": "flags.ignorecase",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.ignorecase_global",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.multiline_off",
+    "ok": true,
+    "matches": [],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.multiline_on",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          2,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.dotall_off",
+    "ok": true,
+    "matches": [],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.dotall_on",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.combo_ims",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          2,
+          5
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.ungreedy",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.inline_ignorecase",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          7
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.inline_scoped",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          8
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.inline_multiline",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          2,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.dollar_before_final_newline",
+    "ok": true,
+    "matches": [],
+    "unit": "bytes"
+  },
+  {
+    "id": "flags.no_flags_global_off",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "bytes"
+  }
+]

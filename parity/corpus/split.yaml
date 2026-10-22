@@ -1,0 +1,18 @@
+- {id: split.comma, mode: split, pattern: ',\s*', text: 'a, b,c'}
+- {id: split.whitespace_edges, mode: split, pattern: '\s+', text: ' a b '}
+- {id: split.no_match, mode: split, pattern: 'z', text: 'abc'}
+- {id: split.empty_text, mode: split, pattern: ',', text: ''}
+- {id: split.empty_pattern_matches, mode: split, pattern: 'x*', text: 'abc'}
+- {id: split.empty_pattern, mode: split, pattern: '', text: 'abc'}
+- {id: split.capture_group, mode: split, pattern: '(,)', text: 'a,b,c'}
+- {id: split.optional_capture, mode: split, pattern: '(a)|b', text: '1a2b3'}
+- {id: split.lookahead, flavors: [python, js, pcre], mode: split, pattern: '(?=[A-Z])', text: 'helloWorldFoo'}
+- {id: split.leading_separator, mode: split, pattern: ',', text: ',a,b'}
+- {id: split.trailing_separator, mode: split, pattern: ',', text: 'a,b,'}
+- {id: split.adjacent_separators, mode: split, pattern: ',', text: 'a,,b'}
+- {id: split.ignorecase, mode: split, pattern: 'x', flags: i, text: 'aXbxc'}
+- {id: split.unicode_text, mode: split, pattern: ' ', text: 'héllo 😀 wörld'}
+- {id: split.global_flag_ignored, mode: split, pattern: ',', flags: g, text: 'a,b,c'}
+- {id: split.newline, mode: split, pattern: '\n', text: "a\nb\n"}
+- {id: split.multi_capture, mode: split, pattern: '(-)(\d)', text: 'a-1b-2c'}
+- {id: split.word_boundary, mode: split, pattern: '\b', text: 'ab cd'}

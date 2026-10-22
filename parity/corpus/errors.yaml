@@ -1,0 +1,22 @@
+- {id: errors.unbalanced_open, pattern: '(', text: 'a'}
+- {id: errors.unbalanced_close, pattern: 'a)', text: 'a'}
+- {id: errors.unclosed_class, pattern: '[a', text: 'a'}
+- {id: errors.leading_star, pattern: '*a', text: 'a'}
+- {id: errors.bad_repeat_range, pattern: 'a{2,1}', text: 'a'}
+- {id: errors.lookbehind_go_only, pattern: '(?<=\$)\d+', flags: g, text: 'cost $10'}
+- {id: errors.named_backref_missing, pattern: '\k<x>', text: 'k<x>'}
+- {id: errors.named_backref_missing_unicode_js, flavors: [js], pattern: '\k<x>', flags: u, text: 'x'}
+- {id: errors.duplicate_name_python, flavors: [python, pcre, go], pattern: '(?P<n>a)(?P<n>b)', text: 'ab'}
+- {id: errors.trailing_backslash, pattern: 'a\', text: 'a'}
+- {id: errors.bad_inline_flag, pattern: '(?z)a', text: 'a'}
+- {id: errors.double_quantifier, pattern: 'a**', text: 'a'}
+- {id: errors.unclosed_named_group, flavors: [js, pcre, go], pattern: '(?<n>a', text: 'a'}
+- {id: errors.backref_no_group, pattern: '\1', text: 'a'}
+- {id: errors.reversed_range, pattern: '[z-a]', text: 'a'}
+- {id: errors.unknown_property, pattern: '\p{Foo}', flags: u, flavors: [js, pcre], text: 'a'}
+- {id: errors.unknown_property_go, flavors: [go], pattern: '\p{Foo}', text: 'a'}
+- {id: errors.bad_flag_group, pattern: '(?', text: 'a'}
+- {id: errors.nothing_to_repeat_plus, pattern: '+', text: 'a'}
+- {id: errors.invalid_lookahead_quantifier, pattern: '(?=a)*', text: 'a'}
+- {id: errors.replace_mode_bad_pattern, mode: replace, pattern: '(', text: 'a', replacement: 'x'}
+- {id: errors.split_mode_bad_pattern, mode: split, pattern: '[', text: 'a'}
