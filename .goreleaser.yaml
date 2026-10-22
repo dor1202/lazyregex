@@ -32,9 +32,17 @@ archives:
     # and their checksums must equal the ones released from ubuntu.
     builds_info:
       mtime: "{{ .CommitDate }}"
+    # File entries need a fixed mtime/mode too: a checkout's mtime differs
+    # between the ubuntu and windows jobs.
     files:
-      - LICENSE
-      - LICENSES/**
+      - src: LICENSE
+        info:
+          mtime: "{{ .CommitDate }}"
+          mode: 0644
+      - src: LICENSES/*
+        info:
+          mtime: "{{ .CommitDate }}"
+          mode: 0644
 
 checksum:
   name_template: checksums.txt
