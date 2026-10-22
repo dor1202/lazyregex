@@ -87,3 +87,31 @@ func TestJSPythonNamedGroupHint(t *testing.T) {
 		t.Error("no error, no hint")
 	}
 }
+
+func TestGoRewriteKeepsMeaning(t *testing.T) {
+	for _, tc := range []struct{ pat, rewrite, text, want string }{
+		{`(?<=a|b)c`, `(?:a|b)(c)`, "ac bc cc", "c c"},
+		{`x(?=b|c)`, `(x)(?:b|c)`, "xb xc xd", "x x"},
+	} {
+		h, ok := For(engine.Go, tc.pat, "", nil)
+		if !ok || h.Rewrite != tc.rewrite {
+			t.Fatalf("%s: got %+v ok=%v", tc.pat, h, ok)
+		}
+		var got []string
+		for _, m := range regexp.MustCompile(h.Rewrite).FindAllStringSubmatch(tc.text, -1) {
+			got = append(got, m[1])
+		}
+		if strings.Join(got, " ") != tc.want {
+			t.Errorf("%s: group 1 = %v, want %q", tc.pat, got, tc.want)
+		}
+	}
+}
+
+func TestGoNoRewriteWithBareFlags(t *testing.T) {
+	for _, pat := range []string{`(?i)x(?=b)`, `(?<=(?i)a)b`, `(?<=a)(?i)b`} {
+		h, ok := For(engine.Go, pat, "", nil)
+		if !ok || h.Rewrite != "" {
+			t.Errorf("%s: got %+v ok=%v", pat, h, ok)
+		}
+	}
+}

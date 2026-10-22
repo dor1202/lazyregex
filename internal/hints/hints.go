@@ -105,6 +105,10 @@ func goRewrite(root *explain.Node, pattern, flags string) (string, bool) {
 	if root.Kind != explain.Sequence || len(root.Children) < 2 {
 		return "", false
 	}
+	if hasBareFlags(root) {
+		// Regrouping would change how far an inline (?i) reaches.
+		return "", false
+	}
 	var rw string
 	first, last := root.Children[0], root.Children[len(root.Children)-1]
 	switch {
@@ -113,13 +117,13 @@ func goRewrite(root *explain.Node, pattern, flags string) (string, bool) {
 		if hasCapture(first) {
 			return "", false
 		}
-		rw = first.Raw[len("(?<="):len(first.Raw)-1] + "(" + pattern[first.Span[1]:] + ")"
+		rw = body(first.Raw[len("(?<="):len(first.Raw)-1]) + "(" + pattern[first.Span[1]:] + ")"
 	case last.Kind == explain.Unknown && strings.HasPrefix(last.Raw, "(?=") &&
 		strings.HasSuffix(last.Raw, ")") && last.Span[1] == len(pattern):
 		if hasCapture(last) {
 			return "", false
 		}
-		rw = "(" + pattern[:last.Span[0]] + ")" + last.Raw[len("(?="):len(last.Raw)-1]
+		rw = "(" + pattern[:last.Span[0]] + ")" + body(last.Raw[len("(?="):len(last.Raw)-1])
 	default:
 		return "", false
 	}
@@ -132,6 +136,28 @@ func goRewrite(root *explain.Node, pattern, flags string) (string, bool) {
 func hasCapture(n *explain.Node) bool {
 	for _, c := range n.Children {
 		if c.Kind == explain.Capture || c.Kind == explain.Named || hasCapture(c) {
+			return true
+		}
+	}
+	return false
+}
+
+// body wraps a lookaround body that has a top-level "|" so that moving it
+// next to other text keeps the alternation inside its own group.
+func body(b string) string {
+	if explain.Parse(b, explain.DialectFor(engine.Go, "")).Kind == explain.Alternation {
+		return "(?:" + b + ")"
+	}
+	return b
+}
+
+// hasBareFlags reports a (?i)-style group without a body anywhere in n.
+func hasBareFlags(n *explain.Node) bool {
+	if n.Kind == explain.InlineFlags && len(n.Children) == 0 {
+		return true
+	}
+	for _, c := range n.Children {
+		if hasBareFlags(c) {
 			return true
 		}
 	}
