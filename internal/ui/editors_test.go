@@ -135,6 +135,7 @@ type snapshot struct {
 	screen string // ANSI-stripped
 	raw    string
 	state  State
+	mouse  tea.MouseMode // the mouse mode the view requests
 }
 
 type probeMsg struct{ reply chan snapshot }
@@ -147,8 +148,8 @@ func (p probe) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			st.Flags[k] = v
 		}
 		st.All = nil
-		raw := p.View().Content
-		pm.reply <- snapshot{screen: ansi.Strip(raw), raw: raw, state: st}
+		v := p.View()
+		pm.reply <- snapshot{screen: ansi.Strip(v.Content), raw: v.Content, state: st, mouse: v.MouseMode}
 		return p, nil
 	}
 	_, cmd := p.Model.Update(msg)

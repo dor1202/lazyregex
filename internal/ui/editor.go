@@ -62,6 +62,16 @@ func (e *editor) Sync(s string) {
 func (e *editor) Value() string { return e.text }
 func (e *editor) Cursor() int   { return e.cur }
 
+// SetCursor moves the cursor to byte offset b, clamped to the text and
+// moved back to a rune boundary.
+func (e *editor) SetCursor(b int) {
+	b = clamp(b, 0, len(e.text))
+	for b < len(e.text) && b > 0 && !utf8.RuneStart(e.text[b]) {
+		b--
+	}
+	e.cur, e.goal, e.typing = b, -1, false
+}
+
 // Update applies a key press or paste and reports whether the text changed.
 func (e *editor) Update(msg tea.Msg) bool {
 	switch msg := msg.(type) {

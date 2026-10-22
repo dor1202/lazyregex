@@ -23,12 +23,18 @@ type textPanel struct {
 	ed        *editor
 	top, left int // scroll position: first line, first content cell
 	want      int // a line to scroll to on the next render (-1 = none)
+	shownCur  int // the cursor of the last render (-1 = not editing)
+
+	// The last render's geometry, for mouse clicks.
+	noticeRows int // rows above the text (the invalid UTF-8 notice)
+	textW      int // cells of the text side (the rest is the Result)
+	gutter     int // cells of the line numbers and the space after them
 
 	cached string // the text lineStarts belongs to
 	starts []int  // byte offset of each line
 }
 
-func newTextPanel() *textPanel { return &textPanel{ed: newEditor(true), want: -1} }
+func newTextPanel() *textPanel { return &textPanel{ed: newEditor(true), want: -1, shownCur: -1} }
 
 func (*textPanel) Tabs() []string { return []string{"Test String"} }
 
@@ -107,15 +113,18 @@ func (p *textPanel) lineOf(text string, b int) int {
 func (p *textPanel) View(s *State, w, h int) string {
 	t := s.Theme
 	var out []string
+	p.noticeRows, p.textW = 0, w
 	if s.InvalidUTF8 {
 		out = append(out, t.fg("anchor").Render(invalidUTF8Notice))
 		h--
+		p.noticeRows = 1
 	}
 	if h <= 0 {
 		return strings.Join(out, "\n")
 	}
 	if s.Mode == engine.ModeReplace || s.Mode == engine.ModeSplit {
 		lw := (w - 1) / 2
+		p.textW = lw
 		left := p.textLines(s, lw, h)
 		right := resultLines(s, w-lw-1, h)
 		sep := t.fg("border").Render("│")
@@ -142,6 +151,7 @@ func (p *textPanel) textLines(s *State, w, h int) []string {
 	n := len(starts)
 	gw := len(fmt.Sprint(n))
 	cw := max(1, w-gw-1) // content width
+	p.gutter = gw + 1
 
 	p.ed.Sync(text) // changed outside the editor: undoable
 	editing := s.Focus == PText && s.Editing && !s.Manual
@@ -149,7 +159,10 @@ func (p *textPanel) textLines(s *State, w, h int) []string {
 	if editing {
 		cursor = p.ed.Cursor()
 		row, ls := p.ed.RowCol()
-		p.want = row
+		if cursor != p.shownCur { // the cursor moved: bring it into view
+			p.want = row
+		}
+		p.shownCur = cursor
 		// Keep the cursor column visible.
 		col := displayWidth(text[ls:cursor])
 		if col < p.left {
@@ -158,7 +171,7 @@ func (p *textPanel) textLines(s *State, w, h int) []string {
 			p.left = col - cw + 1
 		}
 	} else {
-		p.left = 0
+		p.left, p.shownCur = 0, -1
 	}
 	if p.want >= 0 {
 		if p.want < p.top {

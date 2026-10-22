@@ -10,6 +10,7 @@ import (
 // mouseHelp describes the mouse (Task 16), listed in the help popup.
 var mouseHelp = []KeyHelp{
 	{"click", "Focus pane, select row, switch tab"},
+	{"click editor", "Edit with the cursor there"},
 	{"click pattern", "Select its explanation row"},
 	{"wheel", "Scroll the pane under the pointer"},
 	{"drag border", "Resize the columns"},
@@ -199,8 +200,9 @@ func (h *helpPopup) view(t *Theme, w, ht int) (box string, bw, bh int) {
 	return box, bw, bh
 }
 
-// overlay draws box (bw×bh cells) centred over base, a w-cell-wide screen.
-func overlay(base, box string, w, bw, bh int) string {
+// overlay draws box (bw×bh cells) centred over base, a w-cell-wide screen,
+// and returns where it went.
+func overlay(base, box string, w, bw, bh int) (string, rect) {
 	lines := strings.Split(base, "\n")
 	boxLines := strings.Split(box, "\n")
 	x := max(0, (w-bw)/2)
@@ -213,5 +215,5 @@ func overlay(base, box string, w, bw, bh int) string {
 		l := lines[j]
 		lines[j] = ansi.Cut(l, 0, x) + bl + ansi.Cut(l, x+bw, w)
 	}
-	return strings.Join(lines, "\n")
+	return strings.Join(lines, "\n"), rect{x, y, bw, bh}
 }

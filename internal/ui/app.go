@@ -42,6 +42,10 @@ type Model struct {
 	prompt *prompt    // the ":" or y/n prompt line, when open
 	help   *helpPopup // the "?" popup, when open
 	note   *noticeMsg // shown on the bottom line until the next key
+
+	hits       hitMap // what each cell of the last frame shows (mouse)
+	dragging   bool   // the column border is being dragged
+	dragOffset int    // left width minus the pointer's x when the drag began
 }
 
 // patternModes maps the Pattern panel's tabs to evaluation modes.
@@ -147,6 +151,13 @@ func (m *Model) update(msg tea.Msg) tea.Cmd {
 			return m.panels[m.state.Focus].Update(msg, &m.state)
 		}
 		return nil
+	case tea.MouseMsg:
+		// Routed by hit-testing, never broadcast; ignored with the mouse off.
+		if !m.state.Mouse {
+			m.dragging = false
+			return nil
+		}
+		return m.mouse(msg)
 	case tea.KeyPressMsg:
 		m.note = nil
 		if cmd, ok := m.overlayKey(msg); ok {
@@ -206,7 +217,12 @@ func (m *Model) switchTab(delta int) {
 	if n < 2 {
 		return
 	}
-	t := (m.state.Tab[id] + delta + n) % n
+	m.setTab(id, (m.state.Tab[id]+delta+n)%n)
+}
+
+// setTab shows tab t of panel id. The Pattern panel's tab selects the
+// evaluation mode.
+func (m *Model) setTab(id PanelID, t int) {
 	m.state.Tab[id] = t
 	if id == PPattern {
 		m.state.Mode = patternModes[t]
@@ -257,11 +273,16 @@ func (m *Model) overlayKey(k tea.KeyPressMsg) (tea.Cmd, bool) {
 func (m *Model) View() tea.View {
 	v := tea.NewView(m.render())
 	v.AltScreen = true
+	if m.state.Mouse {
+		// Without a mouse mode the terminal keeps its own text selection.
+		v.MouseMode = tea.MouseModeCellMotion
+	}
 	return v
 }
 
 func (m *Model) render() string {
 	s := &m.state
+	m.hits = hitMap{}
 	if s.Width <= 0 || s.Height <= 0 {
 		return ""
 	}
@@ -284,10 +305,12 @@ func (m *Model) render() string {
 	left := lipgloss.JoinVertical(lipgloss.Left, box(PFlavor), box(PFlags), box(PMatches), box(PLibrary))
 	right := lipgloss.JoinVertical(lipgloss.Left, box(PPattern), box(PText), box(PDetails))
 	body := lipgloss.JoinHorizontal(lipgloss.Top, left, right)
+	var popup rect
 	if m.help != nil {
 		box, bw, bh := m.help.view(m.theme, s.Width, s.Height-1)
-		body = overlay(body, box, s.Width, bw, bh)
+		body, popup = overlay(body, box, s.Width, bw, bh)
 	}
+	m.hits = m.buildHits(l, popup)
 	return body + "\n" + m.bottomLine(s.Width)
 }
 

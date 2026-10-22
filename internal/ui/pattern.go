@@ -23,6 +23,10 @@ type patternPanel struct {
 	editorBase
 	pat, repl *editor
 	line      int // 0 = pattern, 1 = replacement
+
+	// cells maps the content cells of the last drawn pattern (0) and
+	// replacement (1) lines to byte offsets, for mouse clicks.
+	cells [2][]textCell
 }
 
 func newPatternPanel() *patternPanel {
@@ -139,6 +143,8 @@ func (p *patternPanel) View(s *State, w, h int) string {
 	if status != "" {
 		avail = max(1, w-ansi.StringWidth(status)-1)
 	}
+	left := windowLeft(ansi.StringWidth(line), focus, avail)
+	p.cells = [2][]textCell{lineCells(s.Pattern, displayWidth(pre), left, avail, w)}
 	line = padRight(window(line, focus, avail), avail)
 	if status != "" {
 		line += " " + status
@@ -156,7 +162,9 @@ func (p *patternPanel) View(s *State, w, h int) string {
 		if cur >= 0 {
 			rfocus += displayWidth(s.Replacement[:cur])
 		}
-		out = append(out, window(t.fg("dim").Render(label)+repl, rfocus, w))
+		rline := t.fg("dim").Render(label) + repl
+		p.cells[1] = lineCells(s.Replacement, len(label), windowLeft(ansi.StringWidth(rline), rfocus, w), w, w)
+		out = append(out, window(rline, rfocus, w))
 	}
 	for _, l := range errorLines(s) {
 		out = append(out, t.fg("error").Render(l))
@@ -220,9 +228,18 @@ func displayWidth(s string) int {
 // window cuts a styled line to w cells, scrolled horizontally so that cell
 // focus stays visible.
 func window(s string, focus, w int) string {
-	if ansi.StringWidth(s) <= w {
+	total := ansi.StringWidth(s)
+	if total <= w {
 		return s
 	}
-	left := max(0, focus-w+2)
+	left := windowLeft(total, focus, w)
 	return ansi.Cut(s, left, left+w)
+}
+
+// windowLeft is the first cell window shows of a line total cells wide.
+func windowLeft(total, focus, w int) int {
+	if total <= w {
+		return 0
+	}
+	return max(0, focus-w+2)
 }
