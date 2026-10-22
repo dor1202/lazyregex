@@ -62,7 +62,7 @@ func TestInteractiveStartsTUI(t *testing.T) {
 	if got.ConfigDir != dir || got.Config.Mouse || got.Config.Timeout != 750*time.Millisecond {
 		t.Fatalf("config not loaded from the hooked dir: %+v", got.Config)
 	}
-	if got.Runner == nil || got.Initial.Flavor != engine.Go {
+	if got.Runner == nil || got.Initial.Flavor != engine.Python {
 		t.Fatalf("deps = %+v", got)
 	}
 	if evalErr != nil || n != 2 {

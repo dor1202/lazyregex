@@ -2,18 +2,17 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/x/term"
 
 	"github.com/dor1202/lazyregex/internal/config"
-	"github.com/dor1202/lazyregex/internal/engine"
-	"github.com/dor1202/lazyregex/internal/engine/goengine"
+	"github.com/dor1202/lazyregex/internal/engine/all"
 	"github.com/dor1202/lazyregex/internal/runner"
 	"github.com/dor1202/lazyregex/internal/ui"
 	"github.com/dor1202/lazyregex/internal/version"
@@ -68,10 +67,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		lib, _ = config.LoadLibrary(dir)
 	}
 
-	// Only the Go engine is wired for now; Task 17 adds the bundled ones.
-	r := runner.New(map[engine.Flavor]runner.Factory{
-		engine.Go: func(context.Context, string) (engine.Engine, error) { return goengine.New(), nil },
-	}, "", cfg.Timeout)
+	r := runner.New(all.Factories(), cacheDir(), cfg.Timeout)
 	defer r.Close()
 
 	err := runTUI(ui.Deps{
@@ -79,11 +75,21 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		Config:    cfg,
 		ConfigDir: dir,
 		Library:   lib,
-		Initial:   ui.InitialInput{Flavor: engine.Go},
+		Initial:   ui.InitialInput{Flavor: cfg.DefaultFlavor},
 	})
 	if err != nil {
 		fmt.Fprintln(stderr, "lazyregex:", err)
 		return 1
 	}
 	return 0
+}
+
+// cacheDir is where wazero keeps compiled WASM modules; it falls back to a
+// temp dir when the user cache dir is unavailable.
+func cacheDir() string {
+	base, err := os.UserCacheDir()
+	if err != nil || base == "" {
+		base = os.TempDir()
+	}
+	return filepath.Join(base, "lazyregex", "wazero")
 }
