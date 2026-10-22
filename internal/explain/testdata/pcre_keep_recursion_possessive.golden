@@ -1,0 +1,12 @@
+foo               "foo" literally
+\K                reset the match start here (drop what matched so far)
+ba                "ba" literally
+r++               "r" literally, 1 or more (possessive)
+(…)               capture group #1
+├─ \(             "(" literally
+├─ (?:…)*         non-capturing group, 0 or more (greedy)
+│  └─ [^()]|(?1)  one of 2 alternatives
+│     ├─ [^()]    any char except: (, )
+│     └─ (?1)     recurse into group #1
+└─ \)             ")" literally
+(?R)?             recurse into the whole pattern, 0 or 1 (greedy)

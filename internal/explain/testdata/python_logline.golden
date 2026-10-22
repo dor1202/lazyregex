@@ -1,0 +1,17 @@
+^                   start of a line (m flag)
+(?P<date>…)         named group "date"
+├─ \d{4}            a digit, exactly 4 times
+├─ -                "-" literally
+├─ \d{2}            a digit, exactly 2 times
+├─ -                "-" literally
+└─ \d{2}            a digit, exactly 2 times
+␣                   " " literally
+(?P<level>…)        named group "level"
+└─ INFO|WARN|ERROR  one of 3 alternatives
+   ├─ INFO          "INFO" literally
+   ├─ WARN          "WARN" literally
+   └─ ERROR         "ERROR" literally
+\s+                 whitespace, 1 or more (greedy)
+(?P<msg>…)          named group "msg"
+└─ .*               any char but newline, 0 or more (greedy)
+$                   end of a line (m flag)

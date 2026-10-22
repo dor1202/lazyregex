@@ -1,0 +1,13 @@
+(…)?          capture group #1, 0 or 1 (greedy)
+└─ a          "a" literally
+# optional a  comment (ignored)
+(?(1)…)       conditional: pick a branch depending on the condition
+├─ (1)        if group #1 matched
+├─ b          then: "b" literally
+└─ c          otherwise: "c" literally
+\1            same text as group #1
+(?:…)*        non-capturing group, 0 or more (greedy)
+└─ x|yz       one of 2 alternatives
+   ├─ x       "x" literally
+   └─ yz      "yz" literally
+[^\n\t]       any char except: newline, tab

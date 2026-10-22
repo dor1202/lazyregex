@@ -1,0 +1,6 @@
+(?<=…)  can't explain this part
+└─ a    "a" literally
+b       "b" literally
+(?i:…)  non-capturing group that turns on case-insensitive
+└─ c    "c" literally (case-insensitive)
+d*      "d" literally, 0 or more (greedy)

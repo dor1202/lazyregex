@@ -1,0 +1,14 @@
+(*UTF)    PCRE option or verb (*UTF)
+(?m)      flags: turns on multiline from here to the end of the group
+^         start of a line (m flag)
+a         "a" literally (case-insensitive)
+(?-i)     flags: turns off case-insensitive from here to the end of the group
+b         "b" literally
+$         end of a line (m flag)
+(?#note)  comment (ignored)
+(*SKIP)   if the rest fails, skip ahead to this position for the next try
+(?>…)     atomic group (no backtracking into it)
+└─ x      "x" literally
+(?<n>…)   named group "n"
+└─ y      "y" literally
+\k<n>     same text as group "n" (#1)
