@@ -140,7 +140,7 @@ lazyregex --explain -f pcre '^(?<y>\d{4})-\d\d$'
 | `--flags LETTERS` | python `gimsxa`, js `gdimsuvy`, pcre `gimsxnUu`, go `gimsU` |
 | `--explain` | print a plain-English explanation and exit |
 | `--licenses` | print the licences of lazyregex and its bundled engines |
-| `--version` | print the version |
+| `--version` | print the version and the pinned engine versions |
 
 Exit codes: 0 ok, 1 runtime error, 2 usage error. When stdout is not a terminal the
 TUI does not start (use `--explain`).

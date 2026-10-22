@@ -7,13 +7,14 @@ import (
 	"strings"
 
 	"github.com/dor1202/lazyregex"
+	"github.com/dor1202/lazyregex/internal/version"
 )
 
 // licenseTitles names each bundled file, in print order.
 var licenseTitles = []struct{ file, title string }{
-	{"CPython-PSF.txt", "CPython 3.14.9 (Python flavor) - PSF License"},
-	{"PCRE2-BSD.txt", "PCRE2 10.44 (PCRE flavor) - BSD"},
-	{"QuickJS-ng-MIT.txt", "QuickJS-ng 0.17.0 (JS flavor) - MIT"},
+	{"CPython-PSF.txt", "CPython " + version.CPython + " (Python flavor) - PSF License"},
+	{"PCRE2-BSD.txt", "PCRE2 " + version.PCRE2 + " (PCRE flavor) - BSD"},
+	{"QuickJS-ng-MIT.txt", "QuickJS-ng " + version.QuickJSNG + " (JS flavor) - MIT"},
 	{"wasi-libc.txt", "wasi-libc (statically linked into the WASM engines) - Apache-2.0 WITH LLVM-exception / Apache-2.0 / MIT, plus musl, cloudlibc and musl-fts"},
 }
 

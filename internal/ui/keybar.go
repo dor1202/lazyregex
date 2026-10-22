@@ -25,7 +25,7 @@ func (m *Model) keyBar(w int) string {
 		}
 	}
 
-	right := "lazyregex " + version.Version
+	right := "lazyregex " + version.String()
 	room := w - ansi.StringWidth(right) - 2 // keep a gap before the version
 	sep := " | "
 	var parts []string

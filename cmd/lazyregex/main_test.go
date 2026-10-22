@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -21,8 +22,13 @@ func TestVersionFlag(t *testing.T) {
 	if code != 0 {
 		t.Fatalf("exit %d", code)
 	}
-	if !strings.HasPrefix(out.String(), "lazyregex dev") {
-		t.Fatalf("got %q", out.String())
+	want := "lazyregex dev\n" +
+		"python  CPython 3.14.9 (re)\n" +
+		"js      QuickJS-ng 0.17.0\n" +
+		"pcre    PCRE2 10.44\n" +
+		"go      Go regexp (RE2) " + runtime.Version() + "\n"
+	if out.String() != want {
+		t.Fatalf("got\n%s\nwant\n%s", out.String(), want)
 	}
 }
 

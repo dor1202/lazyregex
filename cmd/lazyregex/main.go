@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	tea "charm.land/bubbletea/v2"
@@ -83,7 +84,7 @@ flags:
       --flags LETTERS regex flags: python gimsxa, js gdimsuvy, pcre gimsxnUu, go gimsU
       --explain       print a plain-English explanation of the pattern and exit
       --licenses      print the licences of lazyregex and its bundled engines
-      --version       print the version
+      --version       print the version and the pinned engine versions
   -h, --help          show this help
 
 exit codes: 0 ok, 1 runtime error, 2 usage error
@@ -121,7 +122,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return 0
 	}
 	if showVersion {
-		fmt.Fprintf(stdout, "lazyregex %s\n", version.Version)
+		printVersion(stdout)
 		return 0
 	}
 	if doLicenses {
@@ -238,6 +239,20 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return 1
 	}
 	return 0
+}
+
+// printVersion writes lazyregex's version and the pinned engine versions
+// (without starting the engines).
+func printVersion(w io.Writer) {
+	fmt.Fprintf(w, "lazyregex %s\n", version.String())
+	for _, e := range [][2]string{
+		{"python", "CPython " + version.CPython + " (re)"},
+		{"js", "QuickJS-ng " + version.QuickJSNG},
+		{"pcre", "PCRE2 " + version.PCRE2},
+		{"go", "Go regexp (RE2) " + runtime.Version()},
+	} {
+		fmt.Fprintf(w, "%-7s %s\n", e[0], e[1])
+	}
 }
 
 // cacheDir is where wazero keeps compiled WASM modules (native code). When
