@@ -1,0 +1,76 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      # chocolatey needs `choco` (Windows only), so it runs in the next job.
+      # Scoop and AUR skip themselves when their secret is empty.
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean --skip=chocolatey
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
+          SCOOP_GITHUB_TOKEN: ${{ secrets.SCOOP_GITHUB_TOKEN }}
+          AUR_KEY: ${{ secrets.AUR_KEY }}
+
+  chocolatey:
+    needs: goreleaser
+    runs-on: windows-latest
+    env:
+      CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
+    steps:
+      # Every step is gated on the key (a job-level `if` cannot read secrets),
+      # so without it this job is a no-op that still succeeds.
+      - if: env.CHOCOLATEY_API_KEY != ''
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - if: env.CHOCOLATEY_API_KEY != ''
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      # Rebuilds the (reproducible) windows zips and pushes only the
+      # chocolatey package; GORELEASER_CHOCO=true disables the GitHub release.
+      - if: env.CHOCOLATEY_API_KEY != ''
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean --skip=homebrew,scoop,aur,aur-source,nfpm,sbom,sign,announce
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GORELEASER_CHOCO: "true"
+      # The package points at the released zips: fail loudly if the rebuilt
+      # ones differ (the chocolatey install would fail its checksum).
+      - if: env.CHOCOLATEY_API_KEY != ''
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download $env:GITHUB_REF_NAME --pattern checksums.txt --dir released
+          $bad = 0
+          foreach ($zip in Get-ChildItem dist -Filter '*_windows_*.zip') {
+            $hash = (Get-FileHash $zip.FullName -Algorithm SHA256).Hash.ToLower()
+            if (-not (Select-String -Path released/checksums.txt -Pattern "^$hash\s+$($zip.Name)$" -Quiet)) {
+              Write-Error "$($zip.Name) differs from the released archive"
+              $bad = 1
+            }
+          }
+          exit $bad

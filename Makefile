@@ -1,7 +1,7 @@
 VERSION ?= dev
 LDFLAGS := -X github.com/dor1202/lazyregex/internal/version.Version=$(VERSION)
 
-.PHONY: build test lint wasm wasm-pcre wasm-js wasm-python parity-gen
+.PHONY: build test lint release-snapshot wasm wasm-pcre wasm-js wasm-python parity-gen
 
 build:
 	CGO_ENABLED=0 go build -ldflags "$(LDFLAGS)" -o bin/lazyregex ./cmd/lazyregex
@@ -11,6 +11,11 @@ test:
 
 lint:
 	golangci-lint run
+
+# Local GoReleaser dry run into dist/ (nothing is published). chocolatey needs
+# Windows' choco, so it is skipped here; the release workflow runs it on windows-latest.
+release-snapshot:
+	goreleaser release --snapshot --clean --skip=chocolatey
 
 # WASM engine builds: Docker + pinned, checksum-verified sources (wasm/versions.env).
 include wasm/versions.env

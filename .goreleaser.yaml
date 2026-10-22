@@ -1,0 +1,125 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+version: 2
+
+project_name: lazyregex
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: lazyregex
+    main: ./cmd/lazyregex
+    binary: lazyregex
+    env:
+      - CGO_ENABLED=0
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X github.com/dor1202/lazyregex/internal/version.Version={{ .Version }}
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+archives:
+  - id: lazyregex
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    # Reproducible: the windows-latest chocolatey job rebuilds the windows zips
+    # and their checksums must equal the ones released from ubuntu.
+    builds_info:
+      mtime: "{{ .CommitDate }}"
+    files:
+      - LICENSE
+      - LICENSES/**
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^build:"
+
+nfpms:
+  - id: lazyregex
+    package_name: lazyregex
+    vendor: dor1202
+    homepage: https://github.com/dor1202/lazyregex
+    maintainer: Dor Schreiber <schreiberdor@gmail.com>
+    description: A terminal regex tester with real Python, JavaScript, PCRE and Go engines.
+    license: MIT
+    formats: [deb, rpm]
+    contents:
+      - src: LICENSE
+        dst: /usr/share/doc/lazyregex/LICENSE
+      - src: LICENSES/*
+        dst: /usr/share/doc/lazyregex/LICENSES/
+
+# Replaces the old Python/virtualenv Formula/lazyregex.rb in the same tap, so
+# `brew upgrade lazyregex` moves existing users to the Go binary.
+brews:
+  - name: lazyregex
+    repository:
+      owner: dor1202
+      name: homebrew-lazyregex
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    directory: Formula
+    homepage: https://github.com/dor1202/lazyregex
+    description: A terminal regex tester with real Python, JavaScript, PCRE and Go engines.
+    license: MIT
+    test: system "#{bin}/lazyregex --version"
+    # Skipped in snapshots (no tag, no tap token); a real release always pushes.
+    skip_upload: auto
+
+scoops:
+  - repository:
+      owner: dor1202
+      name: scoop-lazyregex
+      token: '{{ index .Env "SCOOP_GITHUB_TOKEN" }}'
+    homepage: https://github.com/dor1202/lazyregex
+    description: A terminal regex tester with real Python, JavaScript, PCRE and Go engines.
+    license: MIT
+    skip_upload: '{{ if not (index .Env "SCOOP_GITHUB_TOKEN") }}true{{ end }}'
+
+aurs:
+  - name: lazyregex-bin
+    homepage: https://github.com/dor1202/lazyregex
+    description: A terminal regex tester with real Python, JavaScript, PCRE and Go engines.
+    license: MIT
+    maintainers:
+      - Dor Schreiber <schreiberdor@gmail.com>
+    private_key: '{{ index .Env "AUR_KEY" }}'
+    git_url: ssh://aur@aur.archlinux.org/lazyregex-bin.git
+    skip_upload: '{{ if not (index .Env "AUR_KEY") }}true{{ end }}'
+    package: |-
+      install -Dm755 "./lazyregex" "${pkgdir}/usr/bin/lazyregex"
+      install -Dm644 "./LICENSE" "${pkgdir}/usr/share/licenses/lazyregex/LICENSE"
+      install -d "${pkgdir}/usr/share/licenses/lazyregex/third-party"
+      install -m644 ./LICENSES/* "${pkgdir}/usr/share/licenses/lazyregex/third-party/"
+
+# Needs `choco` (Windows): the ubuntu release job runs with --skip=chocolatey;
+# the windows-latest job runs this pipe only (see .github/workflows/release.yaml).
+chocolateys:
+  - name: lazyregex
+    owners: dor1202
+    authors: dor1202
+    project_url: https://github.com/dor1202/lazyregex
+    license_url: https://github.com/dor1202/lazyregex/blob/main/LICENSE
+    project_source_url: https://github.com/dor1202/lazyregex
+    summary: A terminal regex tester.
+    description: A terminal regex tester with real Python, JavaScript, PCRE and Go engines.
+    tags: regex terminal tui cli
+    api_key: '{{ index .Env "CHOCOLATEY_API_KEY" }}'
+    source_repo: https://push.chocolatey.org/
+
+# The windows-latest chocolatey job sets GORELEASER_CHOCO=true: it rebuilds the
+# same (reproducible) windows archives but must not touch the GitHub release.
+release:
+  disable: '{{ if eq (index .Env "GORELEASER_CHOCO") "true" }}true{{ end }}'
