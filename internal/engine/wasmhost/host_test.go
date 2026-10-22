@@ -30,7 +30,7 @@ func run(m *testing.M) int {
 			fmt.Fprintln(os.Stderr, err)
 			return 1
 		}
-		defer os.RemoveAll(dir)
+		defer func() { _ = os.RemoveAll(dir) }()
 		out := filepath.Join(dir, "echo.wasm")
 		cmd := exec.Command("go", "build", "-o", out, "./testdata/echo")
 		cmd.Env = append(os.Environ(), "GOOS=wasip1", "GOARCH=wasm", "CGO_ENABLED=0")
@@ -45,8 +45,8 @@ func run(m *testing.M) int {
 		}
 		var buf bytes.Buffer
 		zw := gzip.NewWriter(&buf)
-		zw.Write(raw)
-		zw.Close()
+		_, _ = zw.Write(raw)
+		_ = zw.Close()
 		echoGZ = buf.Bytes()
 	}
 	return m.Run()
@@ -61,7 +61,7 @@ func newHost(t *testing.T, cacheDir string) *Host {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Cleanup(func() { h.Close() })
+	t.Cleanup(func() { _ = h.Close() })
 	return h
 }
 
@@ -147,7 +147,7 @@ func TestHostCompileCache(t *testing.T) {
 	start := time.Now()
 	h1 := newHost(t, dir)
 	first := time.Since(start)
-	h1.Close()
+	_ = h1.Close()
 	start = time.Now()
 	newHost(t, dir)
 	second := time.Since(start)
@@ -177,7 +177,7 @@ func TestHostRestartNotChargedToCall(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer h.Close()
+	defer func() { _ = h.Close() }()
 	killByTimeout(t, h)
 	// The restart takes longer than this Call's whole budget.
 	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)

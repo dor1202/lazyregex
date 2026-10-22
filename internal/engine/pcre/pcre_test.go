@@ -17,7 +17,7 @@ func newEngine(t *testing.T) engine.Engine {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Cleanup(func() { e.Close() })
+	t.Cleanup(func() { _ = e.Close() })
 	return e
 }
 

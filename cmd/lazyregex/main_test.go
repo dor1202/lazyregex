@@ -221,7 +221,9 @@ func TestCLINoTerminalForInput(t *testing.T) {
 func TestCLIConfigErrorReported(t *testing.T) {
 	got := hookTUI(t, okTTY)
 	dir := t.TempDir()
-	os.WriteFile(filepath.Join(dir, "config.yaml"), []byte("mouse: [unclosed\n"), 0o600)
+	if err := os.WriteFile(filepath.Join(dir, "config.yaml"), []byte("mouse: [unclosed\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
 	configDir = func() (string, error) { return dir, nil }
 	var errb bytes.Buffer
 	if code := run(nil, strings.NewReader(""), io.Discard, &errb); code != 0 {
@@ -289,7 +291,9 @@ func TestOpenTTYHandleSurvives(t *testing.T) {
 func TestCLIStartupNotice(t *testing.T) {
 	got := hookTUI(t, okTTY)
 	dir := t.TempDir()
-	os.WriteFile(filepath.Join(dir, "config.yaml"), []byte("mouse: [unclosed\n"), 0o600)
+	if err := os.WriteFile(filepath.Join(dir, "config.yaml"), []byte("mouse: [unclosed\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
 	configDir = func() (string, error) { return dir, nil }
 	run(nil, strings.NewReader(""), io.Discard, io.Discard)
 	if got.Initial.Notice == "" {

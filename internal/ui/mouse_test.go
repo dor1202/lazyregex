@@ -315,13 +315,13 @@ func TestClickWithOverlayOpen(t *testing.T) {
 
 	// Help: a click inside does nothing, a click outside only closes it.
 	send(tm, escKey, key('?'))
-	s := waitFor(t, tm, "help", contains("Keybindings"))
+	waitFor(t, tm, "help", contains("Keybindings"))
 	clickOn(t, tm, "Mouse (when on)", 0)
-	if s = snap(t, tm); !strings.Contains(s.screen, "Mouse (when on)") {
+	if s := snap(t, tm); !strings.Contains(s.screen, "Mouse (when on)") {
 		t.Fatal("a click inside the popup closed it")
 	}
 	clickOn(t, tm, "[1]", 1)
-	s = waitFor(t, tm, "help closed", func(s snapshot) bool { return !strings.Contains(s.screen, "Mouse (when on)") })
+	s := waitFor(t, tm, "help closed", func(s snapshot) bool { return !strings.Contains(s.screen, "Mouse (when on)") })
 	if s.state.Focus != PPattern {
 		t.Errorf("the click acted on [1] under the popup: focus %v", s.state.Focus)
 	}

@@ -53,7 +53,7 @@ func (p *parser) classBody(s int) *Node {
 			first = false
 			continue
 		}
-		if c == ']' && !(first && p.d.Flavor != engine.JS) {
+		if c == ']' && (!first || p.d.Flavor == engine.JS) {
 			p.pos++
 			break
 		}
@@ -112,7 +112,7 @@ func (p *parser) isRangeDash() bool {
 	if i+1 >= len(p.src) || p.src[i] != '-' || p.src[i+1] == ']' {
 		return false
 	}
-	return !(p.d.UnicodeSets && p.src[i+1] == '-')
+	return !p.d.UnicodeSets || p.src[i+1] != '-'
 }
 
 // fillClass stores members in n: plain members as ClassItems and nodes as

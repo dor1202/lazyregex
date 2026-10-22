@@ -62,9 +62,10 @@ var (
 		// On Unix in and out are the same *os.File (one /dev/tty handle):
 		// close it once, and only after the program has finished with it.
 		return in, func() {
-			in.Close()
+			// Teardown of the terminal handle; nothing useful to do on failure.
+			_ = in.Close()
 			if out != in {
-				out.Close()
+				_ = out.Close()
 			}
 		}, nil
 	}
@@ -92,7 +93,7 @@ exit codes: 0 ok, 1 runtime error, 2 usage error
 `
 
 func usageErr(stderr io.Writer, format string, a ...any) int {
-	fmt.Fprintf(stderr, "lazyregex: "+format+"\n", a...)
+	_, _ = fmt.Fprintf(stderr, "lazyregex: "+format+"\n", a...)
 	return 2
 }
 
@@ -115,11 +116,11 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	fs.BoolVar(&help, "help", false, "")
 	fs.BoolVar(&help, "h", false, "")
 	if err := fs.Parse(args); err != nil {
-		fmt.Fprintf(stderr, "lazyregex: %v\n\n%s", err, usage)
+		_, _ = fmt.Fprintf(stderr, "lazyregex: %v\n\n%s", err, usage)
 		return 2
 	}
 	if help {
-		fmt.Fprint(stdout, usage)
+		_, _ = fmt.Fprint(stdout, usage)
 		return 0
 	}
 	if showVersion {
@@ -128,7 +129,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	}
 	if doLicenses {
 		if err := printLicenses(stdout); err != nil {
-			fmt.Fprintln(stderr, "lazyregex:", err)
+			_, _ = fmt.Fprintln(stderr, "lazyregex:", err)
 			return 1
 		}
 		return 0
@@ -159,11 +160,11 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		if dir != "" {
 			var err error
 			if cfg, err = config.Load(dir); err != nil {
-				fmt.Fprintln(stderr, "lazyregex:", err)
+				_, _ = fmt.Fprintln(stderr, "lazyregex:", err)
 				notes = append(notes, err.Error())
 			}
 			if lib, err = config.LoadLibrary(dir); err != nil {
-				fmt.Fprintln(stderr, "lazyregex:", err)
+				_, _ = fmt.Fprintln(stderr, "lazyregex:", err)
 				notes = append(notes, err.Error())
 			}
 		}
@@ -190,15 +191,15 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		if interactive(stdout) {
 			out = termsafe.Lines(out)
 		}
-		fmt.Fprint(stdout, out)
+		_, _ = fmt.Fprint(stdout, out)
 		if !strings.HasSuffix(out, "\n") {
-			fmt.Fprintln(stdout)
+			_, _ = fmt.Fprintln(stdout)
 		}
 		return 0
 	}
 
 	if !interactive(stdout) {
-		fmt.Fprintln(stderr, "lazyregex: needs a terminal (stdout is not one)")
+		_, _ = fmt.Fprintln(stderr, "lazyregex: needs a terminal (stdout is not one)")
 		return 1
 	}
 
@@ -207,20 +208,20 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	if !isTTY(stdin) {
 		tty, closeTTY, err := openTTY()
 		if err != nil {
-			fmt.Fprintln(stderr, "lazyregex: no terminal for interactive input")
+			_, _ = fmt.Fprintln(stderr, "lazyregex: no terminal for interactive input")
 			return 1
 		}
 		defer closeTTY()
 		in = tty
 		data, err := io.ReadAll(io.LimitReader(stdin, maxStdin+1))
 		if err != nil {
-			fmt.Fprintln(stderr, "lazyregex: reading stdin:", err)
+			_, _ = fmt.Fprintln(stderr, "lazyregex: reading stdin:", err)
 			return 1
 		}
 		if len(data) > maxStdin {
 			data = data[:maxStdin]
 			msg := fmt.Sprintf("stdin truncated to %d MiB", maxStdin>>20)
-			fmt.Fprintln(stderr, "lazyregex:", msg)
+			_, _ = fmt.Fprintln(stderr, "lazyregex:", msg)
 			notes = append(notes, msg)
 		}
 		initial.TextPrepared = runner.PrepareText(data)
@@ -239,7 +240,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		Initial:   initial,
 	}, in)
 	if err != nil {
-		fmt.Fprintln(stderr, "lazyregex:", err)
+		_, _ = fmt.Fprintln(stderr, "lazyregex:", err)
 		return 1
 	}
 	return 0
@@ -248,14 +249,14 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 // printVersion writes lazyregex's version and the pinned engine versions
 // (without starting the engines).
 func printVersion(w io.Writer) {
-	fmt.Fprintf(w, "lazyregex %s\n", version.String())
+	_, _ = fmt.Fprintf(w, "lazyregex %s\n", version.String())
 	for _, e := range [][2]string{
 		{"python", "CPython " + version.CPython + " (re)"},
 		{"js", "QuickJS-ng " + version.QuickJSNG},
 		{"pcre", "PCRE2 " + version.PCRE2},
 		{"go", "Go regexp (RE2) " + runtime.Version()},
 	} {
-		fmt.Fprintf(w, "%-7s %s\n", e[0], e[1])
+		_, _ = fmt.Fprintf(w, "%-7s %s\n", e[0], e[1])
 	}
 }
 

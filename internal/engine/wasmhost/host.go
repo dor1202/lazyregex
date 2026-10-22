@@ -78,7 +78,7 @@ func New(ctx context.Context, spec Spec, cacheDir string) (*Host, error) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	if err := h.ensureLocked(ctx); err != nil {
-		h.cache.Close(context.Background())
+		_ = h.cache.Close(context.Background()) // best-effort; reporting the init error
 		return nil, err
 	}
 	return h, nil
@@ -271,7 +271,7 @@ func (h *Host) startInstance() (*instance, error) {
 		WithCompilationCache(h.cache))
 	fail := func(err error) (*instance, error) {
 		cancel()
-		rt.Close(context.Background())
+		_ = rt.Close(context.Background()) // best-effort; reporting the original error
 		return nil, err
 	}
 	wasi_snapshot_preview1.MustInstantiate(runCtx, rt)
@@ -312,8 +312,9 @@ func (h *Host) startInstance() (*instance, error) {
 		_, err := rt.InstantiateModule(runCtx, compiled, cfg)
 		inst.exitErr = err
 		close(inst.exited)
-		inR.Close()
-		outW.Close()
+		// The module has exited; releasing the pipes cannot fail usefully.
+		_ = inR.Close()
+		_ = outW.Close()
 	}()
 	go func() {
 		defer inst.wg.Done()
@@ -338,12 +339,13 @@ func (h *Host) startInstance() (*instance, error) {
 func (i *instance) close() {
 	i.once.Do(func() {
 		close(i.stop)
-		i.stdin.Close()
-		i.inR.Close()
-		i.outR.Close()
+		// Teardown: close errors on in-memory pipes are not actionable.
+		_ = i.stdin.Close()
+		_ = i.inR.Close()
+		_ = i.outR.Close()
 		i.cancel()
-		<-i.exited // let the module finish closing itself before the runtime does
-		i.rt.Close(context.Background())
+		<-i.exited                           // let the module finish closing itself before the runtime does
+		_ = i.rt.Close(context.Background()) // shutdown; nothing to do on failure
 		i.wg.Wait()
 	})
 }

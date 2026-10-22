@@ -241,7 +241,7 @@ func TestRunnerEventsNeverBlock(t *testing.T) {
 	done := make(chan struct{})
 	go func() {
 		for i := 0; i < 60; i++ {
-			r.Eval(engine.Python, engine.Request{Pattern: "1s"}) // times out each time
+			_, _ = r.Eval(engine.Python, engine.Request{Pattern: "1s"}) // times out each time
 		}
 		close(done)
 	}()

@@ -267,7 +267,7 @@ func (p *parser) digitEscape(inClass bool) *Node {
 		}
 		return backref(decimalEnd(2))
 	case engine.JS:
-		if first == '0' && !(i+1 < len(p.src) && p.src[i+1] >= '0' && p.src[i+1] <= '9') {
+		if first == '0' && (i+1 >= len(p.src) || p.src[i+1] < '0' || p.src[i+1] > '9') {
 			p.pos = i + 1
 			return p.literal(s, p.pos, 0)
 		}

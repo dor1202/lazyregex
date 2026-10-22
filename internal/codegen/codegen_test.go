@@ -1,6 +1,7 @@
 package codegen
 
 import (
+	"bytes"
 	"flag"
 	"os"
 	"path/filepath"
@@ -26,6 +27,8 @@ func golden(t *testing.T, name, got string) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Tolerate CRLF checkouts (Windows autocrlf).
+	want = bytes.ReplaceAll(want, []byte("\r\n"), []byte("\n"))
 	if string(want) != got {
 		t.Errorf("%s mismatch\n--- got ---\n%s\n--- want ---\n%s", name, got, want)
 	}

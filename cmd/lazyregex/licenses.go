@@ -21,13 +21,17 @@ var licenseTitles = []struct{ file, title string }{
 // printLicenses writes lazyregex's licence followed by every bundled one,
 // each under a header.
 func printLicenses(w io.Writer) error {
-	fmt.Fprintf(w, "%s\nlazyregex - MIT\n%s\n\n%s\n", rule, rule, strings.TrimRight(lazyregex.Own, "\n"))
+	if _, err := fmt.Fprintf(w, "%s\nlazyregex - MIT\n%s\n\n%s\n", rule, rule, strings.TrimRight(lazyregex.Own, "\n")); err != nil {
+		return err
+	}
 	for _, l := range licenseTitles {
 		b, err := fs.ReadFile(lazyregex.Third, "LICENSES/"+l.file)
 		if err != nil {
 			return err
 		}
-		fmt.Fprintf(w, "\n%s\n%s\n%s\n\n%s\n", rule, l.title, rule, strings.TrimRight(string(b), "\n"))
+		if _, err := fmt.Fprintf(w, "\n%s\n%s\n%s\n\n%s\n", rule, l.title, rule, strings.TrimRight(string(b), "\n")); err != nil {
+			return err
+		}
 	}
 	return nil
 }

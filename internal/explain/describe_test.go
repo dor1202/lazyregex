@@ -1,6 +1,7 @@
 package explain
 
 import (
+	"bytes"
 	"flag"
 	"os"
 	"path/filepath"
@@ -42,6 +43,8 @@ func TestExplainGolden(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			// Tolerate CRLF checkouts (Windows autocrlf).
+			want = bytes.ReplaceAll(want, []byte("\r\n"), []byte("\n"))
 			if got != string(want) {
 				t.Errorf("mismatch for %s\n--- got ---\n%s--- want ---\n%s", c.name, got, want)
 			}

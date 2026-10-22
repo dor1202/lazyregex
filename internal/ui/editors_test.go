@@ -739,8 +739,8 @@ func TestLongLineRendersFast(t *testing.T) {
 }
 
 func TestControlCharactersNeutralised(t *testing.T) {
-	const evil = "a\u009b[2Jb‮c⁦d‏e\x1b[31mf\u0085g"
-	bad := []string{"\u009b", "‮", "⁦", "‏", "\x1b[31m", "\u0085"}
+	const evil = "a\u009b[2Jb\u202ec\u2066d\u200fe\x1b[31mf\u0085g"
+	bad := []string{"\u009b", "\u202e", "\u2066", "\u200f", "\x1b[31m", "\u0085"}
 	clean := func(what, out string) {
 		t.Helper()
 		plain := ansi.Strip(out)

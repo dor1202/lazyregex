@@ -25,7 +25,7 @@ func TestMain(m *testing.M) {
 	}
 	cacheDir = dir
 	code := m.Run()
-	os.RemoveAll(dir)
+	_ = os.RemoveAll(dir)
 	os.Exit(code)
 }
 
@@ -35,7 +35,7 @@ func newEngine(t *testing.T) engine.Engine {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Cleanup(func() { e.Close() })
+	t.Cleanup(func() { _ = e.Close() })
 	return e
 }
 
@@ -181,13 +181,13 @@ func TestPythonStartupTimes(t *testing.T) {
 		t.Fatal(err)
 	}
 	cold := time.Since(start)
-	e1.Close()
+	_ = e1.Close()
 	start = time.Now()
 	e2, err := New(context.Background(), dir)
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer e2.Close()
+	defer func() { _ = e2.Close() }()
 	warm := time.Since(start)
 
 	// Catastrophic backtracking: only the deadline stops it.

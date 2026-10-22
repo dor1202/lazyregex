@@ -195,7 +195,7 @@ func (r *Runner) startLoadLocked(f engine.Flavor) {
 		r.mu.Lock()
 		defer r.mu.Unlock()
 		if err == nil && r.closed {
-			eng.Close()
+			_ = eng.Close() // runner already closed; the engine is discarded and ErrClosed reported
 			err = ErrClosed
 			eng = nil
 		}
@@ -358,7 +358,7 @@ func (r *Runner) Close() {
 	r.mu.Lock()
 	for _, s := range r.slots {
 		if s.eng != nil {
-			s.eng.Close()
+			_ = s.eng.Close() // shutdown; Close has no caller to report to
 			s.eng = nil
 		}
 	}

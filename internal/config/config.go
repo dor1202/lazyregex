@@ -139,8 +139,9 @@ func writeAtomic(dir, name string, data []byte) (err error) {
 	}
 	defer func() {
 		if err != nil {
-			tmp.Close()
-			os.Remove(tmp.Name())
+			// Best-effort cleanup; the original error is what matters.
+			_ = tmp.Close()
+			_ = os.Remove(tmp.Name())
 		}
 	}()
 	if err = tmp.Chmod(0o600); err != nil {

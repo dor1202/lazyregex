@@ -28,7 +28,7 @@ func TestAllEnginesAgreeOnSimpleCase(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			defer e.Close()
+			defer func() { _ = e.Close() }()
 			res, err := e.Eval(ctx, engine.Request{Pattern: `\d+`, Flags: "g", Text: "a1b22", Mode: engine.ModeMatch})
 			if err != nil {
 				t.Fatal(err)

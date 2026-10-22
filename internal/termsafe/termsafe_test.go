@@ -4,12 +4,12 @@ import "testing"
 
 func TestString(t *testing.T) {
 	for in, want := range map[string]string{
-		"plain é😀":       "plain é😀",
-		"a\x1b[31mb\x07": "a␛[31mb␇",
-		"tab\there\n":    "tab␉here␊",
-		"del\x7f":        "del␡",
-		"csi\u009b":      "csi�",
-		"bidi‮⁦":         "bidi��",
+		"plain é😀":         "plain é😀",
+		"a\x1b[31mb\x07":   "a␛[31mb␇",
+		"tab\there\n":      "tab␉here␊",
+		"del\x7f":          "del␡",
+		"csi\u009b":        "csi�",
+		"bidi\u202e\u2066": "bidi��",
 	} {
 		if got := String(in); got != want {
 			t.Errorf("String(%q) = %q, want %q", in, got, want)
