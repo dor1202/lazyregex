@@ -188,7 +188,7 @@ func TestHostRestartNotChargedToCall(t *testing.T) {
 	}
 }
 
-func TestHostCanceledDuringRestart(t *testing.T) {
+func TestHostCallAlreadyCanceledSkipsRestart(t *testing.T) {
 	h := newHost(t, t.TempDir())
 	killByTimeout(t, h)
 	ctx, cancel := context.WithCancel(context.Background())
@@ -196,12 +196,34 @@ func TestHostCanceledDuringRestart(t *testing.T) {
 	if _, err := eval(h, ctx, "", "x"); !errors.Is(err, context.Canceled) {
 		t.Fatalf("err = %v, want context.Canceled", err)
 	}
-	// The restarted instance was not killed: no request had been sent.
-	if h.inst == nil {
-		t.Fatal("instance dropped")
+	if h.inst != nil {
+		t.Fatal("restarted for a Call that was already over")
 	}
 	resp, err := eval(h, context.Background(), "", "y")
 	if err != nil || resp.Output != "Y" {
 		t.Fatalf("after cancel: %+v, %v", resp, err)
+	}
+}
+
+// A start whose ping fails (here: New's context is already canceled) must
+// not leave the started instance running.
+func TestHostFailedStartLeavesNoInstance(t *testing.T) {
+	if echoGZ == nil {
+		t.Skip("go toolchain not on PATH")
+	}
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	if h, err := New(ctx, Spec{Name: "echo", ModuleGZ: echoGZ}, t.TempDir()); !errors.Is(err, context.Canceled) || h != nil {
+		t.Fatalf("New = %v, %v; want nil, context.Canceled", h, err)
+	}
+	// New discards the Host, so check the same start path on a live one.
+	h := newHost(t, t.TempDir())
+	killByTimeout(t, h)
+	h.mu.Lock()
+	err := h.ensureLocked(ctx)
+	inst := h.inst
+	h.mu.Unlock()
+	if !errors.Is(err, context.Canceled) || inst != nil {
+		t.Fatalf("ensureLocked = %v, inst = %v; want context.Canceled and no instance", err, inst)
 	}
 }

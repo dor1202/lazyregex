@@ -115,6 +115,9 @@ func (h *Host) Call(ctx context.Context, req protocol.Req) (protocol.Resp, error
 		return protocol.Resp{}, errors.New(h.spec.Name + ": host closed")
 	}
 	if h.inst == nil {
+		if err := ctx.Err(); err != nil {
+			return protocol.Resp{}, err // don't restart for a Call that is already over
+		}
 		began := time.Now()
 		startCtx, cancel := context.WithTimeout(context.Background(), startupTimeout)
 		err := h.ensureLocked(startCtx)
@@ -158,6 +161,7 @@ func (h *Host) ensureLocked(ctx context.Context) error {
 	h.inst = inst
 	resp, err := h.roundTripLocked(ctx, protocol.Req{Op: protocol.OpPing})
 	if err != nil {
+		h.dropLocked() // no-op if the round trip already dropped it
 		return err
 	}
 	h.vmu.Lock()
