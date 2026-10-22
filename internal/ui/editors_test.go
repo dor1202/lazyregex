@@ -685,3 +685,90 @@ func TestJumpToMatchScrollsText(t *testing.T) {
 	waitFor(t, tm, "line 80 on screen", contains(" 80 needle here"))
 	done(t, tm)
 }
+
+func TestEvalAllTimeoutDoesNotLoop(t *testing.T) {
+	rec := &recorder{}
+	hang := func(ctx context.Context, _ engine.Request) (engine.Result, error) {
+		<-ctx.Done()
+		return engine.Result{}, ctx.Err()
+	}
+	r := setup(t, rec, 50*time.Millisecond, map[engine.Flavor]evalFunc{
+		engine.Python: matchAll("x"), engine.JS: hang,
+	}, nil)
+	tm := run(t, depsFor(r, engine.Python, "x", "xx"))
+	eventually(t, "the JS EvalAll", func() bool { return len(rec.of(engine.JS)) > 0 })
+	time.Sleep(800 * time.Millisecond) // let any restart events settle
+	before := len(rec.of(engine.JS))
+	time.Sleep(time.Second) // a loop would run ~3 times a second
+	if after := len(rec.of(engine.JS)); after != before {
+		t.Fatalf("EvalAll keeps re-running after a timeout: %d -> %d JS calls", before, after)
+	}
+	done(t, tm)
+}
+
+func TestLongLineRendersFast(t *testing.T) {
+	text := strings.Repeat("ab", 100_000) // one 200k-rune line
+	var ms []engine.Match
+	for i := 0; i < len(text); i += 2 {
+		ms = append(ms, engine.Match{Span: engine.Span{Start: i, End: i + 1}})
+	}
+	res := engine.Result{Unit: engine.UnitBytes, Matches: ms}
+	s := &State{
+		Text: text, Result: &res, Matches: ms, ResultText: text, Mode: engine.ModeMatch,
+		Theme: newTheme(true, nil), Focus: PText, Editing: true,
+	}
+	const w, h = 100, 20
+	p := newTextPanel()
+	for _, editing := range []bool{false, true} { // editing puts the cursor (and view) at the end
+		s.Editing = editing
+		start := time.Now()
+		out := p.View(s, w, h)
+		if d := time.Since(start); d > 300*time.Millisecond {
+			t.Errorf("editing=%v: rendering took %v", editing, d)
+		}
+		for _, l := range strings.Split(out, "\n") {
+			if lw := ansi.StringWidth(l); lw > w {
+				t.Errorf("editing=%v: line is %d cells, wider than %d", editing, lw, w)
+			}
+		}
+		if editing && !strings.HasSuffix(ansi.Strip(out), "ab ") {
+			t.Errorf("view should end at the cursor: %q", ansi.Strip(out)[len(ansi.Strip(out))-20:])
+		}
+	}
+}
+
+func TestControlCharactersNeutralised(t *testing.T) {
+	const evil = "a\u009b[2Jb‮c⁦d‏e\x1b[31mf\u0085g"
+	bad := []string{"\u009b", "‮", "⁦", "‏", "\x1b[31m", "\u0085"}
+	clean := func(what, out string) {
+		t.Helper()
+		plain := ansi.Strip(out)
+		for _, b := range bad {
+			if strings.Contains(plain, b) {
+				t.Errorf("%s: %q reaches the terminal: %q", what, b, plain)
+			}
+		}
+	}
+	th := newTheme(true, nil)
+	out := th.highlightText(evil, engine.Result{}, -1)
+	clean("highlightText", out)
+	if w, n := ansi.StringWidth(ansi.Strip(out)), len([]rune(evil)); w != n {
+		t.Errorf("width %d, want one cell per rune (%d)", w, n)
+	}
+	clean("highlightPattern", th.highlightPattern(evil, engine.Python, "g", [2]int{-1, -1}))
+	clean("listRow", listRow(th, evil, 80, true))
+	clean("error line", strings.Join(errorLines(&State{Err: &engine.CompileError{Message: evil}}), "\n"))
+	clean("value", quoteValue(evil))
+
+	// End to end: piped text, its matches and the replace result.
+	r := setup(t, nil, time.Second, nil, map[engine.Flavor]runner.Factory{engine.Go: goFactory})
+	tm := run(t, depsFor(r, engine.Go, `b.c`, evil))
+	waitFor(t, tm, "go result", contains("✓ 1 match"))
+	send(tm, escKey, key('3'), enterKey)
+	s := waitFor(t, tm, "expanded", contains("▾ #1"))
+	clean("screen", s.raw)
+	if !strings.Contains(s.screen, "e␛[31mf") { // ESC drawn as a picture, never raw
+		t.Errorf("ESC not neutralised:\n%s", s.screen)
+	}
+	done(t, tm)
+}

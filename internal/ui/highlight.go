@@ -7,6 +7,7 @@ import (
 	"unicode/utf8"
 
 	"charm.land/lipgloss/v2"
+	"github.com/mattn/go-runewidth"
 
 	"github.com/dor1202/lazyregex/internal/engine"
 	"github.com/dor1202/lazyregex/internal/explain"
@@ -44,16 +45,64 @@ func (t *Theme) paintStyle(p paint) lipgloss.Style {
 	return st
 }
 
-// displayRune is how a rune is drawn: control characters (tab included)
-// become their one-cell Unicode control pictures so widths stay exact.
+// displayRune is how a rune of user or engine text is drawn, so that
+// nothing reaches the terminal raw that could act as a control sequence or
+// reorder the display, and widths stay exact: C0 controls (tab included)
+// become their one-cell Unicode control pictures, DEL becomes ␡, and C1
+// controls (U+0080–U+009F, e.g. U+009B CSI) and bidirectional controls
+// become U+FFFD.
 func displayRune(r rune) rune {
 	switch {
 	case r < 0x20:
 		return 0x2400 + r
 	case r == 0x7f:
 		return '␡'
+	case r >= 0x80 && r <= 0x9f, isBidiControl(r):
+		return utf8.RuneError
 	}
 	return r
+}
+
+// isBidiControl reports the Unicode bidirectional formatting characters.
+func isBidiControl(r rune) bool {
+	switch {
+	case r == 0x061c, r == 0x200e, r == 0x200f:
+		return true
+	case r >= 0x202a && r <= 0x202e, r >= 0x2066 && r <= 0x2069:
+		return true
+	}
+	return false
+}
+
+// sanitize applies displayRune to a whole string.
+func sanitize(s string) string { return strings.Map(displayRune, s) }
+
+// runeCells is the cell width of a rune as drawn.
+func runeCells(r rune) int { return runewidth.RuneWidth(displayRune(r)) }
+
+// cellWindow returns the byte range [from, to) of text[ls:le] that falls in
+// display cells [left, left+w), and pad, the number of blank cells to draw
+// first when a wide rune straddles the left edge. It scans runes without
+// styling, so it is cheap even for very long lines.
+func cellWindow(text string, ls, le, left, w int) (from, to, pad int) {
+	cell, i := 0, ls
+	for i < le && cell < left {
+		r, n := utf8.DecodeRuneInString(text[i:le])
+		cell += runeCells(r)
+		i += n
+	}
+	from, pad = i, max(0, cell-left)
+	cell = pad
+	for i < le {
+		r, n := utf8.DecodeRuneInString(text[i:le])
+		c := runeCells(r)
+		if cell+c > w {
+			break
+		}
+		cell += c
+		i += n
+	}
+	return from, i, pad
 }
 
 // renderRuns renders s[from:to], asking at for the paint of each rune (by
@@ -144,12 +193,15 @@ func textPaint(m engine.Match, selected bool, i int) paint {
 // (byte spans, sorted and non-overlapping) highlighted; match sel is
 // underlined and cursor is drawn reversed.
 func (t *Theme) paintText(text string, from, to int, ms []engine.Match, sel, cursor int) string {
-	k0 := sort.Search(len(ms), func(k int) bool { return ms[k].Span.End > from })
+	// renderRuns asks for increasing offsets, so the match index only
+	// moves forward: O(runes + matches) per call.
+	k := sort.Search(len(ms), func(k int) bool { return ms[k].Span.End > from })
 	return t.renderRuns(text, from, to, func(i int) paint {
-		for k := k0; k < len(ms) && ms[k].Span.Start <= i; k++ {
-			if i < ms[k].Span.End {
-				return textPaint(ms[k], k == sel, i)
-			}
+		for k < len(ms) && ms[k].Span.End <= i {
+			k++
+		}
+		if k < len(ms) && ms[k].Span.Start <= i {
+			return textPaint(ms[k], k == sel, i)
 		}
 		return paint{fg: "text"}
 	}, cursor)

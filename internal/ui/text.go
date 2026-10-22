@@ -190,10 +190,10 @@ func (p *textPanel) textLines(s *State, w, h int) []string {
 		if i >= selFrom && i <= selTo {
 			gutter = t.fg("text").Reverse(true).Render(fmt.Sprintf("%*d", gw, i+1))
 		}
-		content := t.paintText(text, ls, le, s.Matches, s.SelMatch, cursor)
-		if p.left > 0 {
-			content = ansi.Cut(content, p.left, p.left+cw)
-		}
+		// Paint only the visible cells, then make sure the line fits.
+		from, to, pad := cellWindow(text, ls, le, p.left, cw)
+		content := strings.Repeat(" ", pad) + t.paintText(text, from, to, s.Matches, s.SelMatch, cursor)
+		content = ansi.Truncate(content, cw, "")
 		out = append(out, gutter+" "+content)
 	}
 	return out
@@ -208,7 +208,7 @@ func resultLines(s *State, w, h int) []string {
 		return append(out, t.fg("dim").Render("no result"))
 	case s.Mode == engine.ModeReplace:
 		for _, l := range strings.Split(s.Result.Output, "\n") {
-			out = append(out, t.fg("text").Render(strings.Map(displayRune, l)))
+			out = append(out, t.fg("text").Render(quoteValue(l)))
 		}
 	default:
 		gw := len(fmt.Sprint(len(s.Result.Parts)))
@@ -218,7 +218,7 @@ func resultLines(s *State, w, h int) []string {
 				out = append(out, idx+t.fg("dim").Render("None"))
 				continue
 			}
-			out = append(out, idx+t.fg("text").Render(strings.Map(displayRune, part)))
+			out = append(out, idx+t.fg("text").Render(quoteValue(part)))
 		}
 	}
 	return out[:min(len(out), h)]

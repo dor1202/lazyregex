@@ -37,7 +37,11 @@ func errorLines(s *State) []string {
 		return nil
 	}
 	lines := strings.Split(strings.TrimRight(s.Err.Error(), "\n"), "\n")
-	return lines[:min(len(lines), maxErrorLines)]
+	lines = lines[:min(len(lines), maxErrorLines)]
+	for i, l := range lines {
+		lines[i] = sanitize(l)
+	}
+	return lines
 }
 
 // Height is the pattern line, the replacement line in Replace mode, and the
@@ -214,7 +218,7 @@ func plural(n int, one, many string) string {
 
 // displayWidth is the cell width of s as renderRuns draws it.
 func displayWidth(s string) int {
-	return ansi.StringWidth(strings.Map(displayRune, s))
+	return ansi.StringWidth(sanitize(s))
 }
 
 // window cuts a styled line to w cells, scrolled horizontally so that cell

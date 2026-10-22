@@ -148,7 +148,7 @@ func counterOf(i, n int) string {
 // listRow renders a list row padded to w; the selected row gets the
 // selection background across the full width.
 func listRow(t *Theme, text string, w int, selected bool) string {
-	text = fitWidth(text, w)
+	text = fitWidth(sanitize(text), w)
 	if selected {
 		return t.selectedRow().Render(text)
 	}

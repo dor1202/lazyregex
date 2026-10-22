@@ -192,8 +192,23 @@ func groupLabel(g engine.Group) string {
 
 func spanText(sp engine.Span) string { return fmt.Sprintf("%d–%d", sp.Start, sp.End) }
 
-// quoteValue makes a value printable on one line.
-func quoteValue(v string) string { return strings.Map(displayRune, v) }
+// quoteValue makes a value printable on one line; only the first
+// maxValueRunes runes are kept (a row never shows more).
+func quoteValue(v string) string { return sanitize(clipRunes(v, maxValueRunes)) }
+
+// maxValueRunes bounds a value rendered in a row.
+const maxValueRunes = 512
+
+// clipRunes returns at most the first n runes of s.
+func clipRunes(s string, n int) string {
+	for i := range s {
+		if n == 0 {
+			return s[:i]
+		}
+		n--
+	}
+	return s
+}
 
 // matchesJSON is every match with its groups, spans in native units.
 func matchesJSON(s *State) string {

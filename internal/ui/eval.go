@@ -62,7 +62,8 @@ type evalLoop struct {
 	evalSeq int // the latest started evaluation; older results are dropped
 	allSeq  int // the latest EvalAll generation
 	initial engine.Flavor
-	warmed  bool // WarmUp has been called
+	warmed  bool                   // WarmUp has been called
+	loaded  map[engine.Flavor]bool // flavors seen Ready at least once
 }
 
 // waitForEvent delivers the next runner event as a message. The shell
@@ -167,8 +168,17 @@ func (m *Model) onRunnerEvent(ev runner.Event) tea.Cmd {
 			m.ev.warmed = true
 			s.Runner.WarmUp(ev.Flavor)
 		}
-		if ev.Flavor != s.Flavor {
-			cmds = append(cmds, m.scheduleAll()) // a new flavor can get its marker
+		// Only a first load gives a flavor a new marker. A timeout emits
+		// Restarting then Ready again; re-running EvalAll then would time
+		// out again, forever, and drop each result as stale.
+		if m.ev.loaded == nil {
+			m.ev.loaded = map[engine.Flavor]bool{}
+		}
+		if !m.ev.loaded[ev.Flavor] {
+			m.ev.loaded[ev.Flavor] = true
+			if ev.Flavor != s.Flavor {
+				cmds = append(cmds, m.scheduleAll())
+			}
 		}
 	case runner.Failed:
 		if ev.Flavor == s.Flavor {
@@ -249,7 +259,8 @@ func (m *Model) finishEval(msg evalDoneMsg) {
 }
 
 // startAll evaluates the pattern on every other Ready flavor, for the ✗
-// markers. Large input is not sent: the markers only need compile errors.
+// markers. The live text is sent because Task 15's Compare tab shows each
+// flavor's match count from these outcomes; large (manual) input is not.
 func (m *Model) startAll() tea.Cmd {
 	s := &m.state
 	if s.Runner == nil {
