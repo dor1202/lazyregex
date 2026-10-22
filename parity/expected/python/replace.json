@@ -1,0 +1,121 @@
+[
+  {
+    "id": "replace.swap_python",
+    "ok": true,
+    "matches": [],
+    "output": "b at a d at c",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.first_only_python",
+    "ok": true,
+    "matches": [],
+    "output": "b at a c@d",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.no_match",
+    "ok": true,
+    "matches": [],
+    "output": "abc",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.literal",
+    "ok": true,
+    "matches": [],
+    "output": "f00 b00",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.empty_matches_global",
+    "ok": true,
+    "matches": [],
+    "output": "-a-b-c-",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.empty_matches_first",
+    "ok": true,
+    "matches": [],
+    "output": "-abc",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.star_baaa",
+    "ok": true,
+    "matches": [],
+    "output": "-b--",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.whole_match_python",
+    "ok": true,
+    "matches": [],
+    "output": "a<1> b<22>",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.named_python",
+    "ok": true,
+    "matches": [],
+    "output": "a[1] b[22]",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.unmatched_group_python",
+    "ok": true,
+    "matches": [],
+    "output": "[]",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.missing_group_python",
+    "ok": false,
+    "error_message": "invalid group reference 5 at position 1",
+    "matches": [],
+    "unit": ""
+  },
+  {
+    "id": "replace.ignorecase",
+    "ok": true,
+    "matches": [],
+    "output": "bye bye",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.newline_in_text",
+    "ok": true,
+    "matches": [],
+    "output": "> a\n> b",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.unicode",
+    "ok": true,
+    "matches": [],
+    "output": "cafe ee",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.word_unicode",
+    "ok": true,
+    "matches": [],
+    "output": "__",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.backslash_python",
+    "ok": true,
+    "matches": [],
+    "output": "\\",
+    "unit": "codepoints"
+  },
+  {
+    "id": "replace.delete",
+    "ok": true,
+    "matches": [],
+    "output": "abc",
+    "unit": "codepoints"
+  }
+]

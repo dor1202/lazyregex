@@ -1,0 +1,794 @@
+[
+  {
+    "id": "groups.unmatched_optional",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": false,
+            "span": [
+              -1,
+              -1
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              1
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.unmatched_optional_global",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": false,
+            "span": [
+              -1,
+              -1
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "span": [
+          2,
+          4
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              2,
+              3
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "matched": true,
+            "span": [
+              3,
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.alternation_groups",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": false,
+            "span": [
+              -1,
+              -1
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "span": [
+          1,
+          2
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              1,
+              2
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "matched": false,
+            "span": [
+              -1,
+              -1
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.named_p",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          7
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "year",
+            "matched": true,
+            "span": [
+              0,
+              4
+            ]
+          },
+          {
+            "index": 2,
+            "name": "mon",
+            "matched": true,
+            "span": [
+              5,
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "span": [
+          12,
+          19
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "year",
+            "matched": true,
+            "span": [
+              12,
+              16
+            ]
+          },
+          {
+            "index": 2,
+            "name": "mon",
+            "matched": true,
+            "span": [
+              17,
+              19
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.named_mixed_with_unnamed",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              1
+            ]
+          },
+          {
+            "index": 2,
+            "name": "n",
+            "matched": true,
+            "span": [
+              1,
+              2
+            ]
+          },
+          {
+            "index": 3,
+            "name": "",
+            "matched": true,
+            "span": [
+              2,
+              3
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.nested",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          2
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              2
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              1
+            ]
+          },
+          {
+            "index": 3,
+            "name": "",
+            "matched": true,
+            "span": [
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.nested_optional_inner",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          3
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              2,
+              3
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "matched": true,
+            "span": [
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.repeated_last_iteration",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          4
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              3,
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.star_unmatched",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": false,
+            "span": [
+              -1,
+              -1
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.non_capturing",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          2
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.empty_group",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.trailing_unmatched",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": false,
+            "span": [
+              -1,
+              -1
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.many_groups",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          11
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              1
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "matched": true,
+            "span": [
+              1,
+              2
+            ]
+          },
+          {
+            "index": 3,
+            "name": "",
+            "matched": true,
+            "span": [
+              2,
+              3
+            ]
+          },
+          {
+            "index": 4,
+            "name": "",
+            "matched": true,
+            "span": [
+              3,
+              4
+            ]
+          },
+          {
+            "index": 5,
+            "name": "",
+            "matched": true,
+            "span": [
+              4,
+              5
+            ]
+          },
+          {
+            "index": 6,
+            "name": "",
+            "matched": true,
+            "span": [
+              5,
+              6
+            ]
+          },
+          {
+            "index": 7,
+            "name": "",
+            "matched": true,
+            "span": [
+              6,
+              7
+            ]
+          },
+          {
+            "index": 8,
+            "name": "",
+            "matched": true,
+            "span": [
+              7,
+              8
+            ]
+          },
+          {
+            "index": 9,
+            "name": "",
+            "matched": true,
+            "span": [
+              8,
+              9
+            ]
+          },
+          {
+            "index": 10,
+            "name": "",
+            "matched": true,
+            "span": [
+              9,
+              10
+            ]
+          },
+          {
+            "index": 11,
+            "name": "",
+            "matched": true,
+            "span": [
+              10,
+              11
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.group_in_lookahead",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.backref_to_group",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          7
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "span": [
+          8,
+          15
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              8,
+              11
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.alternation_named_p",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "a",
+            "matched": true,
+            "span": [
+              0,
+              1
+            ]
+          },
+          {
+            "index": 2,
+            "name": "b",
+            "matched": false,
+            "span": [
+              -1,
+              -1
+            ]
+          }
+        ]
+      },
+      {
+        "span": [
+          1,
+          2
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "a",
+            "matched": false,
+            "span": [
+              -1,
+              -1
+            ]
+          },
+          {
+            "index": 2,
+            "name": "b",
+            "matched": true,
+            "span": [
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.star_of_star",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.star_of_plus",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          2
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              2
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  },
+  {
+    "id": "groups.multi_line_groups",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          6
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              2
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "matched": true,
+            "span": [
+              4,
+              6
+            ]
+          }
+        ]
+      },
+      {
+        "span": [
+          7,
+          13
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              7,
+              9
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "matched": true,
+            "span": [
+              11,
+              13
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "codepoints"
+  }
+]

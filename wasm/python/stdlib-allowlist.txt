@@ -1,0 +1,24 @@
+# Standard-library modules packed into stdlib.zip (paths under CPython's Lib/;
+# a trailing "/" takes the whole package). Just enough for startup, for
+# shim.py's `import json, re, sys` and for what re imports lazily (warnings,
+# for its FutureWarnings). Modules CPython freezes into the binary (abc,
+# codecs, io, os, stat, _collections_abc, collections.abc, ...) and C modules
+# (_sre, _json, unicodedata, ...) need no entry.
+_py_warnings.py
+collections/__init__.py
+copyreg.py
+encodings/__init__.py
+encodings/aliases.py
+encodings/utf_8.py
+enum.py
+functools.py
+json/__init__.py
+json/decoder.py
+json/encoder.py
+json/scanner.py
+keyword.py
+operator.py
+re/
+reprlib.py
+types.py
+warnings.py
