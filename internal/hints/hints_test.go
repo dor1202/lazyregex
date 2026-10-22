@@ -34,7 +34,9 @@ func TestGoLookbehindRewrite(t *testing.T) {
 
 func TestGoTrailingLookaheadRewrite(t *testing.T) {
 	h, ok := For(engine.Go, `\d+(?=%)`, "", nil)
-	if !ok || h.Rewrite != `(\d+)%` || h.RewriteNote != "read group 1" {
+	// The lookahead's text is consumed now: `\d(?=\d)` on "123" found 1 and 2;
+	// `(\d)\d` finds only "12".
+	if !ok || h.Rewrite != `(\d+)%` || h.RewriteNote != "read group 1; the lookahead's text is now consumed, so overlapping matches differ" {
 		t.Fatalf("got %+v ok=%v", h, ok)
 	}
 }

@@ -54,8 +54,8 @@ func goHint(pattern, flags string) (Hint, bool) {
 		return Hint{}, false
 	}
 	h := Hint{Why: "Go does not support " + name + ". " + re2}
-	if rw, ok := goRewrite(root, pattern, flags); ok {
-		h.Rewrite, h.RewriteNote = rw, "read group 1"
+	if rw, note, ok := goRewrite(root, pattern, flags); ok {
+		h.Rewrite, h.RewriteNote = rw, note
 	}
 	return h, true
 }
@@ -100,37 +100,40 @@ func construct(n, parent *explain.Node, idx int) string {
 
 // goRewrite handles a leading (?<=A)B -> A(B) and a trailing A(?=B) -> (A)B.
 // It only fires on a top-level sequence where the moved part has no capture
-// groups, and only when the result compiles in Go.
-func goRewrite(root *explain.Node, pattern, flags string) (string, bool) {
+// groups, and only when the result compiles in Go. note says how to read
+// the result.
+func goRewrite(root *explain.Node, pattern, flags string) (rw, note string, ok bool) {
 	if root.Kind != explain.Sequence || len(root.Children) < 2 {
-		return "", false
+		return "", "", false
 	}
 	if hasBareFlags(root) {
 		// Regrouping would change how far an inline (?i) reaches.
-		return "", false
+		return "", "", false
 	}
-	var rw string
+	note = "read group 1"
 	first, last := root.Children[0], root.Children[len(root.Children)-1]
 	switch {
 	case first.Kind == explain.Unknown && strings.HasPrefix(first.Raw, "(?<=") &&
 		strings.HasSuffix(first.Raw, ")") && first.Span[0] == 0:
 		if hasCapture(first) {
-			return "", false
+			return "", "", false
 		}
 		rw = body(first.Raw[len("(?<="):len(first.Raw)-1]) + "(" + pattern[first.Span[1]:] + ")"
 	case last.Kind == explain.Unknown && strings.HasPrefix(last.Raw, "(?=") &&
 		strings.HasSuffix(last.Raw, ")") && last.Span[1] == len(pattern):
 		if hasCapture(last) {
-			return "", false
+			return "", "", false
 		}
 		rw = "(" + pattern[:last.Span[0]] + ")" + body(last.Raw[len("(?="):len(last.Raw)-1])
+		// A(?=B) left B for the next match; (A)B consumes it.
+		note = "read group 1; the lookahead's text is now consumed, so overlapping matches differ"
 	default:
-		return "", false
+		return "", "", false
 	}
 	if _, err := regexp.Compile(rw); err != nil {
-		return "", false
+		return "", "", false
 	}
-	return rw, true
+	return rw, note, true
 }
 
 func hasCapture(n *explain.Node) bool {
