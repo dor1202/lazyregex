@@ -39,7 +39,8 @@ function runCase(c) {
   try {
     const flags = c.flags || "";
     const glob = flags.includes("g");
-    const re = new RegExp(c.pattern, flags + "d");
+    new RegExp(c.pattern, flags); // validate with the user's own flags so errors are verbatim
+    const re = new RegExp(c.pattern, flags + "d"); // "d" only adds match indices
     const names = groupNames(c.pattern);
     const mode = c.mode || "match";
     if (mode === "replace") {
