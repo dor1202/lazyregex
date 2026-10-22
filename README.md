@@ -4,7 +4,7 @@ A terminal UI to test and develop regular expressions against the **real engines
 of Python, JavaScript, PCRE (PHP) and Go, without leaving the terminal or opening a
 website. One static binary, no runtime to install.
 
-<p align="center"><img src="assets/demo.gif" alt="lazyregex demo"/></p>
+<!-- TODO: add a demo GIF (assets/demo.gif) recorded from the Go TUI. -->
 
 [![Release](https://img.shields.io/github/release-pre/dor1202/lazyregex.svg)](https://github.com/dor1202/lazyregex/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/lazyregex/blob/main/LICENSE)
@@ -119,6 +119,8 @@ embedded in the binary (Go's `regexp` is linked directly). Nothing on your machi
 - **Very large inputs** (over 1 MiB of test text) are not evaluated while you type: press
   Enter to evaluate. Every evaluation has a timeout (2 s by default; 30 s for these
   large inputs).
+- **JavaScript strings with lone surrogates** (for example a non-`u` split through an
+  emoji) are shown with U+FFFD in their place.
 
 ---
 
@@ -231,7 +233,6 @@ that you want, please file an issue and if so inclined submit a PR!
 
 Big thanks to the following projects for their inspiration:
 
-* [Textual](https://github.com/Textualize/textual)
 * [k9s](https://github.com/derailed/k9s)
 * [rexi](https://github.com/royreznik/rexi)
 
