@@ -47,6 +47,11 @@ archives:
 checksum:
   name_template: checksums.txt
 
+release:
+  # Lets a failed release job be re-run: assets already uploaded are replaced
+  # (builds are reproducible, so the bytes are identical).
+  replace_existing_artifacts: true
+
 changelog:
   sort: asc
   filters:
@@ -72,17 +77,25 @@ nfpms:
 
 # Replaces the old Python/virtualenv Formula/lazyregex.rb in the same tap, so
 # `brew upgrade lazyregex` moves existing users to the Go binary.
-brews:
+homebrew_casks:
   - name: lazyregex
+    binaries: [lazyregex]
     repository:
       owner: dor1202
       name: homebrew-lazyregex
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-    directory: Formula
+    # Casks live in Casks/ (the default). The old Formula/lazyregex.rb is retired
+    # via tap_migrations.json in the tap, so `brew upgrade` moves users to the cask.
     homepage: https://github.com/dor1202/lazyregex
     description: A terminal regex tester with real Python, JavaScript, PCRE and Go engines.
     license: MIT
-    test: system "#{bin}/lazyregex --version"
+    hooks:
+      post:
+        # The binary is not signed/notarized; without this macOS Gatekeeper blocks it.
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/lazyregex"]
+          end
     # Skipped in snapshots (no tag, no tap token); a real release always pushes.
     skip_upload: auto
 

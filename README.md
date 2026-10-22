@@ -19,8 +19,8 @@ website. One static binary, no runtime to install.
 - A library of saved patterns.
 - Errors are the engine's own messages, verbatim.
 
-> v0.x of lazyregex was a Python application. v1.0 is a complete rewrite in Go; the
-> Homebrew formula keeps its name, so `brew upgrade lazyregex` switches to it.
+> v0.x of lazyregex was a Python application. v1.0 is a complete rewrite in Go.
+> Since v1.0.1 Homebrew ships it as a cask (see [Installation](#installation)).
 
 ---
 
@@ -43,8 +43,20 @@ Your donations will go a long way in keeping the project alive and beers in my f
 
 ```sh
 brew tap dor1202/lazyregex
-brew install lazyregex
+brew trust --cask dor1202/lazyregex/lazyregex   # Homebrew 6+: third-party taps must be trusted
+brew install --cask lazyregex
 ```
+
+Upgrading from the old formula (v1.0.0 and the Python v0.x): `brew update` prints a
+notice that lazyregex moved to a cask. Switch once with:
+
+```sh
+brew uninstall --formula --force lazyregex
+brew install --cask dor1202/lazyregex/lazyregex
+```
+
+The binary is not signed by Apple; the cask removes macOS's quarantine flag on install
+so Gatekeeper doesn't block it.
 
 ### Scoop (Windows)
 
