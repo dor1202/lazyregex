@@ -1,0 +1,212 @@
+[
+  {
+    "id": "split.comma",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.whitespace_edges",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "",
+      "a",
+      "b",
+      ""
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.no_match",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "abc"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.empty_text",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      ""
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.empty_pattern_matches",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.empty_pattern",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.capture_group",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      ",",
+      "b",
+      ",",
+      "c"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.optional_capture",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "1",
+      "a",
+      "2",
+      "",
+      "3"
+    ],
+    "parts_nil": [
+      false,
+      false,
+      false,
+      true,
+      false
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.lookahead",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "hello",
+      "World",
+      "Foo"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.leading_separator",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "",
+      "a",
+      "b"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.trailing_separator",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      ""
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.adjacent_separators",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "",
+      "b"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.ignorecase",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.unicode_text",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "héllo",
+      "😀",
+      "wörld"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.global_flag_ignored",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      "c"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.newline",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "b",
+      ""
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.multi_capture",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "a",
+      "-",
+      "1",
+      "b",
+      "-",
+      "2",
+      "c"
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "split.word_boundary",
+    "ok": true,
+    "matches": [],
+    "parts": [
+      "ab",
+      " ",
+      "cd"
+    ],
+    "unit": "utf16"
+  }
+]

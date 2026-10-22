@@ -1,2 +1,73 @@
 # Waived (flavor, case id, field) triples: [{flavor, id, field: matches|error_message|output|parts|unit, reason}]
-[]
+#
+# js: QuickJS-ng and V8 both reject these patterns (ok=false on both sides) but
+# word the SyntaxError differently: V8 prefixes "Invalid regular expression: /<src>/<flags>: "
+# and uses its own phrases; QuickJS-ng's lre_compile messages are lowercase and unprefixed.
+- flavor: js
+  id: errors.unbalanced_open
+  field: error_message
+  reason: "error message wording: V8 says \"Unterminated group\", QuickJS-ng says \"expecting ')'\""
+- flavor: js
+  id: errors.unbalanced_close
+  field: error_message
+  reason: "error message wording: V8 says \"Unmatched ')'\", QuickJS-ng says \"extraneous characters at the end\""
+- flavor: js
+  id: errors.unclosed_class
+  field: error_message
+  reason: "error message wording: V8 says \"Unterminated character class\", QuickJS-ng says \"unexpected end\""
+- flavor: js
+  id: errors.leading_star
+  field: error_message
+  reason: "error message wording: V8 says \"Nothing to repeat\", QuickJS-ng says \"nothing to repeat\""
+- flavor: js
+  id: errors.bad_repeat_range
+  field: error_message
+  reason: "error message wording: V8 says \"numbers out of order in {} quantifier\", QuickJS-ng says \"invalid repetition count\""
+- flavor: js
+  id: errors.named_backref_missing_unicode_js
+  field: error_message
+  reason: "error message wording: V8 says \"Invalid named capture referenced\", QuickJS-ng says \"group name not defined\""
+- flavor: js
+  id: errors.trailing_backslash
+  field: error_message
+  reason: "error message wording: V8 says \"\\ at end of pattern\", QuickJS-ng says \"unexpected end\""
+- flavor: js
+  id: errors.bad_inline_flag
+  field: error_message
+  reason: "error message wording: V8 says \"Invalid group\", QuickJS-ng says \"invalid group\""
+- flavor: js
+  id: errors.double_quantifier
+  field: error_message
+  reason: "error message wording: V8 says \"Nothing to repeat\", QuickJS-ng says \"nothing to repeat\""
+- flavor: js
+  id: errors.unclosed_named_group
+  field: error_message
+  reason: "error message wording: V8 says \"Unterminated group\", QuickJS-ng says \"expecting ')'\""
+- flavor: js
+  id: errors.reversed_range
+  field: error_message
+  reason: "error message wording: V8 says \"Range out of order in character class\", QuickJS-ng says \"invalid class range\""
+- flavor: js
+  id: errors.unknown_property
+  field: error_message
+  reason: "error message wording: V8 says \"Invalid property name\", QuickJS-ng says \"unknown unicode property name\""
+- flavor: js
+  id: errors.bad_flag_group
+  field: error_message
+  reason: "error message wording: V8 says \"Invalid group\", QuickJS-ng says \"invalid group\""
+- flavor: js
+  id: errors.nothing_to_repeat_plus
+  field: error_message
+  reason: "error message wording: V8 says \"Nothing to repeat\", QuickJS-ng says \"nothing to repeat\""
+- flavor: js
+  id: errors.replace_mode_bad_pattern
+  field: error_message
+  reason: "error message wording: V8 says \"Unterminated group\", QuickJS-ng says \"expecting ')'\""
+- flavor: js
+  id: errors.split_mode_bad_pattern
+  field: error_message
+  reason: "error message wording: V8 says \"Unterminated character class\", QuickJS-ng says \"unexpected end\""
+- flavor: js
+  id: flags.inline_ignorecase_js
+  field: error_message
+  reason: "error message wording: V8 says \"Invalid group\", QuickJS-ng says \"expecting ':'\""

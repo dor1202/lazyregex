@@ -1,6 +1,7 @@
 # Builds the regex engines as WASI command modules. Driven by the Makefile
-# (make wasm-pcre), which passes every pinned version from wasm/versions.env
-# as a build argument and copies the final stage's files into the repo.
+# (make wasm-pcre, make wasm-js), which passes every pinned version from
+# wasm/versions.env as a build argument and copies the final stage's files
+# into the repo.
 
 # debian:bookworm-slim (multi-arch index digest)
 FROM debian@sha256:7ff6ba31527b9e336162fa061746c366c4b2032f4d2cff2078bea43f78efe3f8 AS wasi-sdk
@@ -43,3 +44,24 @@ RUN sh /src/shim/build.sh /src/pcre2 /src/shim /out
 
 FROM scratch AS pcre
 COPY --from=pcre-build /out/pcre.wasm.gz /
+
+# ---- QuickJS-ng (ECMAScript RegExp) ----
+FROM wasi-sdk AS quickjs-build
+ARG QUICKJS_NG_VERSION
+ARG QUICKJS_NG_SHA256
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends cmake=3.25.1-1 \
+ && rm -rf /var/lib/apt/lists/*
+RUN set -eu; \
+    curl -fsSLo /tmp/quickjs.tar.gz \
+      "https://github.com/quickjs-ng/quickjs/archive/refs/tags/v${QUICKJS_NG_VERSION}.tar.gz"; \
+    echo "${QUICKJS_NG_SHA256}  /tmp/quickjs.tar.gz" | sha256sum -c -; \
+    mkdir -p /src; \
+    tar xzf /tmp/quickjs.tar.gz -C /src; \
+    mv "/src/quickjs-${QUICKJS_NG_VERSION}" /src/quickjs; \
+    rm /tmp/quickjs.tar.gz
+COPY wasm/quickjs/ /src/build/
+RUN sh /src/build/build.sh /src/quickjs /out
+
+FROM scratch AS quickjs
+COPY --from=quickjs-build /out/qjs.wasm.gz /

@@ -1,0 +1,506 @@
+[
+  {
+    "id": "unicode.word_plain",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          9,
+          10
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          11,
+          14
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.word_js_u",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          9,
+          10
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          11,
+          14
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.dot_plain",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          4
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          5,
+          6
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          7
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          7,
+          8
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          8,
+          9
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          9,
+          10
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          10,
+          11
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          11,
+          12
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          12,
+          13
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          13,
+          14
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.dot_js_u",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          4
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.word_boundary",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          5,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          9,
+          9
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          10,
+          10
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          11,
+          11
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          14,
+          14
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.literal_emoji",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          6
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.literal_accent",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          3,
+          4
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          5,
+          6
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          6,
+          7
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.class_emoji",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          5,
+          6
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.ignorecase_accent",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.property_letters_js_u",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          5
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          9,
+          12
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.cjk_word",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          4,
+          8
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.combining_mark",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.zwj_emoji",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          4
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          5
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.digit_arabic",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          2
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "unicode.codepoint_escape_js",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  }
+]

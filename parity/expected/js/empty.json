@@ -1,0 +1,487 @@
+[
+  {
+    "id": "empty.star_after_text",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          4
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          4
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.star_first_only",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.word_boundary",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          5,
+          5
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.star_on_empty_global",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.star_on_empty",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.lookahead_adjacent",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          1
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.caret_on_empty",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.dollar_global",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          3,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.caret_multiline",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          2
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.empty_pattern",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.lazy_star",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          2
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.optional_global",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          2
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.star_group",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "span": [
+          1,
+          3
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "span": [
+          3,
+          3
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "",
+            "matched": true,
+            "span": [
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.mixed_nonempty_and_empty",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          4
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.empty_after_nonempty",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.lookbehind_empty",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          2
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.dollar_multiline",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          3
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          4,
+          4
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.nonword_boundary",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          1,
+          1
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  },
+  {
+    "id": "empty.unicode_empty",
+    "ok": true,
+    "matches": [
+      {
+        "span": [
+          0,
+          0
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          1,
+          1
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          2,
+          2
+        ],
+        "groups": []
+      },
+      {
+        "span": [
+          3,
+          3
+        ],
+        "groups": []
+      }
+    ],
+    "unit": "utf16"
+  }
+]

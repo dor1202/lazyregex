@@ -11,6 +11,7 @@
 - {id: flags.inline_ignorecase_js, flavors: [js], pattern: '(?i)abc', flags: g, text: 'ABC abc'}
 - {id: flags.inline_scoped, flavors: [python, js, pcre, go], pattern: '(?i:a)b', flags: g, text: 'Ab AB ab'}
 - {id: flags.inline_multiline, flavors: [python, pcre, go], pattern: '(?m)^b', flags: g, text: "a\nb"}
+- {id: flags.js_user_indices, flavors: [js], pattern: 'b(c)?', flags: gd, text: 'abcb'}
 - {id: flags.js_sticky, flavors: [js], pattern: 'a', flags: y, text: 'ab'}
 - {id: flags.js_sticky_global, flavors: [js], pattern: 'a', flags: gy, text: 'aab aa'}
 - {id: flags.js_unicode, flavors: [js], pattern: '^.$', flags: u, text: '😀'}

@@ -1,0 +1,121 @@
+[
+  {
+    "id": "replace.swap_dollar",
+    "ok": true,
+    "matches": [],
+    "output": "b at a d at c",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.first_only_dollar",
+    "ok": true,
+    "matches": [],
+    "output": "b at a c@d",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.no_match",
+    "ok": true,
+    "matches": [],
+    "output": "abc",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.literal",
+    "ok": true,
+    "matches": [],
+    "output": "f00 b00",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.empty_matches_global",
+    "ok": true,
+    "matches": [],
+    "output": "-a-b-c-",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.empty_matches_first",
+    "ok": true,
+    "matches": [],
+    "output": "-abc",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.star_baaa",
+    "ok": true,
+    "matches": [],
+    "output": "-b--",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.whole_match_js",
+    "ok": true,
+    "matches": [],
+    "output": "a<1> b<22>",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.named_js",
+    "ok": true,
+    "matches": [],
+    "output": "a[1] b[22]",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.unmatched_group_dollar",
+    "ok": true,
+    "matches": [],
+    "output": "[]",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.missing_group_dollar",
+    "ok": true,
+    "matches": [],
+    "output": "$5",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.dollar_escape",
+    "ok": true,
+    "matches": [],
+    "output": "$",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.ignorecase",
+    "ok": true,
+    "matches": [],
+    "output": "bye bye",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.newline_in_text",
+    "ok": true,
+    "matches": [],
+    "output": "> a\n> b",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.unicode",
+    "ok": true,
+    "matches": [],
+    "output": "cafe ee",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.word_unicode",
+    "ok": true,
+    "matches": [],
+    "output": "_é",
+    "unit": "utf16"
+  },
+  {
+    "id": "replace.delete",
+    "ok": true,
+    "matches": [],
+    "output": "abc",
+    "unit": "utf16"
+  }
+]
