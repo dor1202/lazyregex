@@ -103,7 +103,7 @@ scoops:
   - repository:
       owner: dor1202
       name: scoop-lazyregex
-      token: '{{ index .Env "SCOOP_GITHUB_TOKEN" }}'
+      token: "{{ .Env.SCOOP_GITHUB_TOKEN }}"
     homepage: https://github.com/dor1202/lazyregex
     description: A terminal regex tester with real Python, JavaScript, PCRE and Go engines.
     license: MIT
@@ -116,7 +116,7 @@ aurs:
     license: MIT
     maintainers:
       - Dor Schreiber <schreiberdor@gmail.com>
-    private_key: '{{ index .Env "AUR_KEY" }}'
+    private_key: "{{ .Env.AUR_KEY }}"
     git_url: ssh://aur@aur.archlinux.org/lazyregex-bin.git
     skip_upload: '{{ if not (index .Env "AUR_KEY") }}true{{ end }}'
     package: |-
@@ -138,5 +138,5 @@ chocolateys:
     summary: A terminal regex tester.
     description: A terminal regex tester with real Python, JavaScript, PCRE and Go engines.
     tags: regex terminal tui cli
-    api_key: '{{ index .Env "CHOCOLATEY_API_KEY" }}'
+    api_key: "{{ .Env.CHOCOLATEY_API_KEY }}"
     source_repo: https://push.chocolatey.org/

@@ -31,7 +31,7 @@ jobs:
       - uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
-          version: "~> v2"
+          version: "v2.19.0"
           args: release --clean --skip=publish,homebrew,scoop,aur,aur-source,nfpm,sbom,sign,announce
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
