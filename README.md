@@ -234,15 +234,6 @@ flavor and test text.
 
 ---
 
-## Acknowledgements
-
-Inspired by:
-
-* [k9s](https://github.com/derailed/k9s)
-* [rexi](https://github.com/royreznik/rexi)
-
----
-
 ## Sponsor
 
 If lazyregex saves you time, you can [sponsor its development](https://github.com/sponsors/dor1202).
