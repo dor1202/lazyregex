@@ -8,12 +8,14 @@ import (
 	"unicode/utf8"
 
 	tea "charm.land/bubbletea/v2"
+	"github.com/charmbracelet/x/ansi"
 
 	"github.com/dor1202/lazyregex/internal/codegen"
 	"github.com/dor1202/lazyregex/internal/engine"
 	"github.com/dor1202/lazyregex/internal/explain"
 	"github.com/dor1202/lazyregex/internal/hints"
 	"github.com/dor1202/lazyregex/internal/runner"
+	"github.com/dor1202/lazyregex/internal/syntax"
 )
 
 // Details tabs, in State.Tab[PDetails] order.
@@ -44,6 +46,7 @@ type detailsPanel struct {
 	top     [3]int // scroll offset of each tab
 	cmpSel  int    // selected Compare row (index into engine.Flavors)
 	started bool   // cmpSel has been put on the current flavor
+	code    codeHighlight
 }
 
 func newDetailsPanel() *detailsPanel { return &detailsPanel{} }
@@ -168,14 +171,32 @@ func (p *detailsPanel) viewCode(s *State, w, h int) string {
 	if !ok {
 		return t.fg("dim").Render(fmt.Sprintf("waiting for the %s engine…", s.Flavor))
 	}
-	lines := strings.Split(strings.TrimSuffix(code, "\n"), "\n")
+	lines := p.codeLines(s.Flavor, code, codeStyle(t))
 	top := clamp(p.top[tabCode], 0, max(0, len(lines)-h))
 	p.top[tabCode] = top
 	var out []string
 	for _, l := range lines[top:min(len(lines), top+h)] {
-		out = append(out, t.fg("text").Render(sanitize(strings.ReplaceAll(l, "\t", "    "))))
+		if ansi.StringWidth(l) > w {
+			l = ansi.Truncate(l, w, "…") + syntax.Reset
+		}
+		out = append(out, l)
 	}
 	return strings.Join(out, "\n")
+}
+
+// codeLines is the snippet as highlighted screen lines (cached per snippet
+// and style). Each line is sanitised first, with tabs as four spaces, and
+// only then coloured, so no control character of the snippet reaches the
+// terminal; every line ends with an SGR reset.
+func (p *detailsPanel) codeLines(f engine.Flavor, code, style string) []string {
+	if c := &p.code; c.lines == nil || c.code != code || c.style != style {
+		lines := strings.Split(strings.TrimSuffix(code, "\n"), "\n")
+		for i, l := range lines {
+			lines[i] = sanitize(strings.ReplaceAll(l, "\t", "    "))
+		}
+		*c = codeHighlight{code: code, style: style, lines: syntax.Lines(codeLang[f], lines, style)}
+	}
+	return p.code.lines
 }
 
 // --- Compare -------------------------------------------------------------

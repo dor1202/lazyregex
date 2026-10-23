@@ -635,7 +635,11 @@ func TestDetailsTextSanitized(t *testing.T) {
 	detailsTab(tm, tabExplanation)
 	clean("explanation", waitFor(t, tm, "explanation", contains("U+202E literally")).raw)
 	tm.Send(key(']'))
-	clean("code", waitFor(t, tm, "code", contains("regexp.MustCompile")).raw)
+	code := waitFor(t, tm, "code", contains("regexp.MustCompile"))
+	clean("code", code.raw)
+	if !strings.Contains(code.raw, "\x1b[38;2;") || !strings.Contains(code.screen, "␛[31m") {
+		t.Error("code: the snippet should be highlighted with ESC drawn as ␛")
+	}
 	tm.Send(key(']'))
 	s := waitFor(t, tm, "compare", func(s snapshot) bool {
 		return strings.Contains(s.screen, "Why:") && strings.Contains(s.screen, "bad ") && strings.Contains(s.screen, "  js     ✓")

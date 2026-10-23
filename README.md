@@ -14,7 +14,8 @@ website. One static binary, no runtime to install.
 
 - Matches, groups, replace and split, with highlighting in the test string.
 - Plain-English explanation of the pattern, per flavor.
-- A runnable code snippet for the current flavor, and a Compare tab that shows the
+- A runnable, syntax-highlighted code snippet for the current flavor (Catppuccin Mocha
+  or Latte, following the terminal background), and a Compare tab that shows the
   same pattern's results on every flavor.
 - A library of saved patterns.
 - Errors are the engine's own messages, verbatim.
@@ -203,7 +204,7 @@ Above 1 MiB of text, `enter` evaluates.
 | Matches / Groups | `enter` expand, `o` jump to the text, `y` copy value, `Y` copy all as JSON |
 | Library | `enter` load, `n` save the current pattern, `d` delete |
 | Explanation | `up` `down` select a row (highlights it in the pattern) |
-| Code | `y` copy the snippet |
+| Code | `y` copy the snippet (plain text, without the highlighting), `up` `down` scroll |
 | Compare | `enter` use that flavor, `a` apply the suggested rewrite |
 
 Commands (`:`, `tab` completes): `flavor`, `flags`, `mode`, `mouse [on|off]`,
