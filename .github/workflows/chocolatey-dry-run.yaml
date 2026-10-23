@@ -1,0 +1,66 @@
+name: chocolatey-dry-run
+
+# Builds and installs the Chocolatey package for an existing release tag without
+# pushing anything to chocolatey.org. Run it before relying on the release job's
+# `choco push`: Actions > chocolatey-dry-run > Run workflow.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to package (e.g. v1.0.1)
+        required: true
+
+jobs:
+  dry-run:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ inputs.tag }}
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      # Same pack-only invocation as the release job; --skip=publish uploads nothing.
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean --skip=publish,homebrew,scoop,aur,aur-source,nfpm,sbom,sign,announce
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify rebuilt zips match the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          gh release download $env:TAG --pattern checksums.txt --dir released
+          $zips = Get-ChildItem dist -Filter '*_windows_*.zip'
+          if ($zips.Count -ne 2) { throw "expected 2 windows zips, found $($zips.Count)" }
+          foreach ($zip in $zips) {
+            $hash = (Get-FileHash $zip.FullName -Algorithm SHA256).Hash.ToLower()
+            if (-not (Select-String -Path released/checksums.txt -Pattern "^$hash\s+$($zip.Name)$" -Quiet)) {
+              throw "$($zip.Name) differs from the released archive"
+            }
+            Write-Host "ok $($zip.Name) $hash"
+          }
+      - name: Install the package locally and run it
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $nupkg = Get-ChildItem dist -Recurse -Filter '*.nupkg'
+          if ($nupkg.Count -ne 1) { throw "expected 1 nupkg, found $($nupkg.Count)" }
+          Write-Host "package: $($nupkg.FullName)"
+          # Installs from the local nupkg; its install script downloads the released
+          # zip and verifies its checksum, exactly as users will get it.
+          choco install lazyregex --source $nupkg.DirectoryName --yes --no-progress
+          if ($LASTEXITCODE -ne 0) { throw "choco install failed" }
+          $env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + $env:Path
+          lazyregex --version
+          if ($LASTEXITCODE -ne 0) { throw "lazyregex --version failed" }
