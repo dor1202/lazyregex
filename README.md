@@ -4,7 +4,7 @@ A terminal UI to test and develop regular expressions against the **real engines
 of Python, JavaScript, PCRE (PHP) and Go, without leaving the terminal or opening a
 website. One static binary, no runtime to install.
 
-<!-- TODO: add a demo GIF (assets/demo.gif) recorded from the Go TUI. -->
+![lazyregex demo](assets/demo.gif)
 
 [![Release](https://img.shields.io/github/release-pre/dor1202/lazyregex.svg)](https://github.com/dor1202/lazyregex/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/lazyregex/blob/main/LICENSE)
@@ -18,6 +18,18 @@ website. One static binary, no runtime to install.
   same pattern's results on every flavor.
 - A library of saved patterns.
 - Errors are the engine's own messages, verbatim.
+
+### See it in action
+
+**Same pattern, four engines**: a lookbehind compiles on Python, JS and PCRE, Go
+rejects it with its own error, and the Compare tab suggests a rewrite you apply with `a`.
+
+![Switching flavors and the Compare tab](assets/flavors.gif)
+
+**Replace with live preview**: named groups in the pattern, `\g<name>` in the
+replacement, and the result updates as you type.
+
+![Replace tab](assets/replace.gif)
 
 > v0.x of lazyregex was a Python application. v1.0 is a complete rewrite in Go.
 > Since v1.0.1 Homebrew ships it as a cask (see [Installation](#installation)).

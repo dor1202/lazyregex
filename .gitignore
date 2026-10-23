@@ -5,3 +5,6 @@ coverage.txt
 coverage.html
 .superpowers/
 .env
+assets/tapes/lazyregex-linux
+assets/tapes/.cache/
+tmp/

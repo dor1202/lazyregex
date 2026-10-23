@@ -1,7 +1,7 @@
 VERSION ?= dev
 LDFLAGS := -X github.com/dor1202/lazyregex/internal/version.Version=$(VERSION)
 
-.PHONY: build test lint release-snapshot wasm wasm-pcre wasm-js wasm-python parity-gen
+.PHONY: build test lint release-snapshot wasm wasm-pcre wasm-js wasm-python parity-gen gifs
 
 build:
 	CGO_ENABLED=0 go build -ldflags "$(LDFLAGS)" -o bin/lazyregex ./cmd/lazyregex
@@ -36,3 +36,8 @@ wasm-python:
 parity-gen:
 	@test -n "$(FLAVOR)" || (echo "usage: make parity-gen FLAVOR=python|js|pcre|go" && exit 1)
 	go run ./parity/gen/driver -flavor $(FLAVOR) -out parity/expected
+
+# Regenerate the README demo GIFs (assets/*.gif) with the vhs Docker image.
+gifs:
+	CGO_ENABLED=0 GOOS=linux GOARCH=$$(docker version --format '{{.Server.Arch}}') go build -ldflags "-X github.com/dor1202/lazyregex/internal/version.Version=$$(git describe --tags --abbrev=0)" -o assets/tapes/lazyregex-linux ./cmd/lazyregex
+	for t in demo flavors replace; do docker run --rm -v "$$PWD":/vhs ghcr.io/charmbracelet/vhs assets/tapes/$$t.tape || exit 1; done
