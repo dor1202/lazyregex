@@ -1,4 +1,4 @@
-## lazyregex
+# lazyregex
 
 A terminal UI to test and develop regular expressions against the **real engines**
 of Python, JavaScript, PCRE (PHP) and Go, without leaving the terminal or opening a
@@ -6,9 +6,9 @@ website. One static binary, no runtime to install.
 
 ![lazyregex demo](assets/demo.gif)
 
-[![Release](https://img.shields.io/github/release-pre/dor1202/lazyregex.svg)](https://github.com/dor1202/lazyregex/releases)
+[![Release](https://img.shields.io/github/v/release/dor1202/lazyregex)](https://github.com/dor1202/lazyregex/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dor1202/lazyregex/blob/main/LICENSE)
-<!-- [![Downloads](https://img.shields.io/github/downloads/dor1202/lazyregex/total.svg)](https://github.com/dor1202/lazyregex/releases) -->
+[![Downloads](https://img.shields.io/github/downloads/dor1202/lazyregex/total.svg)](https://github.com/dor1202/lazyregex/releases)
 
 ---
 
@@ -34,19 +34,6 @@ replacement, and the result updates as you type.
 
 > v0.x of lazyregex was a Python application. v1.0 is a complete rewrite in Go.
 > Since v1.0.1 Homebrew ships it as a cask (see [Installation](#installation)).
-
----
-
-## Note...
-
-Lazyregex is an idea of a frustrated developer who got the task of developing regexes and not by a big corporation with deep pockets.
-
-It is a project that is being developed by a single person in their free time.
-
-If you feel Lazyregex makes your regex journey a bit easier, saves you time and makes you more productive, please consider [sponsoring!](https://github.com/sponsors/dor1202)
-Your donations will go a long way in keeping the project alive and beers in my fridge! 🍺
-
-**Thank you!**
 
 ---
 
@@ -90,12 +77,6 @@ Download the `.deb` or `.rpm` from the [releases page](https://github.com/dor120
 
 ```sh
 sudo dpkg -i lazyregex_*_linux_amd64.deb    # or: sudo rpm -i lazyregex_*_linux_amd64.rpm
-```
-
-### Arch Linux (AUR)
-
-```sh
-yay -S lazyregex-bin
 ```
 
 ### Go
@@ -232,33 +213,36 @@ Only Go is needed. `make wasm` rebuilds the embedded engines from their pinned s
 
 ## Contributors
 
-Without the contributions from these fine folks, this project would be a total dud!
-
 <a href="https://github.com/dor1202/lazyregex/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=dor1202/lazyregex" />
 </a>
 
 ---
 
-## Known Issues
+## Issues and feature requests
 
-This is still work in progress! If something is broken or there's a feature
-that you want, please file an issue and if so inclined submit a PR!
-
----
-
-## Contributions Guideline
-
-* File an issue first prior to submitting a PR!
-* Ensure all exported items are properly commented
+Found a bug or a difference from a language's own behaviour? Please
+[open an issue](https://github.com/dor1202/lazyregex/issues) with the pattern, flags,
+flavor and test text.
 
 ---
 
-## References
+## Contributing
 
-Big thanks to the following projects for their inspiration:
+* Open an issue before starting on a pull request, so we can agree on the approach.
+* `go vet ./...`, `go test ./...` and `golangci-lint run` must pass; exported items need doc comments.
+
+---
+
+## Acknowledgements
+
+Inspired by:
 
 * [k9s](https://github.com/derailed/k9s)
 * [rexi](https://github.com/royreznik/rexi)
 
-Without them, this project would not be possible.
+---
+
+## Sponsor
+
+If lazyregex saves you time, you can [sponsor its development](https://github.com/sponsors/dor1202).
